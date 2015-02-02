@@ -6,7 +6,7 @@ class Dictionary
   def initialize
     print "What is the name of the dictionary you want to load?\n > "
     @dictionary_name = gets.chomp
-    @dictionary = DictionaryLoader.new(@dictionary_name).dictionary
+    @dictionary = DictionaryLoader.new(@dictionary_name).words
   end
 end
 
