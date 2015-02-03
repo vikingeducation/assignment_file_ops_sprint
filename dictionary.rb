@@ -5,8 +5,8 @@ class Dictionary
   attr_reader :dictionary
   def initialize
     print "What is the name of the dictionary you want to load?\n > "
-    @dictionary_name = gets.chomp
-    @dictionary = DictionaryLoader.new(@dictionary_name).words
+    dictionary_name = gets.chomp
+    @dictionary = DictionaryLoader.new(dictionary_name).words
   end
 end
 
