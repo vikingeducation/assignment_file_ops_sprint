@@ -1,5 +1,7 @@
 require './dictionaryloader.rb'
 require './dictionaryanalyzer.rb'
+require 'pry'
+require 'yaml'
 
 class Dictionary
   attr_accessor :user_dictionary, :chosen_dictionary, :data_result
@@ -7,6 +9,7 @@ class Dictionary
     welcome
     @chosen_dictionary = DictionaryLoader.new(@user_dictionary).dictionary_array
     @data_result = DictionaryAnalyzer.new(@chosen_dictionary)
+    @data_result.user_search_choices
   end
 
 
