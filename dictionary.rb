@@ -9,7 +9,7 @@ class Dictionary
     @dictionary = DictionaryLoader.new(dictionary_name).words
     @analyzer = DictionaryAnalyzer.new(dictionary)
     print "How would you like to search?\n1 for an exact match\n2 for partial matches\n3 to match beginning of word\n4 to match end of word\n > "
-    search_style = gets.chomp
+    search_style = gets.chomp.to_i
     print "Enter your search string\n > "
     search_string = gets.chomp
     search_results = analyzer.search(search_style,search_string)
