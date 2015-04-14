@@ -28,10 +28,13 @@ class DictionaryAnalyzer
   end
   
   def exact_search(term)
+    matches = []
     @words.each do |word|
       if term == word
         puts ''
         puts "Found #{term} in the dictionary."
+        matches << word
+        return matches
       end
     end
   end
@@ -42,6 +45,7 @@ class DictionaryAnalyzer
     puts "Found '#{term}' present in the following words:"
     puts ''
     matches.each { |match| puts match }
+    return matches
   end
   
   def begins_with_search(term)
@@ -50,6 +54,7 @@ class DictionaryAnalyzer
     puts "The following words begin with '#{term}':"
     puts ''
     matches.each { |match| puts match }
+    return matches
   end
   
   def ends_with_search(term)
@@ -58,7 +63,7 @@ class DictionaryAnalyzer
     puts "The following words end in '#{term}':"
     puts ''
     matches.each { |match| puts match }
+    return matches
   end
-        
   
 end

@@ -13,36 +13,57 @@ class Dictionary
     @dictionary_analyzer.alphabet_word_count
     until !@wants_to_continue
       search_options
-      search_term(@option)
-      save_results
+      perform_search(@option)
     end
   end
   
-  def search_term(option)
+  def save_results(matches)
+    puts ''
+    puts "Would you like to save your results to a new file? (y/n)"
+    
+    response = gets.chomp.strip.downcase
+    if response == "y"
+      print "Enter the filename to store the results in: "
+      results_file = gets.chomp.strip
+      File.open(results_file, 'w') do |file|
+        matches.each do |match|
+          file.write match
+          file.write "\n"
+        end
+      end
+    end
+  end
+  
+  def perform_search(option)
+    matches = []
     if option == 'exact'
       puts''
       puts "What exact word would you like to search for?"
       print '> '
       @search_term = gets.chomp.strip
-      @dictionary_analyzer.exact_search(@search_term)
+      matches = @dictionary_analyzer.exact_search(@search_term)
+      save_results(matches)
     elsif option == 'partial'
       puts''
       puts "What partial term would you like to search for?"
       print '> '
       @search_term = gets.chomp.strip
-      @dictionary_analyzer.partial_search(@search_term)
+      matches = @dictionary_analyzer.partial_search(@search_term)
+      save_results(matches)
     elsif option == 'beginswith'
       puts''
       puts "What beginning term would you like to search for?"
       print '> '
       @search_term = gets.chomp.strip
-      @dictionary_analyzer.begins_with_search(@search_term)
+      matches = @dictionary_analyzer.begins_with_search(@search_term)
+      save_results(matches)
     elsif option == 'endswith'
       puts''
       puts "What exact word would you like to search for?"
       print '> '
       @search_term = gets.chomp.strip
-      @dictionary_analyzer.ends_with_search(@search_term)
+      matches = @dictionary_analyzer.ends_with_search(@search_term)
+      save_results(matches)
     elsif option == 'q'
       @wants_to_continue = false
     else
@@ -75,6 +96,3 @@ class Dictionary
   end
   
 end
-
-test = Dictionary.new
-test.use
