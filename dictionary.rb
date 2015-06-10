@@ -30,6 +30,45 @@ class Dictionary
   end
 
 
+  def search
+    puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with\n"
+    print " > "
+    option = gets.chomp.to_i
+
+    puts "What would you like to search for?"
+    print " > "
+    term = gets.chomp
+
+    case option
+      when 1
+        regex = /^#{term}$/i
+      when 2
+        regex = /^.*#{term}.*$/i
+      when 3
+        regex = /^#{term}.*$/i
+      when 4
+        regex = /^.*#{term}$/i
+    end
+
+    output = run_search(regex)
+
+  end
+
+
+  private
+
+
+  def run_search(regex)
+    output = []
+
+    @dictionary.each do |entry|
+      output << entry if entry.match(regex)
+    end
+
+    output
+  end
+
+=begin
   def search_exact(word)
     output = []
 
@@ -72,5 +111,6 @@ class Dictionary
 
     output
   end
+=end
 
 end
