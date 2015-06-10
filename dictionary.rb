@@ -31,13 +31,56 @@ class Dictionary
 
 
   def search
-    puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with\n"
+    parameters = get_search_parameters
+    #puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with"
+    #print " > "
+    #option = gets.chomp.to_i
+
+    #puts "What would you like to search for?"
+    #print " > "
+    #term = gets.chomp
+    regex = define_search_regex(parameters)
+    #case option
+    #  when 1
+    #    regex = /^#{term}$/i
+    #  when 2
+    #    regex = /^.*#{term}.*$/i
+    #  when 3
+    #    regex = /^#{term}.*$/i
+    #  when 4
+    #    regex = /^.*#{term}$/i
+    #end
+
+    results = run_search(regex)
+
+
+    process_search_results(results)
+    #puts "Number of matches: #{output.count}"
+    #puts "Would you like to:\n\t1) Display the results, or\n\t2) Save the results?"
+    #print " > "
+
+  end
+
+
+  private
+
+
+  def get_search_parameters
+    puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with"
     print " > "
     option = gets.chomp.to_i
 
     puts "What would you like to search for?"
     print " > "
     term = gets.chomp
+
+    [option, term]
+  end
+
+
+  def define_search_regex(parameters)
+    option = parameters[0]
+    term = parameters[1]
 
     case option
       when 1
@@ -50,12 +93,8 @@ class Dictionary
         regex = /^.*#{term}$/i
     end
 
-    output = run_search(regex)
-
+    regex
   end
-
-
-  private
 
 
   def run_search(regex)
@@ -68,49 +107,43 @@ class Dictionary
     output
   end
 
-=begin
-  def search_exact(word)
-    output = []
 
-    @dictionary.each do |entry|
-      output << entry if entry.match(/^#{word}$/i)
-    end
+  def process_search_results(results)
+    puts "Number of matches: #{results.count}"
+    puts "Would you like to:\n\t1) Display the results, or\n\t2) Save the results?"
+    print " > "
+    destination = gets.chomp.to_i
 
-    output
+    puts results if destination == 1
+    save_search_results(results) if destination == 2
   end
 
 
-  def search_partial(substring)
-    output = []
+  def save_search_results(results)
+    puts "Enter filename:"
+    print " > "
+    save_file = gets.chomp
 
-    @dictionary.each do |entry|
-      output << entry if entry.match(/^.*#{substring}.*$/i)
+    if File.exist?(save_file)
+      puts "Warning: #{save_file} already exists.  Overwrite (y/n)?"
+      print " > "
+      permission = gets.chomp
+    else
+      permission = "y"
     end
 
-    output
-  end
+    if permission.downcase[0] == "y"
 
+      File.open(save_file, "w") do |file|
+        results.each { |result| file.write(result + "\n") }
+      end
+      puts "Save completed."
 
-  def search_begins_with(substring)
-    output = []
-
-    @dictionary.each do |entry|
-      output << entry if entry.match(/^#{substring}.*$/i)
+    else
+      puts "Save cancelled."
     end
 
-    output
   end
 
-
-  def search_ends_with(substring)
-    output = []
-
-    @dictionary.each do |entry|
-      output << entry if entry.match(/^.*#{substring}$/i)
-    end
-
-    output
-  end
-=end
 
 end
