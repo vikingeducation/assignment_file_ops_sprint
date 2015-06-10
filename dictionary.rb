@@ -5,6 +5,8 @@ require './dictionary_analyzer'
 class Dictionary
 
   def initialize(filename = "")
+    @quitting = false
+
     if filename.empty?
       puts "Enter the name & extension of your dictionary file:"
       print " > "
@@ -31,34 +33,14 @@ class Dictionary
 
 
   def search
+    @quitting = false
     parameters = get_search_parameters
-    #puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with"
-    #print " > "
-    #option = gets.chomp.to_i
 
-    #puts "What would you like to search for?"
-    #print " > "
-    #term = gets.chomp
-    regex = define_search_regex(parameters)
-    #case option
-    #  when 1
-    #    regex = /^#{term}$/i
-    #  when 2
-    #    regex = /^.*#{term}.*$/i
-    #  when 3
-    #    regex = /^#{term}.*$/i
-    #  when 4
-    #    regex = /^.*#{term}$/i
-    #end
+    regex = define_search_regex(parameters) unless @quitting
 
-    results = run_search(regex)
+    results = run_search(regex) unless @quitting
 
-
-    process_search_results(results)
-    #puts "Number of matches: #{output.count}"
-    #puts "Would you like to:\n\t1) Display the results, or\n\t2) Save the results?"
-    #print " > "
-
+    process_search_results(results) unless @quitting
   end
 
 
@@ -67,14 +49,21 @@ class Dictionary
 
   def get_search_parameters
     puts "How would you like to search?\n\t1) Exact match\n\t2) Partial match\n\t3) Beginning with\n\t4) Ending with"
+    puts "(type 'q' to quit)"
     print " > "
-    option = gets.chomp.to_i
+    option = gets.chomp
+    @quitting = true if option == "q"
 
-    puts "What would you like to search for?"
-    print " > "
-    term = gets.chomp
+    unless @quitting
+      puts "What would you like to search for?"
+      puts "(type 'q' to quit)"
+      print " > "
+      term = gets.chomp
+      @quitting = true if term == "q"
 
-    [option, term]
+      [option.to_i, term]
+    end
+
   end
 
 
@@ -111,11 +100,16 @@ class Dictionary
   def process_search_results(results)
     puts "Number of matches: #{results.count}"
     puts "Would you like to:\n\t1) Display the results, or\n\t2) Save the results?"
+    puts "(type 'q' to quit)"
     print " > "
-    destination = gets.chomp.to_i
+    destination = gets.chomp
+    @quitting = true if destination == "q"
 
-    puts results if destination == 1
-    save_search_results(results) if destination == 2
+    unless @quitting
+      puts results if destination == "1"
+      save_search_results(results) if destination == "2"
+    end
+
   end
 
 
