@@ -12,6 +12,9 @@ class DictionaryLoader
   end
 
 
+  private
+
+
   def strip_lines
 
     @dictionary.each do |line|

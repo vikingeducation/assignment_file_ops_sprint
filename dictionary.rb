@@ -25,8 +25,52 @@ class Dictionary
     @analyzer = DictionaryAnalyzer.new(@dictionary)
     puts "Total word count: #{@analyzer.stats[:word_count]}"
     @analyzer.stats[:word_count_by_letter].each do |key, value|
-      puts "#{key.to_s.upcase}: #{value}"
+      print "#{key.to_s.upcase}: #{value}\t"
     end
+  end
+
+
+  def search_exact(word)
+    output = []
+
+    @dictionary.each do |entry|
+      output << entry if entry.match(/^#{word}$/i)
+    end
+
+    output
+  end
+
+
+  def search_partial(substring)
+    output = []
+
+    @dictionary.each do |entry|
+      output << entry if entry.match(/^.*#{substring}.*$/i)
+    end
+
+    output
+  end
+
+
+  def search_begins_with(substring)
+    output = []
+
+    @dictionary.each do |entry|
+      output << entry if entry.match(/^#{substring}.*$/i)
+    end
+
+    output
+  end
+
+
+  def search_ends_with(substring)
+    output = []
+
+    @dictionary.each do |entry|
+      output << entry if entry.match(/^.*#{substring}$/i)
+    end
+
+    output
   end
 
 end
