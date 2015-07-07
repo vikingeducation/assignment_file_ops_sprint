@@ -26,8 +26,13 @@ class Dictionary
 
       when "exact_match"
         matches = @dic_analyzer.exact_match(ans_arr[1])
-        puts 1
-        ask(matches)
+        if matches == false
+          print "0 matches found..\n"
+        else
+          print "1\n"
+          ask(matches)
+        end
+        
 
       when "begins_with"
         matches = @dic_analyzer.begins_with(ans_arr[1])
