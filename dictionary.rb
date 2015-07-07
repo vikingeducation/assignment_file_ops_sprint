@@ -32,9 +32,9 @@ class DictionaryLoader
 
   def load_file(file)
 
-    dict = File.read(file)
-    # dict.map {|line| line.strip!}
-    # dict
+    dict = File.readlines(file)
+    dict.map {|line| line.strip!}
+    dict
 
   end
 
@@ -53,18 +53,25 @@ class DictionaryAnalyzer
 
     dict_string = @dict.join(" ")
     regex = /^(a|A)/
-    s = string.scan(regex)
 
-    # puts "This dictionary contains #{@dict.length} words"
+    a_array = dict_string.scan(regex)
+    a_array.lenght
+
+    
+    puts "This dictionary contains #{@dict.lenght} words"
     puts "This dictionary contains:"
 
-  end
+    end
+
+
+
 
 
   end
 
 
-
+  
+end
 
 
 
