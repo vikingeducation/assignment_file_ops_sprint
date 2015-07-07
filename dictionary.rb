@@ -18,6 +18,13 @@ class Dictionary
 
   end
 
+  def analyze_dictionary
+
+    analyzer = DictionaryAnalyzer.new(@dict)
+    analyzer.initial_analysis
+
+  end
+
 end
 
 
@@ -25,9 +32,9 @@ class DictionaryLoader
 
   def load_file(file)
 
-    dict = File.readlines(file)
-    dict.map {|line| line.strip!}
-    dict
+    dict = File.read(file)
+    # dict.map {|line| line.strip!}
+    # dict
 
   end
 
@@ -36,8 +43,28 @@ end
 
 class DictionaryAnalyzer
 
-  
-end
+  def initialize(dict)
+
+    @dict = dict
+
+  end
+
+  def initial_analysis
+
+    dict_string = @dict.join(" ")
+    regex = /^(a|A)/
+    s = string.scan(regex)
+
+    # puts "This dictionary contains #{@dict.length} words"
+    puts "This dictionary contains:"
+
+  end
+
+
+  end
+
+
+
 
 
 
