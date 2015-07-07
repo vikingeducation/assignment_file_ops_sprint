@@ -43,7 +43,7 @@ class Dictionary
     search_term = gets.chomp
 
     if type == 'e'
-      regex = /#{search_term}/i
+      regex = /^#{search_term}$/i
     elsif type == 'p'
       regex = /\w*#{search_term}\w*/i
     elsif type == 'b'
@@ -52,9 +52,11 @@ class Dictionary
       regex = /\w*#{search_term}$/i
     end
 
-    match(regex)
+    search_array = match(regex)
 
-    puts "the end"
+    save(search_array)
+
+
   end
 
   def type_search
@@ -68,6 +70,27 @@ class Dictionary
   def match(regex)
 
     arr = @dict.select {|word| !!(word =~ regex)}
+    print arr
+    arr
+
+  end
+
+  def save(search_array)
+
+    puts "\nDo you want to save your file? (y/n)"
+
+    if gets.chomp == 'y'
+
+      puts "Give me a name for your file"
+      name = gets.chomp
+
+      File.open("#{name}.txt","w") do |file|
+
+        search_array.each {|word| file.write "#{word}\n" }
+       
+      end
+
+    end
 
   end
 
@@ -99,15 +122,6 @@ class DictionaryAnalyzer
 
     puts "This dictionary contains #{@dict.length} words"
 
-    # dict_string = @dict.join(" ") + ' '
-    
-    # ('a'..'z').each do |l|
-    #   regex = Regexp.new("(#{l}|#{l.upcase})[a-zA-Z]*\\s")
-    #   array = dict_string.scan(regex)
-    #   puts "This dictionary contains #{array.length} words starting with letter #{l}."
-    # end
-
-
     ('a'..'z').each do |l|
 
       regex = Regexp.new("^#{l}",true)
@@ -118,8 +132,7 @@ class DictionaryAnalyzer
 
     end
 
-
-    end
+  end
 
 end
 
