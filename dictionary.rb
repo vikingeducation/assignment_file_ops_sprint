@@ -7,6 +7,7 @@ class Dictionary
     @file_name = ''
     @loader = DictionaryLoader.new
     @dict = []
+    user_interaction
 
   end
 
@@ -14,7 +15,7 @@ class Dictionary
 
     choose_file
     analyze_dictionary
-    # search_dictionary
+    search_dictionary
 
   end
 
@@ -34,33 +35,41 @@ class Dictionary
 
   end
 
-  # def search_dictionary
+  def search_dictionary
 
-  #   type = type_search
+    type = type_search
 
-  #   puts = "What do you want to search"
-  #   search_term = gets.chomp
+    puts "What do you want to search"
+    search_term = gets.chomp
 
-  #   if type == 'e'
-  #     exact_search(search_term)
-  #   elsif type == 'p'
-  #     partial_search(search_term)
-  #   elsif type == 'b'
-  #     begins_search(search_term)
-  #   else
-  #     end_search(search_term)
-  #   end
-        
+    if type == 'e'
+      regex = /#{search_term}/i
+    elsif type == 'p'
+      regex = /\w*#{search_term}\w*/i
+    elsif type == 'b'
+      regex = /^#{search_term}\w*/i
+    else
+      regex = /\w*#{search_term}$/i
+    end
 
-  # end
+    match(regex)
 
-  # def type_search
+    puts "the end"
+  end
 
-  #   puts "What kind of search do you want to do? exact(e), partial(p), begins with(b), ends with(e)"
-  #   type = gets.chomp
-  #   return type if ['e', 'p', 'b', 'e'].include(type)
+  def type_search
 
-  # end
+    puts "What kind of search do you want to do? exact(e), partial(p), begins with(b), ends with(ew)"
+    type = gets.chomp
+    return type if ['e', 'p', 'b', 'ew'].include?(type)
+
+  end
+
+  def match(regex)
+
+    arr = @dict.select {|word| !!(word =~ regex)}
+
+  end
 
 end
 
@@ -98,9 +107,14 @@ class DictionaryAnalyzer
     #   puts "This dictionary contains #{array.length} words starting with letter #{l}."
     # end
 
+
     ('a'..'z').each do |l|
 
       regex = Regexp.new("^#{l}",true)
+
+      n = @dict.count {|word| !!(word =~ regex)}
+
+      puts "This dictionary contains #{n} words starting with letter #{l}."
 
     end
 
