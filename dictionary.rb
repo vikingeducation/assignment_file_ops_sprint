@@ -82,20 +82,20 @@ class DictionaryAnalyzer
 
     num = get_type
 
-    case 
+    case num
 
-    when num == 1
-      exact_match
-    when num == 2
-      partial_match
-    when num == 3
-      begin_match
-    when num == 4 
-      end_match
+    when 1
+      results = exact_match
+    when 2
+      results = partial_match
+    when 3
+      results = begin_match
+    when 4
+      results = end_match
 
     end
 
-    save()
+    save(results)
 
 
   end
@@ -139,16 +139,13 @@ class DictionaryAnalyzer
   def partial_match
 
     word = gets.chomp
-    regex = /\S*#{word}\S*/i   # ab    cab
+    regex = /\S*#{word}\S*/i
 
-    puts regex
     matches = @dictionary.scan(regex)
-    
     puts matches
 
     puts "There are #{matches.length} match(es)"
 
-    
     matches
 
   end
@@ -183,10 +180,23 @@ class DictionaryAnalyzer
 
   end
 
-  def save
+  def save(results)
 
+    puts "Would you like to store the results?"
 
+    input = gets.chomp.downcase
 
+    until ["y", "n"].include?(input[0])
+      puts "type 'y' or 'n'"
+      input = gets.chomp.downcase
+    end
+
+    if input == "y"
+      puts "What should the file be named? (without extension)"
+      file_name = gets.chomp + ".txt"
+      file = File.open(file_name, "w")
+      file.write(results.join("\n"))
+    end
 
   end
 
