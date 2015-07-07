@@ -4,20 +4,12 @@ class Dictionary
 
   def initialize
     @dict = []
+    @quit = false
   end
 
   def get_dictionary(filename)
     @dict = DictionaryLoader.new(filename).dict
     @dict = DictionaryAnalyzer.new(@dict)
-  end
-
-  def print_stats
-    puts @dict.word_count
-    puts @dict.words_starting_with("a")
-    #puts @dict.partial_match("ab")
-    #puts @dict.begins_with("ab")
-    puts @dict.ends_with("re")
-
   end
 
   def load_file
@@ -28,9 +20,11 @@ class Dictionary
 
   def run
     load_file
-    result = perform_search(search_type)
-    display_matches(result)
-    display_or_save(result)
+    until (@quit)
+      result = perform_search(search_type)
+      display_matches(result)
+      display_or_save(result)
+    end
   end
 
   def display_matches(result)
@@ -39,12 +33,12 @@ class Dictionary
 
   def display_or_save(result)
     puts "Do you want to (1) save the results or (2) display to screen?"
-    input = gets.chomp
+    input = gets.chomp.to_i
     case input
     when 1
       save_to_file(result)
     when 2
-      p(result)
+      puts result
     end
   end
 
@@ -52,13 +46,24 @@ class Dictionary
     puts "Name your file:"
     file_name = gets.chomp
     if File.exist? file_name
-    save(result)
-
+      puts "The file #{file_name} already exists."
+      puts "Type 'y' to overwrite the file."
+      choice = gets.chomp
+      if choice.downcase == "y"
+        save(file_name, result, "w")
+      else
+        return display_or_save(result)
+      end
+    end
+    save(file_name, result, "w")
   end
 
-  def save(result)
-    my_dump = YAML::dump(result)
-    my_file
+  def save(filename, result, mode)
+    my_file = File.open(filename, mode)
+    result.each do |word|
+      my_file.puts(word)
+    end
+    my_file.close
   end
 
 
@@ -82,13 +87,18 @@ class Dictionary
     puts "(2) partial match"
     puts "(3) begins with"
     puts "(4) ends with"
+    puts "(q) to quit"
     input = 0
     loop do
       input = gets.chomp
-      break if (1..4).include? input
+      if input.downcase == "q"
+        @quit = true
+        exit
+      end
+      break if (1..4).include? input.to_i
       puts "Please enter option 1-4:"
     end
-    input
+    input.to_i
   end
 end
 
@@ -102,9 +112,8 @@ class DictionaryLoader
   end
 
   def read_from_file(filename)
-    File.readlines(filename) do |line|
-      line.chomp
-    end
+    lines = File.readlines(filename)
+    lines.each {|line| line.strip!}
   end
 
 end
@@ -123,8 +132,9 @@ class DictionaryAnalyzer
     @dict.select{|word| word[0].downcase == letter.downcase}.length
   end
 
-  def exact_match(word)
-    (@dict.include?(word.downcase)||@dict.include?(word.capitalize)) ? word : false
+  def exact_match(input)
+    input = input.downcase
+    return @dict.reject{|word| (/^#{input}$/ =~ word.downcase).nil?}
   end
 
   def partial_match(input)
@@ -139,7 +149,7 @@ class DictionaryAnalyzer
 
   def ends_with(input)
     input = input.downcase
-    return @dict.reject{|word| (/\w+#{input}\b/ =~ word.downcase).nil?}
+    return @dict.reject{|word| (/#{input}$/ =~ word.downcase).nil?}
   end
 
 
@@ -147,5 +157,4 @@ class DictionaryAnalyzer
 end
 
 dict = Dictionary.new
-dict.load_file
-dict.print_stats
+dict.run
