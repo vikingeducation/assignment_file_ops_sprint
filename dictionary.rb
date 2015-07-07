@@ -43,6 +43,9 @@ class Dictionary
         matches = @dic_analyzer.ends_with(ans_arr[1])
         puts matches.length
         ask(matches) 
+
+      when "Q"
+        exit
     end
         
       
