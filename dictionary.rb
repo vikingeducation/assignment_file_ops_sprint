@@ -112,6 +112,7 @@ class DictionaryAnalyzer
     input = 0
     until (1..4).include?(input)
       input = gets.chomp.to_i
+      abort if input == 0 
     end
 
 
@@ -123,6 +124,7 @@ class DictionaryAnalyzer
   def exact_match
 
     word = gets.chomp
+    
     regex = /\b#{word}\b/i
     matches = @dictionary.scan(regex)
 
@@ -139,6 +141,7 @@ class DictionaryAnalyzer
   def partial_match
 
     word = gets.chomp
+    
     regex = /\S*#{word}\S*/i
 
     matches = @dictionary.scan(regex)
@@ -153,6 +156,7 @@ class DictionaryAnalyzer
   def begin_match
 
     word = gets.chomp
+    
     regex = /\b#{word}\S*/i
     matches= @dictionary.scan(regex)
 
@@ -168,6 +172,7 @@ class DictionaryAnalyzer
   def end_match
 
     word = gets.chomp
+    
     regex = /\S*#{word}\b/i
 
     matches= @dictionary.scan(regex)
@@ -185,17 +190,34 @@ class DictionaryAnalyzer
     puts "Would you like to store the results?"
 
     input = gets.chomp.downcase
+    abort if input[0] == 'q'
 
     until ["y", "n"].include?(input[0])
       puts "type 'y' or 'n'"
       input = gets.chomp.downcase
+      abort if word[0] == 'q'
     end
+
 
     if input == "y"
       puts "What should the file be named? (without extension)"
       file_name = gets.chomp + ".txt"
-      file = File.open(file_name, "w")
-      file.write(results.join("\n"))
+      if File.exist?(file_name)
+        overwrite = "q"
+        puts "File already exists. Would you like to overwrite? Y/N"
+        until ["y","n"].include?(overwrite)
+          overwrite = gets.chomp.downcase
+          abort if word[0] == 'q'
+        end
+        if overwrite == 'y'
+          file = File.open(file_name, "w")
+          file.write(results.join("\n"))
+        end
+      else
+        file = File.open(file_name, "w")
+        file.write(results.join("\n")) 
+      end
+
     end
 
   end
