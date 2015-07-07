@@ -14,37 +14,62 @@ class Dictionary
   def search
     puts "What you would like me to look for? (method , word)"
 
-    ans_arr=get.chomp
+    ans_arr=gets.chomp
+    ans_arr = ans_arr.split(",")
+
+    case ans_arr[0]
+      
+      when "partial_match"
+        matches = @dic_analyzer.partial_match(ans_arr[1])
+        puts matches.length
+        ask(matches)
+
+      when "exact_match"
+        matches = @dic_analyzer.exact_match(ans_arr[1])
+        puts 1
+        ask(matches)
+
+      when "begins_with"
+        matches = @dic_analyzer.begins_with(ans_arr[1])
+        puts matches.length
+        ask(matches) 
+
+      when "ends_with" 
+        matches = @dic_analyzer.ends_with(ans_arr[1])
+        puts matches.length
+        ask(matches) 
+    end
+        
+      
 
 
   end
 
-  def ask
+  def ask(array)
     puts "What you would like me to do?"
       act=gets.chomp
       case act
-        when "S" 
-          if !File.exist?("test.txt","w") 
-            File.open("test.txt","w") do |file|
-            file.write @dic_analyzer.partial_match("sun")
-            end
-          else
+        when "S"
+          puts "What would you like to name this file?"
+          file_name = gets.chomp
+          if File.exist?("#{file_name}.txt") 
             puts "Would you like to overwrite the file? (y/n)"
-            if gets.chomp == "y"
-              File.open("test.txt","w") do |file|
-              file.write @dic_analyzer.partial_match("sun")
+            if gets.chomp == "n"
+              exit
             end
-
           end
+          File.open("#{file_name}.txt","w") do |file|
+          file.write array
+        end
 
         when "P"
-          puts @dic_analyzer.partial_match("sun")
+          puts array
 
         when "Q"
           exit
 
-        else ask
-
+        else
+          search
       end    
   end
 
