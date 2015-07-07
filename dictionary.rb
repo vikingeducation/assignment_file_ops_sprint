@@ -51,26 +51,23 @@ class DictionaryAnalyzer
 
   def initial_analysis
 
-    dict_string = @dict.join(" ")
-    regex = /^(a|A)/
+    dict_string = @dict.join(" ") + ' '
+    # regex = /^(a|A)/
 
-    a_array = dict_string.scan(regex)
-    a_array.lenght
+    # a_array = dict_string.scan(regex)
+    # a_array.lenght
 
     
-    puts "This dictionary contains #{@dict.lenght} words"
-    puts "This dictionary contains:"
+    puts "This dictionary contains #{@dict.length} words"
+
+    ('a'..'z').each do |l|
+      regex = Regexp.new("(#{l}|#{l.upcase})[a-zA-Z]*\\s")
+      array = dict_string.scan(regex)
+      puts "This dictionary contains #{array.length} words starting with letter #{l}."
+    end
 
     end
 
-
-
-
-
-  end
-
-
-  
 end
 
 
