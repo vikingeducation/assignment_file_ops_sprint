@@ -4,7 +4,7 @@ require_relative 'dictionaryanalyzer'
 class Dictionary
 
   def main_loop
-    #loop do
+    loop do
       render_heading
       dictionary = get_filename
       @analyzer = DictionaryAnalyzer.new(dictionary)
@@ -19,16 +19,31 @@ class Dictionary
 
       term = get_search_term
 
-      # render_heading
-      # render_stats
-
       @results = @analyzer.search(type.to_sym, term)
 
       choice = get_results_choice
 
       process_results(choice.to_sym, @results)
-    #end
-    
+
+      quit_or_continue?
+    end
+  end
+
+
+  def quit_or_continue?
+    puts "\nWould you to (s)earch again or (q)uit?"
+
+    loop do
+      print "> "
+      input = gets.chomp.downcase
+      if input == "s"
+        break
+      elsif input == "q"
+        exit
+      else
+        puts "Invalid selection!"
+      end
+    end
   end
 
 
@@ -78,6 +93,7 @@ class Dictionary
     puts "(p)artial - 'apple' returns 'apple, grapple, applejack'"
     puts "(b)egins - 'apple' returns 'apple, applejack'"
     puts "(e)nds - 'apple' returns 'apple, grapple'"
+
     loop do
       print "> "
       input = gets.chomp.downcase
@@ -88,6 +104,7 @@ class Dictionary
     input
   end
 
+
   def valid_search_type?(input)
     if ["x", "p", "b", "e"].include?(input)
       true
@@ -96,6 +113,7 @@ class Dictionary
       false
     end
   end
+
 
   def get_search_term
     puts "OK! What word would you like to search for?"
@@ -133,7 +151,6 @@ class Dictionary
   end
 
 
-
   def process_results(choice, results)
     print "\n"
     if choice == :v
@@ -169,6 +186,8 @@ class Dictionary
     end
 
     @analyzer.output_results(input)
+
+    puts "File Saved!\n"
   end
 
 
@@ -189,8 +208,6 @@ class Dictionary
       true
     end
   end
-
-
 
 end
 

@@ -36,7 +36,7 @@ class DictionaryAnalyzer
 
   def output_results(filename)
     File.open(filename, "w") do |file|
-      file.write @results
+      @results.each { |word| file.puts(word) }
     end
   end
 
