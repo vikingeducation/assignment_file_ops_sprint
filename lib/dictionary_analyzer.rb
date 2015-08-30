@@ -1,0 +1,2 @@
+class DictionaryAnalyzer
+end

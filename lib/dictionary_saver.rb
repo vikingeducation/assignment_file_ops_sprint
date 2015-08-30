@@ -1,0 +1,2 @@
+class DictionarySaver
+end
