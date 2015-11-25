@@ -14,14 +14,16 @@ class DictionaryAnalyzer
 
     case selection
     when 1
-      exact_match_search(search_text)
+      result = exact_match_search(search_text)
     when 2
-      partial_match_search(search_text)
+      result = partial_match_search(search_text)
     when 3
-      begins_with_search(search_text)
+      result = begins_with_search(search_text)
     when 4
-      ends_with_search(search_text)
+      result = ends_with_search(search_text)
     end
+
+    output(search_text, result)
   end
 
   private
@@ -55,22 +57,27 @@ class DictionaryAnalyzer
   end
 
   def exact_match_search(string)
-    result = [@dictionary.find{ |word| word == string }]
-    output(string, result)
+    [@dictionary.find{ |word| word == string }]
   end
 
   def partial_match_search(string)
+    @dictionary.find_all{ |word| word.include?(string) }
   end
 
   def begins_with_search(string)
+    letter_count = string.size
+    @dictionary.find_all{ |word| word[0, letter_count] == string }
   end
 
   def ends_with_search(string)
+    letter_count = string.size
+    start = - letter_count
+    @dictionary.find_all{ |word| word[start, letter_count] == string }
   end
 
   def output(string, result)
     puts "\n --- Results --------------------------"
-    puts "Your search string was #{string}, and the result(s) are:"
+    puts "Your search string was '#{string}', which returned #{result.size} result(s):"
     puts result.join(', ')
   end
 
