@@ -1,15 +1,9 @@
 class DictionaryLoader
   # Reads in the specified dictionary file.
 
-  def initialize
-    @dictionary = load_5desk
-  end
-
-  private
-
-  def load_5desk
+  def load(file)
     words = []
-    File.readlines('5desk.txt').each do |line|
+    File.readlines(file).each do |line|
       words << line.strip
     end
     words

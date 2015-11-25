@@ -6,19 +6,21 @@ class Dictionary
   def initialize
     puts "Welcome to the Dictionary Tool"
     if load?
-      @dictionary = DictionaryLoader.new
-      # @analyzer = DictionaryAnalyzer.new(@dictionary)
-      @selection = 1
+      @dictionary_loader = DictionaryLoader.new
+      @dictionary = @dictionary_loader.load('5desk.txt')
+      @analyzer = DictionaryAnalyzer.new(@dictionary)
     else
       quit
     end
   end
 
   def menu
-    while (1..4).include?(@selection)
-      render_menu
-      @selection = gets.chomp.to_i
+    selection = 1
 
+    while (1..4).include?(selection)
+      render_menu
+      selection = gets.chomp.to_i
+      @analyzer.run_search(selection)
     end
   end
 
