@@ -1,13 +1,9 @@
-require 'pry'
-
 class DictionaryAnalyzer
 
   def initialize(dictionary)
     @dictionary = dictionary
     show_statistics
   end
-
-   # If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not.
 
   def run_search(selection)
     search_text = get_text

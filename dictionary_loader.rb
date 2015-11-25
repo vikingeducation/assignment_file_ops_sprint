@@ -1,5 +1,4 @@
 class DictionaryLoader
-  # Reads in the specified dictionary file.
 
   def load(file)
     words = []

@@ -51,6 +51,3 @@ class Dictionary
   end
 
 end
-
-d = Dictionary.new
-d.menu
