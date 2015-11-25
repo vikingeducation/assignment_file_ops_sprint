@@ -7,7 +7,7 @@ class DictionaryAnalyzer
     show_statistics
   end
 
-   # The results should return the full word, regardless of match type.  Once the search is complete, display the number of matches and prompt the user whether to save the results to a file or display to the screen (puts). If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not.
+   # If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not.
 
   def run_search(selection)
     search_text = get_text
@@ -77,8 +77,51 @@ class DictionaryAnalyzer
 
   def output(string, result)
     puts "\n --- Results --------------------------"
-    puts "Your search string was '#{string}', which returned #{result.size} result(s):"
-    puts result.join(', ')
+    puts "Your search string was '#{string}', which returned #{result.size} result(s)."
+    output_location = get_output_location
+    if output_location == 1
+      puts result.join(', ')
+    else
+      save_to_file(result)
+    end
+  end
+
+  def get_output_location
+    loop do
+      puts "Would you like to output the result(s) to the screen (1) or save them to a file (2)?"
+      print "Type 1 or 2 > "
+      selection = gets.chomp.to_i
+      if selection == 1 || selection == 2
+        return selection
+      else
+        print " I'm sorry, I don't recognize that response."
+      end
+    end
+  end
+
+  def save_to_file(result)
+    filename = get_filename
+
+    File.open(filename, 'w') do |file|
+      file.write result.join("\n")
+    end
+
+    puts "Saved successfully!"
+  end
+
+  def get_filename
+    loop do
+      print "Enter the file name > "
+      name = gets.chomp
+      if File.file?(name)
+        puts "That file already exists. Would you like to overwrite it?"
+        print "Type y or n > "
+        overwrite = gets.chomp
+        return name if overwrite == 'y'
+      else
+        return name
+      end
+    end
   end
 
 end
