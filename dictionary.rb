@@ -15,19 +15,23 @@ class Dictionary
   end
 
   def menu
-    selection = 1
-
-    while (1..4).include?(selection)
+    loop do
       render_menu
       selection = gets.chomp.to_i
-      @analyzer.run_search(selection)
+      if (1..4).include?(selection)
+        @analyzer.run_search(selection)
+      else
+        quit
+        break
+      end
     end
   end
 
   private
 
   def load?
-    puts "Would you like to load the dictionary?  Type 'y' for yes and anything else to quit"
+    puts "Would you like to load the dictionary?  Type 'y' for yes and anything else to quit."
+    print " > "
     gets.chomp == 'y' ? true : false
   end
 
@@ -36,6 +40,7 @@ class Dictionary
   end
 
   def render_menu
+    puts "\n --- Menu -----------------------------"
     puts "What would you like to do next (enter number)?"
     puts "  1  exact-match search"
     puts "  2  partial-match search"
@@ -45,9 +50,6 @@ class Dictionary
     puts "(or enter anything else to quit)"
   end
 
-   # Handles user interaction loop
-   # The results should return the full word, regardless of match type.  Once the search is complete, display the number of matches and prompt the user whether to save the results to a file or display to the screen (puts). If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not.
-   # Always give the user the option to quit.
 end
 
 d = Dictionary.new

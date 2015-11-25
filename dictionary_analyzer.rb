@@ -1,29 +1,33 @@
 require 'pry'
 
 class DictionaryAnalyzer
-  # takes a dictionary and contains methods that provide simple statistics for how many words occur starting with each letter of the alphabet. Display these to the user when the dictionary is successfully read in.
 
   def initialize(dictionary)
     @dictionary = dictionary
     show_statistics
   end
 
+   # The results should return the full word, regardless of match type.  Once the search is complete, display the number of matches and prompt the user whether to save the results to a file or display to the screen (puts). If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not.
+
   def run_search(selection)
+    search_text = get_text
+
     case selection
     when 1
-      exact_match_search
+      exact_match_search(search_text)
     when 2
-      partial_match_search
+      partial_match_search(search_text)
     when 3
-      begins_with_search
+      begins_with_search(search_text)
     when 4
-      ends_with_search
+      ends_with_search(search_text)
     end
   end
 
   private
 
   def show_statistics
+    puts "\n --- Statistics -----------------------"
     total_words
     words_by_letter
   end
@@ -45,16 +49,29 @@ class DictionaryAnalyzer
     puts results.join(', ')
   end
 
-  def exact_match_search
+  def get_text
+    print "Enter search string > "
+    gets.chomp
   end
 
-  def partial_match_search
+  def exact_match_search(string)
+    result = [@dictionary.find{ |word| word == string }]
+    output(string, result)
   end
 
-  def begins_with_search
+  def partial_match_search(string)
   end
 
-  def ends_with_search
+  def begins_with_search(string)
+  end
+
+  def ends_with_search(string)
+  end
+
+  def output(string, result)
+    puts "\n --- Results --------------------------"
+    puts "Your search string was #{string}, and the result(s) are:"
+    puts result.join(', ')
   end
 
 end
