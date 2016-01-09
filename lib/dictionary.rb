@@ -2,4 +2,9 @@
 
 class Dictionary
 
+  attr_accessor :file
+
+  def initialize
+    @file = nil
+  end
 end
