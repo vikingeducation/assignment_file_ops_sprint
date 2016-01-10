@@ -1,7 +1,7 @@
 require 'dictionaryloader'
 
 describe DictionaryLoader do
-
+  
   let(:dl){DictionaryLoader.new}
 
   it 'should be an instance of class' do
@@ -34,5 +34,9 @@ describe DictionaryLoader do
       dl.chomp_words(["X\n", "Y\n"])
       expect(dictionary.array).to eq(['X', 'Y'])
     end
+  end
+
+  describe '#return_statistics' do
+    # This is a method when called, analyses the dictionary array and prints out some stats about what's in the dictionary. I think the main test that should happen should be making sure the output figures are correct. However I have no idea how that could be done in an rspecs format...
   end
 end

@@ -1,12 +1,13 @@
 # DictionaryLoader is a helper class whose single responsibility is to load in the dictionary.
 
 # I take this to mean it's going to prepare the file into an array and close it up.
-require_relative 'dictionary'
 
 class DictionaryLoader
 
-  def initialize
-    @dictionary = Dictionary.new
+  attr_reader :dictionary
+
+  def initialize(dictionary)
+    @dictionary = dictionary
   end
 
   def load_file(file_location)
