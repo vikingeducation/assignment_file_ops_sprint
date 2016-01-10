@@ -4,4 +4,20 @@ class DictionarySearcher
   def initialize(dictionary)
     @dictionary = dictionary
   end
+
+  def exact_match
+    nil
+  end
+
+  def partial_match
+    nil
+  end
+
+  def begins_with
+    nil
+  end
+
+  def ends_with
+    nil
+  end
 end

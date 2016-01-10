@@ -1,4 +1,6 @@
 # DictionaryLoader is a helper class whose single responsibility is to load in the dictionary.
+
+# I take this to mean it's going to prepare the file into an array and close it up.
 require_relative 'dictionary'
 
 class DictionaryLoader
@@ -8,14 +10,19 @@ class DictionaryLoader
   end
 
   def load_file(file_location)
-    mode = "r+"
-    @dictionary.file = File.open(file_location, mode)
+    file_array = File.readlines(file_location)
+    chomp_words(file_array)
     return_statistics
-    @dictionary.file.close
+  end
+
+  def chomp_words(file_array)
+    file_array.each do |word|
+      @dictionary.array << word.chomp
+    end
   end
 
   def return_statistics
-    arr = @dictionary.file.readlines
+    arr = @dictionary.array
     puts "Dictionary successfully loaded"
     puts "Your dictionary contains #{arr.count} words."
     puts "Word frequency by starting letter:"

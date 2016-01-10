@@ -2,9 +2,10 @@
 
 class Dictionary
 
-  attr_accessor :file
+  attr_accessor :array
 
   def initialize
-    @file = nil
+    @array = []
   end
+
 end
