@@ -15,7 +15,7 @@ class DictionaryLoader
         end
 
     end
- 
+
 
 end
 
