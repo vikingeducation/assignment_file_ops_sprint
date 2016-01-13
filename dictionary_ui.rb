@@ -10,12 +10,14 @@ class DictionaryUI
   def initialize
     @dictionary = nil
     @searcher = nil
+    @result = nil
   end
 
   def run
     load_dictionary
     puts
     search
+    #ask_for_save
   end
 
   def load_dictionary
