@@ -16,15 +16,17 @@ class DictionaryUI
   def run
     load_dictionary
     puts
-    search
-    #ask_for_save
+    loop do
+      search
+      ask_for_save
+    end
   end
 
   def load_dictionary
     until @dictionary
       puts "# Where is your dictionary? ('q' to quit)"
       input = gets.chomp
-      return if input == 'q'
+      exit if input == 'q'
       @dictionary = DictionaryLoader.load(input)
       @searcher = DictionarySearcher.new(@dictionary)
     end
@@ -38,7 +40,7 @@ class DictionaryUI
     puts "# 4: Ends With"
     input = gets.chomp
 
-    return if input == 'q'
+    exit if input == 'q'
     search unless (1..4) === input.to_i
 
     case input
@@ -55,7 +57,46 @@ class DictionaryUI
 
   def get_search_term
     puts "# Enter search term"
-    term = gets.chomp
+    gets.chomp
+  end
+
+  def ask_for_save
+    puts "# Do you want to save your results? y/n? 'q' quits"
+    save = gets.chomp
+
+    case save
+    when /^y/
+      save_results
+    when /^n/
+      search
+    when /^q/
+      exit
+    else
+      ask_for_save
+    end
+  end
+
+  def save_results
+    puts "# What file path should we write results to? "
+    file = gets.chomp
+    overwrite = false
+    if File.exists?(file)
+      puts "# That file exists. Overwrite? y/n?"
+      answer = gets.chomp
+      case answer
+      when /^n/
+        save_results
+      end
+      overwrite = true
+    end
+
+    file_saver = ResultsSaver.new(@result, file)
+    file_saver.save
+    if overwrite
+      puts "File successfully overwritten"
+    else
+      puts "File successfully saved"
+    end
   end
 
   def exact_match
@@ -65,6 +106,7 @@ class DictionaryUI
     results.each do |result|
       puts result.upcase
     end
+    @result = results
   end
 
   def partial_match
@@ -74,6 +116,7 @@ class DictionaryUI
     results.each do |result|
       puts result.upcase
     end
+    @result = results
   end
 
   def begins_with
@@ -83,6 +126,7 @@ class DictionaryUI
     results.each do |result|
       puts result.upcase
     end
+    @result = results
   end
 
   def ends_with
@@ -92,6 +136,7 @@ class DictionaryUI
     results.each do |result|
       puts result.upcase
     end
+    @result = results
   end
 end
 
