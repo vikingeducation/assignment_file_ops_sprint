@@ -19,6 +19,7 @@ class DictionarySearcher
   end
 
 
+  # TODO: refactor 4 matches into one function
   def exact_match(user_word)
     @loader.arr.each do |word|
       return word if word == user_word

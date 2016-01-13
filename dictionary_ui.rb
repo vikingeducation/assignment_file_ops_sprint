@@ -8,8 +8,25 @@ class DictionaryUI
     @search_type = nil
     @word_search = nil
     @searcher = DictionarySearcher.new
+    @loader = DictionaryLoader.new
   end
 
+  def run
+    # ask for user file path
+    file_path = user_file_path
+    # print file info
+    puts "#{@loader.count}"
+    # ask for search type
+    user_search_type
+    # ask for word
+    user_word
+
+    matches = @searcher.find_matches(@search_type, @word_search)
+    puts "Here are your matches: #{matches}"
+
+  end
+
+  
   def user_file_path
     puts "Welcome to Dictionary."
     puts "Where is your dictionary? ('q' to quit)"
@@ -20,20 +37,6 @@ class DictionaryUI
     else
       return input
     end
-  end
-
-
-  def run
-    # ask for user file path
-    file_path = user_file_path
-    # ask for search type
-    user_search_type
-    # ask for word
-    user_word
-
-    matches = @searcher.find_matches(@search_type, @word_search)
-    puts "Here are your matches: #{matches}"
-
   end
 
 
