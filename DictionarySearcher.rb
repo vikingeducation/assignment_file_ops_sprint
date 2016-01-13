@@ -8,6 +8,14 @@ class DictionarySearcher
         @results = []
     end
 
+    def search(word,type)
+        match_exact(word) if type = 1
+        match_exact(word) if type = 2
+        match_exact(word) if type = 3
+        match_exact(word) if type = 4
+    end
+
+
     def match_exact ( word )
         @dict.each do | entry |
             results << entry if entry == word

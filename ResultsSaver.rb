@@ -3,22 +3,25 @@ class ResultsSaver
 
     attr_accessor :out_file_name, :overwrite
 
-    def initialize results
+    def initialize results, filename, overwrite
         @results = results
+        @filename = filename
+        @overwrite = overwrite
     end
-
-    def write_results_to_file
-        if overwrite
-            out = File.open(out_file_name, "w")
-            @results.each do | word |
+       
+        def write_results_to_file
+            if overwrite
+                out = File.open(@filename, "w")
+                @results.each do | word |
                 out.write(word + "\n")
             end
-        else
-            @results.each do | word |
-                puts word
+            else
+                @results.each do | word |
+                    puts word
+                end
             end
         end
-    end
+    
 end
 
 
