@@ -1,28 +1,5 @@
 class DictionarySearcher
 
-<<<<<<< HEAD
-  def initialize(dictionary)
-    @dictionary = dictionary
-  end
-
-  def exact_match
-
-  end
-
-  def partial_match
-
-  end
-
-  def begins_with
-
-  end
-
-  def ends_with
-
-  end
-end
-=======
-
   def self.dictionary_search(search_type,search_word,dict)
     
     case search_type.upcase
@@ -79,5 +56,4 @@ end
       
   end
   
-end  
->>>>>>> de8a6f774ce0523dd34e180f903ab43dfc5aef2e
+end

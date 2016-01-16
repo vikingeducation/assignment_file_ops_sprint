@@ -1,3 +1,5 @@
+require_relative 'dictionary_searcher.rb'
+require_relative 'dictionary_loader.rb'
 
 class DictionaryUI
   attr_accessor :letter_count, :word_count, :dict
@@ -9,23 +11,22 @@ class DictionaryUI
   end  
 
   def ask_user_input
+    input = ""
 
-    dict_file = ""
+    until input.length > 0
+      print "Enter the dictionary file name to upload: "
+      input = gets.chomp
+    end
+    file_name = input  
+    puts "We will load the dictionary file #{file_name}"
 
-    until dict_file != ""
-      print "Where is your dictionary? ('q' to quit) "
-      dict_file = gets.chomp
-      puts dict_file
-
-      if File.file?(dict_file)
-         @dict = File.readlines(dict_file)
-        
-         @word_count = @dict.size
-
-         puts "No of words is : #{@word_count}"
-
-      end
-
+    if @dict = ::DictionaryLoader.load(file_name)
+      puts "File #{file_name} loaded successfully!"
+      p @dict
+      true
+    else
+      puts "Unable to load your dictionary file #{file_name}!"
+      false
     end
 
   end
@@ -39,8 +40,6 @@ class DictionaryUI
       @letter_count[letter] = count_match.length
     end
   
-    print_letter_count
-  
   end
 
   def print_letter_count
@@ -52,6 +51,10 @@ class DictionaryUI
   def process_dict
     ask_user_input
     count_by_letter
+    print_letter_count
+    searcher = DictionarySearcher.new(@dict)
+    searcher.run
+    
   end
 
 end 
