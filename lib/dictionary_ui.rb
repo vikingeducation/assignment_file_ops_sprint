@@ -1,8 +1,9 @@
 # DictionaryUI is the main class which handles the user interaction loop.
 
-require_relative 'dictionaryloader'
 require_relative 'dictionary'
-require_relative 'dictionarysearcher'
+require_relative 'dictionary_loader'
+require_relative 'dictionary_searcher'
+require_relative 'result_saver'
 
 class DictionaryUI
 
@@ -11,6 +12,8 @@ class DictionaryUI
     @dictionary_loader = DictionaryLoader.new(@dictionary)
     @dictionary_searcher = DictionarySearcher.new(@dictionary)
     @file_location = nil
+    @result_saver = ResultSaver.new
+    @write_mode = 'a+'
   end
 
   def run
@@ -19,9 +22,40 @@ class DictionaryUI
     exit if quit?(response)
     @dictionary_loader.load_file(response)
     search
+    puts ""
   end
 
-  private
+private
+
+  def prompt_to_save(word, search_type)
+    print "Save Results? (y, n or q): "
+    response = gets.chomp
+    exit if quit?(response)
+    # I want to save
+    # the initial word that was searched for,
+    # the type of search that was done,
+    # the number of matches and
+    # the words that matched.####
+    @result_saver.save_results(word, search_type, @dictionary_searcher.matches, get_file_name, @write_mode) if response == 'y'
+  end
+
+  def get_file_name
+    @write_mode = 'a+'
+    print "Name of file to save to?: "
+    response = gets.chomp
+    exit if quit?(response)
+    get_write_mode if File.file?(response)
+    response
+  end
+
+  # the write_mode seems crucial either way, because even if not specified by the user, it'll have to default to something.
+  def get_write_mode
+    # by default it'll be create a new file and write/read.
+    print "File already exists, overwrite existing file? (y, n or q): "
+    response = gets.chomp
+    exit if quit?(response)
+    @write_mode = 'w+' if response == 'y'
+  end
 
   def quit?(response)
     response == 'q'
@@ -53,12 +87,13 @@ class DictionaryUI
     else
       @dictionary_searcher.ends_with(word)
     end
+    prompt_to_save(word, search_type)
   end
 
   def get_valid_search_number
     search_type = gets.chomp
     until ("1".."4").include? search_type
-      exit if quit?(serach_type)
+      exit if quit?(search_type)
       puts "Invalid response"
       puts ""
       puts "Search Your Dictionary"

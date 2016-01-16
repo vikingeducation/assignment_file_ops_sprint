@@ -1,4 +1,4 @@
-require 'dictionaryui'
+require 'dictionary_ui'
 
 describe DictionaryUI do
 
@@ -15,11 +15,12 @@ describe DictionaryUI do
     it "d receives quit?" do
       allow(d).to receive(:gets).and_return("5desk.txt")
       allow(d).to receive(:quit?).with('q').and_return(false)
+      allow(d).to receive(:search).and_return(true)
       expect(d).to receive(:quit?)
       d.run
     end
   end
-
+=begin
   describe '#quit?' do
     it "returns true if response == 'q'" do
       expect(d.quit?('q')).to eq(true)
@@ -29,6 +30,7 @@ describe DictionaryUI do
       expect(d.quit?('x')).to eq(false)
     end
   end
+=end
 
 end
 

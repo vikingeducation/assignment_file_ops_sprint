@@ -1,11 +1,13 @@
-require 'dictionaryloader'
+require 'dictionary'
+require 'dictionary_loader'
 
 describe DictionaryLoader do
-  
-  let(:dl){DictionaryLoader.new}
+
+  let(:d){Dictionary.new}
+  let(:dl){DictionaryLoader.new(d)}
 
   it 'should be an instance of class' do
-    expect(subject).to be_a(DictionaryLoader)
+    expect(dl).to be_a(DictionaryLoader)
   end
 
   describe '#load_file' do
@@ -17,8 +19,16 @@ describe DictionaryLoader do
     it 'does not raise an error if argument is a valid file location' do
       expect{dl.load_file("5desk.txt")}.not_to raise_error
     end
-  end
 
+    context 'valid file_location given' do
+      it "makes it's @dictionary.array based on file given" do
+      # Want to test that the @dictionary.array is filled up correctly.
+        dl.load_file("test.txt")
+        expect(d.array).to eq(['x', 'y'])
+      end
+    end
+  end
+=begin
   describe '#chomp_words' do
     it 'raises an error if argument is not an array' do
       expect{dl.chomp_words("X")}.to raise_error
@@ -35,8 +45,6 @@ describe DictionaryLoader do
       expect(dictionary.array).to eq(['X', 'Y'])
     end
   end
+=end
 
-  describe '#return_statistics' do
-    # This is a method when called, analyses the dictionary array and prints out some stats about what's in the dictionary. I think the main test that should happen should be making sure the output figures are correct. However I have no idea how that could be done in an rspecs format...
-  end
 end

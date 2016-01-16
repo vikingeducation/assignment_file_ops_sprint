@@ -16,6 +16,8 @@ class DictionaryLoader
     return_statistics
   end
 
+  private
+
   def chomp_words(file_array)
     file_array.each do |word|
       @dictionary.array << word.chomp
