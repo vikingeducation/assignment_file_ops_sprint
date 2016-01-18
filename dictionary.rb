@@ -1,7 +1,3 @@
-require_relative "dictionary_loader"
-require_relative "dictionary_searcher"
-
-
 class Dictionary
 
   def initialize()
@@ -11,13 +7,4 @@ class Dictionary
 
   end
 
-
-  
-
-  
-
-end 
-
-d = Dictionary.new
-d.dictionary_reader
-
+end

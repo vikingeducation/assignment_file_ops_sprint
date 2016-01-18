@@ -14,7 +14,7 @@ class DictionaryUI
     input = ""
 
     until input.length > 0
-      print "Enter the dictionary file name to upload: "
+      print "Enter the dictionary file name to upload:"
       input = gets.chomp
     end
     file_name = input  
@@ -22,7 +22,6 @@ class DictionaryUI
 
     if @dict = ::DictionaryLoader.load(file_name)
       puts "File #{file_name} loaded successfully!"
-      p @dict
       true
     else
       puts "Unable to load your dictionary file #{file_name}!"
@@ -54,7 +53,6 @@ class DictionaryUI
     print_letter_count
     searcher = DictionarySearcher.new(@dict)
     searcher.run
-    
   end
 
 end 

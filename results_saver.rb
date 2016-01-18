@@ -10,16 +10,19 @@ class ResultsSaver
     File.open(file, "w") do |results_file|
       results_file.write "Type of match: #{@match_type}\n"
       results_file.write "Word matched: #{@word}\n"
-      results_file.write "Results:\n#{@results}"
+      results_file.write "Results:\n"
+      @results.each { |word| results_file.write "#{word} "}
     end
   end
 
   def save_file_input
     user_input = ""
-    until user_input == "y" || user_input == "n"
+    until user_input == "y" || user_input == "n" || user_input == "q"
       puts "Do you want to save results?"
       user_input = gets.chomp
     end
+
+    return if user_input == "q"
 
     if user_input == "y"
       filename = ""
@@ -34,9 +37,7 @@ class ResultsSaver
           puts "File exists, do you want to overwrite?"
           input = gets.chomp
         end
-        if input == "y"
-          save_results(filename)
-        end
+        save_results(filename) if input == "y"
       else
         save_results(filename)
       end
