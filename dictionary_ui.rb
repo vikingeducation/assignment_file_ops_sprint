@@ -5,22 +5,22 @@ require_relative "dictionary.rb"
 
 class DictionaryUI
   def run
-    path = get_dictionary_path
+    path = dictionary_path
     dict = Dictionary.new(load_dictionary(path))
-    seach_type = get_search_type
-    search_term = get_search_term
-    search_results = search_dictionary(dict, seach_type, search_term)
+    type = search_type
+    term = search_term
+    search_results = search_dictionary(dict, type, term)
     save_results(search_results)
   end
 
-  def get_dictionary_path
+  def dictionary_path
     puts "Enter the dictionary path, ('q' to quit)"
     ip = gets.chomp
     exit if ip == 'q'
     ip
   end
 
-  def get_search_term
+  def search_term
     puts "Enter the search term>"
     gets.chomp.upcase
   end
@@ -41,7 +41,7 @@ class DictionaryUI
     end
   end
 
-  def get_search_type
+  def search_type
     puts "What kind of search?"
     puts "1: Exact"
     puts "2: Partial"

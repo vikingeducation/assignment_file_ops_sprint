@@ -1,5 +1,4 @@
 class DictionaryLoader
-
   def initialize
     @dict = {}
   end
