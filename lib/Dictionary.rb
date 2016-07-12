@@ -1,6 +1,7 @@
 #Dictionary
 
 class Dictionary
+  attr_reader :word_bank
   def initialize(word_bank)
     @word_bank = word_bank
   end
