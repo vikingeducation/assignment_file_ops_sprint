@@ -8,7 +8,8 @@ class DictionarySearcher
   end
 
   def search(dictionary, string, choice)
-    @method_hash[choice.to_sym].call(dictionary, string)
+    #@method_hash[choice.to_sym].call(dictionary, string)
+    send(choice.to_sym, dictionary, string)
   end
 
   def exact(dictionary, string)
