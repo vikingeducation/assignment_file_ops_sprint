@@ -1,6 +1,4 @@
-require 'dictionaryui'
-require 'dictionary'
-require 'pry'
+require_relative 'dictionary'
 
 class DictionaryLoader
 
@@ -13,7 +11,8 @@ class DictionaryLoader
 
   def get_dictionary
     if valid_path?
-      dict_arr = File.readlines(@path, 'r')
+      dict_arr = File.readlines(@path).each { |word| word.strip}
+      puts dict_arr
       @dictionary = Dictionary.new(dict_arr)
       success_message
     end
@@ -28,13 +27,14 @@ class DictionaryLoader
      puts "Dictionary successfully loaded"
      puts "Your dictionary contains #{@dictionary.num_words} words."
      puts "Word frequency by starting letter:"
+    #  print @dictionary.word_frequency
      read_frequency
   end
 
   def read_frequency
     hash = @dictionary.word_frequency
     hash.each do |letter, frequency|
-      puts "#{letter}: #{frequency}"
+      puts "#{letter.upcase}: #{frequency}"
     end
   end
 end

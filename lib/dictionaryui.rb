@@ -1,9 +1,9 @@
-require 'dictionary-loader'
+require_relative 'dictionary-loader'
 
 
 class DictionaryUI
   attr_reader :loaded_dictionary
-  
+
   def initialize
     @loaded_dictionary = nil
   end
@@ -15,8 +15,12 @@ class DictionaryUI
     @loaded_dictionary.get_dictionary
   end
 
-   
+  def loaded_dictionary
+    @loaded_dictionary
+  end
+
 end
+
 
 d = DictionaryUI.new
 d.run
