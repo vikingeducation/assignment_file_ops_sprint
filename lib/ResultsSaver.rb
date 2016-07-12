@@ -1,1 +1,3 @@
 #ResultsSaver
+class ResultsSaver
+end
