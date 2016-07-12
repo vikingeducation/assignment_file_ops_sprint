@@ -9,10 +9,10 @@ class DictionaryUI
 
   def run 
     prompt
-    #dictionary_path = gets.chomp
+    # dictionary_path = gets.chomp
     dictionary_path = "5desk.txt"
     dict = Dictionary.new(dictionary_path)
-
+    # consider adding more dictionary files as a user option
     print dict.print_stats
   end
 

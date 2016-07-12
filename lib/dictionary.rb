@@ -12,16 +12,18 @@ class Dictionary
     puts "There are #{@words.length} words in this dictionary."
     puts "Word frequency by starting letter:"
 
-    
-
-    # Array('A'..'Z').each 
-    # capital of each letter will be break point, that index -1 is previous letter's word count
-    # subtract word count of each previous letter off of it too
-
-    Array('A'..'Z').each do |letter|
-
-      puts "#{letter}: #{letter_count}"
+    letters = Array('A'..'Z')
+    word_counts = []
+    letters.each do |letter| 
+      word_counts << @words.index(letter)
     end
+
+    Array('A'..'Z').each_with_index do |letter, index|
+      word_count = (word_counts[index + 1] || @words.length) - word_counts[index]
+
+      puts "#{letter}: #{word_count}"
+    end
+    
   end 
 
 end
