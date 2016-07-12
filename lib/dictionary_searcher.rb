@@ -1,12 +1,5 @@
 class DictionarySearcher
 
-  def initialize
-    @method_hash = { exact: method(:exact),
-                     partial: method(:partial),
-                     begins: method(:begins_with),
-                     ends: method(:ends_with)      }
-  end
-
   def search(dictionary, string, choice)
     #@method_hash[choice.to_sym].call(dictionary, string)
     send(choice.to_sym, dictionary, string)
@@ -20,12 +13,12 @@ class DictionarySearcher
     dictionary.select { |word| word[string] }
   end
 
-  def begins_with(dictionary, string)
+  def begins(dictionary, string)
     dictionary.select { |word| word[/^#{string}/] }
 
   end
 
-  def ends_with(dictionary, string)
+  def ends(dictionary, string)
     dictionary.select { |word| word[/#{string}$/] }
   end
 
