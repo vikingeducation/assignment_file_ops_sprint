@@ -13,11 +13,7 @@ class Dictionary
   def words_by_letter
     result = {}
     "A".upto("Z") { |letter| result[letter] = 0 }
-
-    @words.each do |word|
-
-      result[word[0].upcase] += 1
-    end
+    @words.each { |word| result[word[0].upcase] += 1 }
     result
   end
 end

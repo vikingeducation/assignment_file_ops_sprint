@@ -1,5 +1,7 @@
+require 'json'
 require_relative 'dictionary'
 require_relative 'dictionary_loader'
+require_relative 'results_saver'
 
 class DictionaryUI
   attr_reader :path
@@ -7,32 +9,39 @@ class DictionaryUI
     @path = path
     @new_dictionary = []
     @search = DictionarySearch.new
+    @saver = ResultsSaver.new
   end
 
   def run
     get_dictionary
     display_dictionary_data
-
     #user input for type of search
+    @search.search(type, @new_dictionary, term)
+    display_search_results
+    #ask_if_save, if yes, ask for name
+    @saver.archive(file_name, @results) if saving?
 
-    display_search_results(type, term)
-    #ask_if_save
+    #save it yes, exit if no
 
   end
 
-  def display_search_results(type, term)
-    result = DictionarySearch.new.search(type, @new_dictionary, term)
-    puts "Found #{result.size} matches"
-    result.each {|result| puts result.upcase}
+  def display_search_results
+    puts "Found #{@search.results.size} matches:"
+    @search.results.each {|word| puts word.upcase}
   end
 
   def get_dictionary
     loop do
-      prompt_user
-      # get_input
+      get_file_location
+
       @new_dictionary = Dictionary.new(@path)
       break unless @new_dictionary.words == []
     end
+  end
+
+  def get_file_location
+    prompt_user
+    get_input
   end
 
   def prompt_user
