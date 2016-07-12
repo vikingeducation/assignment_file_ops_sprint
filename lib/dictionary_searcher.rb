@@ -1,11 +1,11 @@
 class DictionarySearcher
 
-  def search(dictionary, chars, choice)
-    send(choice.to_sym, dictionary, chars)
+  def search(dictionary, word, option)
+    send(option.to_sym, dictionary, word)
   end
 
-  def exact
-
+  def exact(dictionary, word)
+    dictionary.words.select { |x| x == word }
   end
 
   def begins
