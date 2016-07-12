@@ -9,14 +9,15 @@ class DictionarySearcher
   end
 
   def begins(dictionary, word)
-    dictionary.words.select { |x| /\A[#{word}]/}
+    dictionary.words.select { |x| x=~ /\A#{word}/ }
   end
 
-  def ends
-    
+  def ends(dictionary, word)
+    dictionary.words.select { |x| x=~ /#{word}$/ }
   end
 
-  def partial
+  def partial(dictionary, word)
+    dictionary.words.select { |x| x=~ /#{word}/ }
 
   end
 
