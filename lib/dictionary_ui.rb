@@ -9,17 +9,16 @@ class DictionaryUI
   end
 
   def run
-      get_dictionary
-
-    p @dict[1..20]
+    get_dictionary
   end
 
   def get_dictionary
     loop do
       prompt_user
-      # get_input
-      @dict = Dictionary.new(@path)
-      break unless @dict = []
+      get_input
+      new_dict = Dictionary.new(@path)
+      @dict = new_dict.dictionary
+      break unless @dict == []
     end
   end
 
@@ -30,6 +29,6 @@ class DictionaryUI
   def get_input
     input = gets.strip
     exit if input == 'q'
-    @path=input
+    @path=File.join(__dir__, input)
   end
 end

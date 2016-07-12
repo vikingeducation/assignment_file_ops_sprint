@@ -1,6 +1,12 @@
 class DictionaryLoader
-  # Dir.pwd
+
+  attr_reader :dictionary
   def initialize(path)
-    @dictionary = File.readlines("lib/5desk.txt").map(&:strip)
+    @dictionary = File.readlines(path).map(&:strip)
   end
+
 end
+
+
+
+
