@@ -20,6 +20,7 @@ class DictionaryUI
     @results_saver=ResultsSaver.new
     save_results
   end
+  private
 
   def save_results
     puts "Do you want to save results? y/n"
@@ -39,7 +40,7 @@ class DictionaryUI
 
 
   def print_stats
-    puts "Dictionary succesfully loaded"
+    puts "Dictionary successfully loaded"
     puts "Your dictionary contains #{@stats[:word_count]} words"
     puts "Word frequency by starting letter:"
     @stats[:words_by_starting_letter].each do |k,v|
