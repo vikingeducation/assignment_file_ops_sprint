@@ -3,16 +3,13 @@ require 'dictionary_searcher'
 
 describe 'DictionarySearcher' do
 
-  let (:dict_double) { ["A", "a", "Aachen", "Aalborg",
-                                        "aardvark", "Aarhus", "Aaron",
-                                        "AB", "Ab", "abaci", "aback",
-                                        "abacus", "Abadan", "abaft",
-                                        "abalone", "abandon", "abandoned",
-                                        "abandonedly", "abandonment", "abase",
-                                        "abasement", "abash", "abashed",
-                                        "abashedly", "abashment", "abate",
-                                        "abatement", "abattoir", "abbacy",
-                                        "abbe"] }
+  let (:dict_double) {
+    ["A", "a", "Aachen", "Aalborg", "aardvark", "Aarhus", "Aaron",
+     "AB", "Ab", "abaci", "aback", "abacus", "Abadan", "abaft",
+     "abalone", "abandon", "abandoned", "abandonedly", "abandonment",
+     "abase", "abasement", "abash", "abashed", "abashedly", "abashment",
+     "abate", "abatement", "abattoir", "abbacy", "abbe"] }
+
   let (:input1) { "aardvark" }
   let (:input2) { "abate" }
   let (:input3) { "abandonment" }
