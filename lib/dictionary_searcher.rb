@@ -24,7 +24,7 @@ class DictionarySearcher
 
   end
 
-  def ends_with
+  def ends_with(dictionary, string)
     dictionary.select { |word| word[/#{string}$/] }
   end
 

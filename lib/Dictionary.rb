@@ -1,10 +1,8 @@
-require 'DictionaryLoader'
-
 class Dictionary
   attr_reader :words
 
   def initialize
-    @words = DictionaryLoader.new
+    @words = DictionaryLoader.new.load
   end
 
 end
