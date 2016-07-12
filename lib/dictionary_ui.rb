@@ -17,42 +17,57 @@ class DictionaryUI
   def run
     get_dictionary
     display_dictionary_data
-    type = get_search_type
-    term = get_search_term
+    type, term = get_search_type, get_search_term
     @search.search(type, @new_dictionary.words, term)
     display_search_results
     if saving?
       file_name = ask_for_filename
       @saver.archive(file_name, @search.results)
     end
-
-    #save it yes, exit if no
-
   end
 
   def ask_for_filename
+    puts
     puts "Please name the file that holds results"
-    gets.chomp
+    file_name = ""
+    file_name = gets.chomp until valid_filename?(file_name)
+  end
 
+  def valid_filename?(input)
+    !!input[ /\w+\.\w+/ ]
   end
 
   def ask_if_saving
+    puts
     puts "Do you want to save the search results (y/n)?"
-    gets.chomp
-    #needs validation
+    input = ""
+    input = gets.chomp until valid_saving?(input)
+  end
+
+  def valid_saving?(input)
+    input.downcase!
+    return false unless input == 'y' || input == 'n'
+    true
   end
 
   def saving?
     ask_if_saving == 'y' ? true : false
-
   end
 
   def get_search_type
-    puts "What search type do you want to perform?"
-    puts "Enter: exact, partial, begins_with or ends_with"
-    gets.chomp
-    #validate
-   
+    search_input = ""
+    puts
+    until valid_search?(search_input)
+      puts "\nWhat search type do you want to perform?"
+      puts "Enter: exact, partial, begins_with or ends_with"
+      search_input = gets.chomp
+    end
+  end
+
+  def valid_search?(input)
+    search_options = %w[exact partial begins_with ends_with]
+    return false unless search_options.include?(input)
+    true
   end
 
   def get_search_term
