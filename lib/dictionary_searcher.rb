@@ -8,8 +8,8 @@ class DictionarySearcher
     dictionary.words.select { |x| x == word }
   end
 
-  def begins
-
+  def begins(dictionary, word)
+    dictionary.words.select { |x| /\A[#{word}]/}
   end
 
   def ends
