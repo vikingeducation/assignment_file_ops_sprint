@@ -1,7 +1,7 @@
 require_relative 'dictionary'
 require_relative 'dictionaryloader'
 require_relative 'dictionarysearcher'
-require_relative 'dictionarysaver'
+require_relative 'resultssaver'
 require_relative 'view'
 
 
@@ -23,14 +23,15 @@ class DictionaryUI
     View.where_dict
     file_path = gets.chomp
     @dictionary = Dictionary.wrap(DictionaryLoader.load(file_path))
-    View.load_success(DictionarySearcher.quick_stats)
+    arr = DictionarySearcher.quick_stats(@dictionary)
+    View.load_success(arr)
     loop do
       View.search_num
-      @input_num = gets.chomp
+      @input_num = gets.chomp.to_i
       break if @input_num == "q"
       View.search_query
       @input_query = gets.chomp
-      @matches = method_return
+      @matches = method_return(@input_num)
       puts @matches
       View.save
       response = gets.chomp
@@ -48,17 +49,20 @@ class DictionaryUI
     end
   end
 
-  def method_return
-    if @input_num == 1
+  def method_return(input)
+    if input == 1
       DictionarySearcher.exact?(@input_query, @dictionary)
-    elsif @input_num == 2
+    elsif input == 2
       DictionarySearcher.partial(@input_query, @dictionary)
-    elsif @input_num == 3
+    elsif input == 3
       DictionarySearcher.begins_with(@input_query, @dictionary)
-    elsif @input_num == 4
+    elsif input == 4
       DictionarySearcher.ends_with(@input_query, @dictionary)
     end
   end
 
 
 end
+
+g = DictionaryUI.new
+g.run

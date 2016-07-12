@@ -1,6 +1,6 @@
 
 class DictionaryLoader
   def self.load(dict_location)
-    file = File.open(dict_location, "r")
+    File.read(dict_location)
   end
 end
