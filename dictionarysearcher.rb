@@ -4,7 +4,7 @@ class DictionarySearcher
     num_of_words = dictionary_array.length
     frequencies_hash = {}
     dictionary_array.each do |word|
-      frequences_hash[word[0].upcase] += 1
+      frequencies_hash[word[0].upcase] += 1
     end
     [num_of_words, frequencies_hash]
   end
@@ -31,14 +31,18 @@ class DictionarySearcher
         match_array << dictionary_word
       end
     end
+    match_array
   end
 
   def ends_with(word)
     match_array = []
     regex = /#{word}$/i
     dictionary_array.each do |dictionary_word|
-
+      if regex =~ dictionary_word != nil
+        match_array << dictionary_word
+      end
     end
+    match_array
   end
 
 end
