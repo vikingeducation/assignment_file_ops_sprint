@@ -3,6 +3,6 @@ class DictionaryLoader
   # __dir
   attr_reader :dictionary
   def initialize(path)
-    @dictionary = File.readlines(path).map(&:strip)
+    @dictionary = File.readlines("5desk.txt").map(&:strip)
   end
 end

@@ -15,7 +15,7 @@ class DictionaryUI
   def get_dictionary
     loop do
       prompt_user
-      get_input
+      # get_input
       new_dict = Dictionary.new(@path)
       @dict = new_dict.words
       p @dict[0..10]
