@@ -10,10 +10,4 @@ describe 'Dictionary' do
     end
   end
 
-  describe '#dict' do
-    it 'returns an array of dictionary words' do
-      expect(my_dict.dict).to eq([])
-    end
-  end
-
 end
