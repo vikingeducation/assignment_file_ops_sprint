@@ -1,3 +1,5 @@
+Jessica Dennis & Johnny Steenbergen
+
 # assignment_recursion_sprint
 Again and again and again and again and again...
 
