@@ -27,8 +27,9 @@ class DictionaryUI
     View.load_success(arr)
     loop do
       View.search_num
-      @input_num = gets.chomp.to_i
-      break if @input_num == "q"
+      temp_num = gets.chomp
+      break if temp_num == "q"
+      @input_num = temp_num.to_i
       View.search_query
       @input_query = gets.chomp
       @matches = method_return(@input_num)
@@ -40,8 +41,10 @@ class DictionaryUI
         View.filepath
         @file_path = gets.chomp
         View.overwrite
+        temp_mode = gets.chomp
+        break if temp_mode == "q"
         @mode = "w"
-        @mode = "a" if gets.chomp == "n"
+        @mode = "a" if temp_mode == "n"
         ResultsSaver.save(@input_num, @input_query, @matches)
         ResultsSaver.export(@file_path, @mode)
         View.written

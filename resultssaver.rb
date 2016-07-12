@@ -4,7 +4,7 @@ class ResultsSaver
   @@dump = ""
 
   def self.save(num, query, matches)
-    @@dump = {"#{num}, #{query}" => matches}.to yaml
+    @@dump = {"#{num}, #{query}" => matches}.to_yaml
 
   end
 

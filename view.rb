@@ -21,7 +21,7 @@ class View
     puts "2: Partial"
     puts "3: Begins With"
     puts "4: Ends with"
-    puts "q: qui"
+    puts "q: quit"
   end
 
   def self.search_query
@@ -38,6 +38,10 @@ class View
 
   def self.overwrite
     puts "If that file exists, do you want to overwrite? y/n? 'q' quits."
+  end
+
+  def self.written
+    puts "Your results have been added to the file!"
   end
 
 
