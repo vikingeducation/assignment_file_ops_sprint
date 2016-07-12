@@ -18,7 +18,6 @@ class DictionarySearcher
 
   def partial(dictionary, word)
     dictionary.words.select { |x| x=~ /#{word}/ }
-
   end
 
 

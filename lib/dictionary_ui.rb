@@ -4,20 +4,20 @@ require_relative 'dictionary'
 #dictionary_ui.rb
 class DictionaryUI
 
-  def initialize
-  end 
-
   def run 
     prompt
     # dictionary_path = gets.chomp
     dictionary_path = "5desk.txt"
     dict = Dictionary.new(dictionary_path)
-    # consider adding more dictionary files as a user option
-    print dict.print_stats
+    dict.print_stats
   end
 
   def prompt
     puts "Where is your dictionary? ('q' to quit)"
+  end
+
+  def enter_search
+    
   end
 
 end

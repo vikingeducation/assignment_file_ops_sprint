@@ -26,7 +26,6 @@ describe DictionarySearcher do
   describe '#begins' do 
     it "returns items that begin with the search keyword" do
       expect(d.begins(test_arr, "the")).to eq(%w(thesaurus thereafter theresee they).sort)
-
     end
   end
 
