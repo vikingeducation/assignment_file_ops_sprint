@@ -1,5 +1,9 @@
 class DictionarySearch
 
+  def search(type, dictionary, word)
+    send(type.to_sym, dictionary, word)
+  end
+
   def exact(dictionary, word)
     dictionary.select { |dictionary_word| word == dictionary_word }
   end
@@ -18,6 +22,14 @@ class DictionarySearch
 
 end
 
-puts DictionarySearch.new.exact(["find", "notfind"], "find")
 
-puts DictionarySearch.new.partial(["find", "notfind"], "in")
+
+ p DictionarySearch.new.search('exact',["find", "notfind"], "find")
+
+# p DictionarySearch.new.partial(["find", "notfind"], "in")
+
+# p DictionarySearch.new.begins_with(["find", "notfind"], "fi")
+
+# p DictionarySearch.new.ends_with(["find", "notfind"], "ind")
+
+
