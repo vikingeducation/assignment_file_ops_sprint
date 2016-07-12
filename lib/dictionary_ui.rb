@@ -59,16 +59,17 @@ class DictionaryUI
   private 
 
     def save(results)
-      ResultsSaver.save(results, "results.txt")
+      puts "Type in the filename for your results."
+      filename = gets.chomp + ".txt"
+      ResultsSaver.save(results, filename)
     end
 
     def display_results(results)
       puts
-      puts "Found #{results.length} mathes:"
+      puts "Found #{results.length} matches:"
       results.each do |word|
         puts word
       end
-      puts
     end
 
     def ask_about_saving
@@ -86,6 +87,10 @@ class DictionaryUI
 
     def display_stats(dictionary)
       puts "Your dictionary contains #{dictionary.word_count} words."
+      puts "Found the following matches per starting letter: "
+      ("A".."Z").each do |letter|
+        puts "#{letter}: #{DictionarySearcher.first_letter(dictionary,letter).count}"
+      end
     end
 
     def display_options

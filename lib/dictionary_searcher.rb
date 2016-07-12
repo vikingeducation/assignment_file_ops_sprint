@@ -17,11 +17,17 @@ class DictionarySearcher
       dict.words.select{ |word| /\A#{search}/i.match(word)}
     end
 
+    def first_letter(dict, search)
+      dict.words.select { |word| word[0].downcase == search.downcase }
+    end
+
   #Ends_with
     def ends_with(dict, search)
       dict.words.select{ |word| /#{search}\z/i.match(word)}
     end
 
   end
+
+
 
 end
