@@ -1,5 +1,5 @@
 class Dictionary
-
+  attr_reader :dict_arr
   def initialize(dict_arr)
     @dict_arr = dict_arr
   end

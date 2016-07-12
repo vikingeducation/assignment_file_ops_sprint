@@ -12,7 +12,6 @@ class DictionaryLoader
   def get_dictionary
     if valid_path?
       dict_arr = File.readlines(@path).each { |word| word.strip}
-      puts dict_arr
       @dictionary = Dictionary.new(dict_arr)
       success_message
     end

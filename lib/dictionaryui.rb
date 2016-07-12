@@ -1,5 +1,5 @@
 require_relative 'dictionary-loader'
-
+require_relative 'dictionary-searcher'
 
 class DictionaryUI
   attr_reader :loaded_dictionary
@@ -13,6 +13,8 @@ class DictionaryUI
     path = gets.chomp
     @loaded_dictionary = DictionaryLoader.new(path)
     @loaded_dictionary.get_dictionary
+    searcher = DictionarySearcher.new(@loaded_dictionary.dictionary.dict_arr)
+    searcher.ask_user
   end
 
   def loaded_dictionary
