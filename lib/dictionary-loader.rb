@@ -1,5 +1,6 @@
 require 'dictionaryui'
 require 'dictionary'
+require 'pry'
 
 class DictionaryLoader
 
@@ -20,6 +21,7 @@ class DictionaryLoader
 
   def valid_path?
     raise ArgumentError("Dictionary does not exist!") unless File.exists?(@path)
+    true
   end
 
   def success_message
