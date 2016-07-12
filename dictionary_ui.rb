@@ -1,6 +1,7 @@
 require_relative 'dictionary_loader'
 require_relative 'dictionary_searcher'
 require_relative 'dictionary'
+require_relative 'results_saver'
 
 class DictionaryUI
   attr_reader :dictionary
@@ -9,31 +10,41 @@ class DictionaryUI
 
   def run
     @dictionary = Dictionary.new(get_file_path).load
+    print_intro
+    loop do 
+      search_type = get_search_type
+      @matches = assign_search_type(search_type)
+      display_matches(@matches)
+      save_results?
+      break unless search_again?
+    end
+  end
+
+  def get_file_path
+    begin
+      puts "Where is your dictionary? ('q' to quit)"
+      @location = gets.chomp
+      exit if @location == "q"
+    end until File.file?(@location)
+    @location
+  end
+
+  def print_intro
     puts "Dictionary succesfully loaded"
     puts "Your dictionary containts #{@dictionary.size} words"
     puts "Word frequency by starting letter:"
     display_word_count
-    search_type = get_search_type
-    @matches = assign_search_type(search_type)
-    display_matches(@matches)
-    save_results?
   end
-
-  def get_file_path
-    puts "Where is your dictionary? ('q' to quit)"
-    @location = gets.chomp
-    exit if @location == "q"
-    @location
-  end
-
 
   def get_search_type
-    puts "What kind of search?"
-    puts "1: Exact"
-    puts "2: Partial"
-    puts "3: Starts with"
-    puts "4: Ends with"
-    type = gets.chomp.to_i
+    begin
+      puts "What kind of search? Enter 1 - 4"
+      puts "1: Exact"
+      puts "2: Partial"
+      puts "3: Starts with"
+      puts "4: Ends with"
+      type = gets.chomp.to_i
+    end until (1..4).to_a.include?(type)
     puts "Enter the search term"
     search_term = gets.chomp
     [type, search_term]
@@ -67,8 +78,10 @@ class DictionaryUI
   end
 
   def save_results?
-    puts "Do you want to save the results to a file? y/n?"
-    save_file = gets.chomp
+    begin 
+      puts "Do you want to save the results to a file? y/n?"
+      save_file = gets.chomp
+    end until save_file == "y" || save_file == "n"
     if save_file == "y"
       ask_for_file_name
     else
@@ -82,22 +95,33 @@ class DictionaryUI
     if File.file?(file_path)
       ask_to_overwrite(file_path)
     else
-      File.open(file_path, "w+") do |file|
-        file.write @matches
-      end
+      ResultsSaver.new.save_results(@matches, file_path)
     end
   end
 
   def ask_to_overwrite(file_path)
-    puts "That file already exists. Should we overwrite? y/n?"
-    overwrite_file = gets.chomp
+    begin
+      puts "That file already exists. Should we overwrite? y/n?"
+      overwrite_file = gets.chomp
+    end until overwrite_file == "y" || overwrite_file == "n"
     if overwrite_file == "y"
-      File.open(file_path, "w+") do |file|
-        file.write @matches
-      end
+      ResultsSaver.new.save_results(@matches, file_path)
     else
       exit
     end
+  end
+
+  def search_again?
+    begin
+      puts "Do you want to search again? y/n?"
+      search_again = gets.chomp
+    end until search_again == "y" || search_again == "n"
+    if search_again == "y"
+      true
+    else
+      false
+    end
+
   end
 
 

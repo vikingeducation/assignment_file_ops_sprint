@@ -1,1 +1,1 @@
-["hundreds", "redshift"]
+["diction", "dictionary"]

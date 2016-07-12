@@ -9,7 +9,7 @@ class DictionarySearcher
  
 
   def exact_matches(search_term)
-    puts @dictionary.select {|word| word.downcase == search_term}
+    @dictionary.select {|word| word.downcase == search_term}
   end
 
   def partial_matches(search_term)
