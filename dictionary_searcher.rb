@@ -3,15 +3,13 @@ require_relative 'dictionary'
 class DictionarySearcher
 
   def initialize(dictionary)
-    @dictionary = dictionary.dictionary
+    @dictionary = dictionary
   end
 
-  def display_matches(array)
-    puts array
-  end
+ 
 
   def exact_matches(search_term)
-    @dictionary.select {|word| word.downcase == search_term}
+    puts @dictionary.select {|word| word.downcase == search_term}
   end
 
   def partial_matches(search_term)

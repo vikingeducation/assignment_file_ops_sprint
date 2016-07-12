@@ -15,7 +15,7 @@ class DictionaryUI
     puts "2: Partial"
     puts "3: Starts with"
     puts "4: Ends with"
-    type = get.chomp
+    type = gets.chomp.to_i
     puts "Enter the search term"
     search_term = gets.chomp
     [type, search_term]
