@@ -11,7 +11,9 @@ describe DictionarySearcher do
 
 
   describe '#search' do
-    it 'listens to' do
+    it 'calls other methods' do
+      expect(d).to receive(:exact).with(test_arr, "itsdatboi")
+      d.search(test_arr, "itsdatboi", "exact")
     end
   end
 
