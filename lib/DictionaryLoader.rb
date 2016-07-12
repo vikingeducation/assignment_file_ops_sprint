@@ -1,8 +1,7 @@
 class DictionaryLoader
-  attr_reader :words
 
   def initialize
-    @words = File.read("5desk.txt")
+    File.readlines("5desk.txt").map{|word| word.strip}
   end
 
 end

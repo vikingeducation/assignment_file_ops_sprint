@@ -1,0 +1,5 @@
+DictionaryUI is the main class which handles the user interaction loop.
+DictionaryLoader is a helper class whose single responsibility is to load in the dictionary.
+Dictionary is the class which wraps the loaded dictionary.
+DictionarySearcher is an analysis class whose sole responsibility is to perform any analysis on the dictionary you provide it.
+ResultsSaver takes a batch of results and writes them to a file.
