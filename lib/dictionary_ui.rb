@@ -24,6 +24,11 @@ class DictionaryUI
       file_name = ask_for_filename
       @saver.archive(file_name, @search.results)
     end
+    goodbye
+  end
+
+  def goodbye
+    puts "\nThanks for using the dictionary. You were awesome!"
   end
 
   def ask_for_filename
@@ -62,6 +67,7 @@ class DictionaryUI
       puts "Enter: exact, partial, begins_with or ends_with"
       search_input = gets.chomp
     end
+    search_input
   end
 
   def valid_search?(input)
