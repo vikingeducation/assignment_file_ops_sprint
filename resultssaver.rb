@@ -3,12 +3,11 @@ require 'yaml'
 class ResultsSaver
   @@dump = ""
 
-  def self.save
-    dict.results["#{dict.input_num}, #{dict.input_query}"] = dict.matches
+  def self.save(num, query, matches)
+    @@dump = {"#{num}, #{query}" => matches}.to yaml
   end
 
   def self.export(string, mode)
-    @@dump = dict.results.to yaml
     File.open(string, mode) do |file|
       file.write @@dump
     end  
