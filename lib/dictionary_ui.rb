@@ -1,8 +1,8 @@
 #DictionaryUI
-require './Dictionary'
-require './DictionaryLoader'
-require './DictionarySearcher'
-require './ResultsSaver'
+require 'dictionary'
+require 'dictionary_loader'
+require 'dictionary_searcher'
+require 'results_saver'
 
 class DictionaryUI
 
