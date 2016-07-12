@@ -10,9 +10,14 @@ class DictionaryUI
   end
 
   def run
-    filename = prompt_filename
-    abort if quit?(filename) 
-    dict = DictionaryLoader.load(filename)
+    begin
+      filename = prompt_filename
+      abort if quit?(filename) 
+      dict = DictionaryLoader.load(filename)
+    rescue Errno::ENOENT => e
+      puts e
+      retry
+    end
     display_stats(dict)
     loop do
       option_choice = display_options
