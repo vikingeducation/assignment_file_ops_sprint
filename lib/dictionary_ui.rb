@@ -1,5 +1,6 @@
 require_relative 'dictionary_loader'
 require_relative 'dictionary'
+require_relative 'dictionary_searcher.rb'
 
 #dictionary_ui.rb
 class DictionaryUI
@@ -12,12 +13,25 @@ class DictionaryUI
     # dictionary_path = gets.chomp
     dictionary_path = "5desk.txt"
     dict = Dictionary.new(dictionary_path)
-    # consider adding more dictionary files as a user option
-    print dict.print_stats
+   
+    puts "Enter your word/phrase: "
+
+    word = gets.chomp.downcase
+
+    puts "Search for words in dictionary that match: "
+    puts "exact, partial, begins, ends"
+
+    option = gets.chomp.downcase
+
+    DictionarySearcher.new.search(dict, word, option)
+
   end
 
   def prompt
     puts "Where is your dictionary? ('q' to quit)"
+  end
+
+  def sdfsf
   end
 
 end
