@@ -84,8 +84,6 @@ class DictionaryUI
     end until save_file == "y" || save_file == "n"
     if save_file == "y"
       ask_for_file_name
-    else
-      exit
     end
   end
 
