@@ -1,6 +1,6 @@
-Jessica Dennis & Johnny Steenbergen
 
-# assignment_recursion_sprint
-Again and again and again and again and again...
+# assignment_file_ops_sprint
+I can haz spellz
 
-[A recursion assignment which uses Ruby for the Viking Code School](http://www.vikingcodeschool.com)
+jessica dennis
+Jonathan Steenberg
