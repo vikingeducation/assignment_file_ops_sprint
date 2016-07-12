@@ -1,11 +1,11 @@
 
 class Dictionary
-  # attr_reader :dictionary
+  attr_reader :words
   def initialize(path)
-    @dictionary = DictionaryLoader.new(path)
-  end 
-
-  def dictionary
-    @dictionary
+    @words = DictionaryLoader.new(path).dictionary
   end
+
+  # def dictionary
+  #   @dictionary
+  # end
 end

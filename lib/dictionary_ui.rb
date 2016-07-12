@@ -3,8 +3,8 @@ require_relative 'dictionary_loader'
 
 class DictionaryUI
   attr_reader :path
-  def initialize
-    @path = ''
+  def initialize(path = 'lib/5desk.txt')
+    @path = path
     @dict = []
   end
 
@@ -17,7 +17,8 @@ class DictionaryUI
       prompt_user
       get_input
       new_dict = Dictionary.new(@path)
-      @dict = new_dict.dictionary
+      @dict = new_dict.words
+      p @dict[0..10]
       break unless @dict == []
     end
   end
@@ -32,3 +33,6 @@ class DictionaryUI
     @path=File.join(__dir__, input)
   end
 end
+
+d = DictionaryUI.new
+d.run
