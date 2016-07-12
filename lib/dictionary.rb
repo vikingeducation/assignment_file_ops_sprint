@@ -1,8 +1,8 @@
 class Dictionary
   attr_reader :words
 
-  def initialize
-    @words = DictionaryLoader.new.load
+  def initialize(file)
+    @words = DictionaryLoader.new.load(file)
   end
 
 end

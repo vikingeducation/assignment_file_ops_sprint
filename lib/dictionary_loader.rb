@@ -1,7 +1,7 @@
 class DictionaryLoader
 
-  def load
-    File.readlines("lib/desk.txt").map{ |word| word.strip }
+  def load(file)
+    File.readlines("lib/file").map{ |word| word.strip }
   end
 
 end
