@@ -21,6 +21,7 @@ class View
     puts "2: Partial"
     puts "3: Begins With"
     puts "4: Ends with"
+    puts "q: qui"
   end
 
   def search_query
@@ -28,9 +29,16 @@ class View
   end
 
   def save
-    puts "Do you want to save the results? (y/n)"
+    puts "Do you want to save the results? (y/n) 'q' quits."
   end
 
+  def filepath
+    puts "What filepath should we write results to?"
+  end
+
+  def overwrite
+    puts "If that file exists, do you want to overwrite? y/n? 'q' quits."
+  end
 
 
 end

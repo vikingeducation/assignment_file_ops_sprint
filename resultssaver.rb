@@ -5,12 +5,13 @@ class ResultsSaver
 
   def self.save(num, query, matches)
     @@dump = {"#{num}, #{query}" => matches}.to yaml
+
   end
 
   def self.export(string, mode)
     File.open(string, mode) do |file|
       file.write @@dump
-    end  
+    end
   end
 
 end

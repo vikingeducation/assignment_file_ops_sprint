@@ -9,11 +9,11 @@ class DictionarySearcher
     [num_of_words, frequencies_hash]
   end
 
-  def self.exact?(word)
+  def self.exact?(word, dictionary_array)
     dictionary_array.include?(word)
   end
 
-  def partial(word)
+  def partial(word, dictionary_array)
     match_array = []
     dictionary_array.each do |dictionary_word|
       if dictionary_word.include?(word)
@@ -23,22 +23,22 @@ class DictionarySearcher
     match_array
   end
 
-  def begins_with(word)
+  def begins_with(word, dictionary_array)
     match_array = []
     regex = /^#{word}/i
     dictionary_array.each do |dictionary_word|
-      if regex =~ dictionary_word != nil
+      if (regex =~ dictionary_word) != nil
         match_array << dictionary_word
       end
     end
     match_array
   end
 
-  def ends_with(word)
+  def ends_with(word, dictionary_array)
     match_array = []
     regex = /#{word}$/i
     dictionary_array.each do |dictionary_word|
-      if regex =~ dictionary_word != nil
+      if (regex =~ dictionary_word) != nil
         match_array << dictionary_word
       end
     end
