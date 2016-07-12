@@ -9,10 +9,10 @@ class Dictionary
   end
 
   def word_frequency
-    hash = Hash.new
+    hash = Hash.new(0)
     @dict_arr.each do |word|
       letter = word[0].downcase
-      hash[letter] ? hash[letter] += 1 : hash[letter] = 1
+      hash[letter] += 1
     end
     hash
   end

@@ -1,20 +1,20 @@
 
 class DictionarySearcher
-
   def initialize(dict_arr)
     @dict_arr = dict_arr
   end
 
   def ask_user
-    input_type = ask_for_search_type 
+    input_type = ask_for_search_type
     input_str = ask_for_query
     matches = input_type_to_method(input_type, input_str)
     display_matches(matches)
+    ResultSaver.new.ask_user_save(matches)
   end
 
   def ask_for_search_type
     puts "How would you like to search? (exact, partial, begins, ends)"
-    input_type = gets.chomp 
+    input_type = gets.chomp
 
     unless valid_search_type?(input_type)
       puts "That was not a valid choice. Choose again."
@@ -22,7 +22,7 @@ class DictionarySearcher
     end
     input_type
   end
-    
+
   def ask_for_query
     puts "what would you like to search?"
     input_str = gets.chomp

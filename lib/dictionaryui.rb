@@ -1,5 +1,6 @@
 require_relative 'dictionary-loader'
 require_relative 'dictionary-searcher'
+require_relative 'results_saver'
 
 class DictionaryUI
   attr_reader :loaded_dictionary
@@ -9,7 +10,8 @@ class DictionaryUI
   end
 
   def run
-    puts "Where is your dictionary? ('q' to quit)"
+    puts "Where is your dictionary?"
+    # q to quit?
     path = gets.chomp
     @loaded_dictionary = DictionaryLoader.new(path)
     @loaded_dictionary.get_dictionary
@@ -20,6 +22,8 @@ class DictionaryUI
   def loaded_dictionary
     @loaded_dictionary
   end
+
+
 
 end
 
