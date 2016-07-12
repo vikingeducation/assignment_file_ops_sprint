@@ -21,10 +21,6 @@ describe DictionaryLoader do
   end
 
   describe "#success_message" do
-  #   it "calls #num_words" do
-  #     loader.get_dictionary
-  #     expect(loader.dictionary).to receive(:num_words).and_return(10)
-  #   end
     it "calls #read_frequency" do
       expect(loader).to receive(:read_frequency).and_return(nil)
       loader.get_dictionary
