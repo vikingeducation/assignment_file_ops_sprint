@@ -48,8 +48,8 @@ class DictionaryUI
   end
 
   def check_default
-    @dictionary_file = nil if @dictionary_file == ""
-    @place_to_save = nil if @place_to_save == ""
+    @dictionary_file = "desk.txt" if @dictionary_file == ""
+    @place_to_save = "results.txt" if @place_to_save == ""
   end
 
   def valid_word?(choice)
@@ -61,7 +61,7 @@ class DictionaryUI
   end
 
   def valid_file?(choice)
-    !!choice[/.txt$/]
+    !!choice[/.txt$/] || choice == ""
   end
 
 end
