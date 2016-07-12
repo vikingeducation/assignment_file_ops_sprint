@@ -5,6 +5,9 @@ require './DictionarySearcher'
 require './ResultsSaver'
 
 class DictionaryUI
+
+  attr_reader :results
+
   def run
     puts "Where is your dictionary?"
     file_path = gets.chomp
@@ -14,6 +17,7 @@ class DictionaryUI
     @dictionary_searcher = DictionarySearcher.new(@dictionary)
     print_stats
     search_prompt
+    @results_saver=ResultsSaver.new
     save_results
   end
 
@@ -29,8 +33,8 @@ class DictionaryUI
         answer = gets.chomp
         answer == 'y' ? overwrite = true : overwrite = false
       end
+      @results_saver.handle_saving(filepath, @results) unless overwrite == false
     end
-    handle_saving(filepath) unless overwrite == false
   end
 
 
@@ -67,6 +71,7 @@ class DictionaryUI
     when 4
       results = ends_with_matches(search)
     end
+    @results=results
     provide_formatted_results(results)
   end
 
