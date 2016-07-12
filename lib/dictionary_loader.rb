@@ -8,7 +8,7 @@ class DictionaryLoader
       word_list << line.strip
     end
 
-    word_list
+    Dictionary.new(word_list)
   end
 
 end
