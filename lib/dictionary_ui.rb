@@ -2,6 +2,7 @@ require 'json'
 require_relative 'dictionary'
 require_relative 'dictionary_loader'
 require_relative 'results_saver'
+require_relative 'dictionary_search'
 
 class DictionaryUI
   attr_reader :path
@@ -10,19 +11,53 @@ class DictionaryUI
     @new_dictionary = []
     @search = DictionarySearch.new
     @saver = ResultsSaver.new
+    @saving = false
   end
 
   def run
     get_dictionary
     display_dictionary_data
-    #user input for type of search
-    @search.search(type, @new_dictionary, term)
+    type = get_search_type
+    term = get_search_term
+    @search.search(type, @new_dictionary.words, term)
     display_search_results
-    #ask_if_save, if yes, ask for name
-    @saver.archive(file_name, @results) if saving?
+    if saving?
+      file_name = ask_for_filename
+      @saver.archive(file_name, @search.results)
+    end
 
     #save it yes, exit if no
 
+  end
+
+  def ask_for_filename
+    puts "Please name the file that holds results"
+    gets.chomp
+
+  end
+
+  def ask_if_saving
+    puts "Do you want to save the search results (y/n)?"
+    gets.chomp
+    #needs validation
+  end
+
+  def saving?
+    ask_if_saving == 'y' ? true : false
+
+  end
+
+  def get_search_type
+    puts "What search type do you want to perform?"
+    puts "Enter: exact, partial, begins_with or ends_with"
+    gets.chomp
+    #validate
+   
+  end
+
+  def get_search_term
+    puts "Enter a search term"
+    gets.chomp
   end
 
   def display_search_results

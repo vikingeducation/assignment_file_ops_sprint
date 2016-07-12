@@ -1,5 +1,5 @@
 class DictionarySearch
-
+  attr_reader :results
   def search(type, dictionary, word)
     @results = send(type.to_sym, dictionary, word)
   end
