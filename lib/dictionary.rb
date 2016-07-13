@@ -15,5 +15,9 @@ class Dictionary
     @dictionary[index]
   end
 
+  def statistics
+
+  end
+
 end
 
