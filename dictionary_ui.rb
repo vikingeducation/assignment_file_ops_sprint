@@ -34,6 +34,7 @@ class DictionaryUI
     puts "Your dictionary containts #{@dictionary.size} words"
     puts "Word frequency by starting letter:"
     display_word_count
+    puts
   end
 
   def get_search_type
@@ -45,6 +46,7 @@ class DictionaryUI
       puts "4: Ends with"
       type = gets.chomp.to_i
     end until (1..4).to_a.include?(type)
+    puts
     puts "Enter the search term"
     search_term = gets.chomp
     [type, search_term]
@@ -72,6 +74,7 @@ class DictionaryUI
   end
 
    def display_matches(array)
+    puts
     puts "Searching..."
     puts "Found #{array.length} matches:"
     puts array
@@ -79,6 +82,7 @@ class DictionaryUI
 
   def save_results?
     begin 
+      puts
       puts "Do you want to save the results to a file? y/n?"
       save_file = gets.chomp
     end until save_file == "y" || save_file == "n"
@@ -88,22 +92,26 @@ class DictionaryUI
   end
 
   def ask_for_file_name
-    puts "What filepath should we write the results to?"
-    file_path = gets.chomp
+    puts
+    puts "What file should we write the results to?"
+    file_path = File.join("results_folder", gets.chomp)
     if File.file?(file_path)
       ask_to_overwrite(file_path)
     else
       ResultsSaver.new.save_results(@matches, file_path)
+      puts "Results saved successfully to #{file_path}"
     end
   end
 
   def ask_to_overwrite(file_path)
     begin
+      puts
       puts "That file already exists. Should we overwrite? y/n?"
       overwrite_file = gets.chomp
     end until overwrite_file == "y" || overwrite_file == "n"
     if overwrite_file == "y"
       ResultsSaver.new.save_results(@matches, file_path)
+      puts "Results saved successfully to #{file_path}"
     else
       exit
     end
@@ -111,6 +119,7 @@ class DictionaryUI
 
   def search_again?
     begin
+      puts
       puts "Do you want to search again? y/n?"
       search_again = gets.chomp
     end until search_again == "y" || search_again == "n"
