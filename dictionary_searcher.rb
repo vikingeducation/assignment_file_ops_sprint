@@ -1,5 +1,7 @@
 require_relative 'dictionary'
 
+
+
 class DictionarySearcher
 
   def initialize(dictionary)
@@ -19,12 +21,13 @@ class DictionarySearcher
 
   #case-sensitive
   def begins_with_matches(search_term)
-    @dictionary.select {|word| word.start_with?(search_term)}
+    dictionary = []
+    @dictionary.select {|word| /\A#{search_term}/ =~ word}
   end
 
   #case-sensitive
   def ends_with_matches(search_term)
-    @dictionary.select {|word| word.end_with?(search_term)}
+    @dictionary.select {|word| /#{search_term}\z/ =~ word}
   end
 
 

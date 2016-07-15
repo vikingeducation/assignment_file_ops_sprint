@@ -30,6 +30,7 @@ class DictionaryUI
   end
 
   def print_intro
+    puts
     puts "Dictionary succesfully loaded"
     puts "Your dictionary containts #{@dictionary.size} words"
     puts "Word frequency by starting letter:"
