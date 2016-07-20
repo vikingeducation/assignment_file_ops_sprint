@@ -53,6 +53,7 @@ class DictionaryUI
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
 		#@saver = ResultsSaver.new
+		@dictionary = nil
 
 	end
 
@@ -68,14 +69,22 @@ class DictionaryUI
 		end
 
 		puts "Dictionary loaded successfully"
+
 		@loader.load
-		print_word_count
-		print_starting_letters
-		@loader.close_file
+
+		#create_dictionary
+		#print_word_count
+		#print_starting_letters
+		#@loader.close_file
 
 
 	end
 
+	def create_dictionary
+
+		@dictionary = Dictionary.new
+
+	end
 
 
 	def prompt_for_file_location
@@ -94,29 +103,7 @@ class DictionaryUI
 
 
 
-	def print_word_count
 
-		puts "The dictionary has #{@loader.count_words} words."
-
-	end
-
-
-
-
-	def print_starting_letters
-
-		word_hash = @loader.count_starting_letters
-
-		puts "Count of words starting with each letter:"
-
-		word_hash.each do | k, v |
-
-			puts "#{k}: #{v.count}"
-
-		end
-
-
-	end
 
 
 end #/.DictionaryUI

@@ -3,6 +3,7 @@
 # # Return statistics about your dictionary when it is first loaded, including word count and words by starting letter:
 
 require 'pry'
+require_relative 'Dictionary'
 
 class DictionaryLoader
 
@@ -12,6 +13,7 @@ class DictionaryLoader
 
 		@file = nil
 		@file_path = nil
+		@word_hash = Hash.new { |h, k| h[k] = Array.new }
 		@arr = []
 
 	end
@@ -20,8 +22,13 @@ class DictionaryLoader
 	def load
 
 		@file = File.open( @file_path, 'r' )
-		Dictionary.new( @file )
 		create_array
+
+		print_word_count
+		print_starting_letters
+
+		close_file
+
 
 	end
 
@@ -52,6 +59,8 @@ class DictionaryLoader
 
 	end
 
+
+
 	def count_words
 
 		return @arr.count
@@ -61,16 +70,38 @@ class DictionaryLoader
 
 	def count_starting_letters
 
-		word_hash = Hash.new { |h, k| h[k] = Array.new }
-
 		@arr.each do | w |
 
 			w_upcase = w.upcase
-			word_hash[ w_upcase[0] ] << w
+			@word_hash[ w_upcase[0] ] << w
 
 		end
 
-		return word_hash
+		return @word_hash
+
+	end
+
+	def print_word_count
+
+		puts "The dictionary has #{count_words} words."
+
+	end
+
+
+
+
+	def print_starting_letters
+
+		@word_hash = count_starting_letters
+
+		puts "Count of words starting with each letter:"
+
+		@word_hash.each do | k, v |
+
+			puts "#{k}: #{v.count}"
+
+		end
+
 
 	end
 
