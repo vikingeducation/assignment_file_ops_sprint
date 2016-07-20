@@ -20,7 +20,7 @@ class DictionaryLoader
 	def load
 
 		@file = File.open( @file_path, 'r' )
-
+		Dictionary.new( @file )
 		create_array
 
 	end

@@ -96,7 +96,7 @@ class DictionaryUI
 
 	def print_word_count
 
-		puts "Total words #{@loader.count_words}"
+		puts "The dictionary has #{@loader.count_words} words."
 
 	end
 
