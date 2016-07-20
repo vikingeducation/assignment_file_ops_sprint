@@ -53,7 +53,7 @@ class DictionaryUI
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
 		#@saver = ResultsSaver.new
-		@dictionary = Dictionary.new
+		#@dictionary = Dictionary.new
 
 	end
 
@@ -72,18 +72,14 @@ class DictionaryUI
 
 		@loader.load
 
-		@dictionary = @loader.create_dictionary
-		
-
-
-		close_dictionary
-
+		@loader.create_dictionary
 
 
 		ask_for_search
 		ask_for_word
 		@searcher.search
 
+		$dictionary.close
 
 	end
 
@@ -119,13 +115,6 @@ class DictionaryUI
 		puts "Please enter your word"
 
 		@searcher.word = gets.strip
-
-	end
-
-
-	def close_dictionary
-
-		@dictionary.close
 
 	end
 

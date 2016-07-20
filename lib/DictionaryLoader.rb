@@ -27,10 +27,17 @@ class DictionaryLoader
 		print_word_count
 		print_starting_letters
 
+		close
+
 
 	end
 
 
+	def close
+
+		@file.close
+
+	end
 
 
 	def create_dictionary

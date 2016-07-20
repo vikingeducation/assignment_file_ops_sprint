@@ -32,7 +32,20 @@ class DictionarySearcher
 
 	def search
 
-		binding.pry
+
+
+		case @search_type
+
+		when 1
+			exact_match
+		when 2
+			partial_m
+		when 3
+			begins_with
+		when 4
+			ends_with
+		end
+
 
 	end
 
@@ -40,6 +53,7 @@ class DictionarySearcher
 
 
 	def exact_match
+
 
 
 	end

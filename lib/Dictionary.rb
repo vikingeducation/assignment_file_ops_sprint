@@ -3,20 +3,14 @@ require 'pry'
 
 class Dictionary
 
-	attr_reader :dictionary
+	attr_accessor :file, :dictionary
 
-	def initialize( dictionary = nil )
+	def initialize( file )
 
-		@dictionary = dictionary
-
-	end
-
-
-
-	def close
-
-		@dictionary.close
+		$dictionary = File.open( file, 'r' )
 
 	end
+
+
 
 end
