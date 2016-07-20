@@ -11,6 +11,8 @@ class Dictionary
 
 	end
 
+
+
 	def close
 
 		@dictionary.close

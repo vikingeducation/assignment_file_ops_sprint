@@ -73,13 +73,16 @@ class DictionaryUI
 		@loader.load
 
 		@dictionary = @loader.create_dictionary
+		
+
 
 		close_dictionary
 
 
 
 		ask_for_search
-
+		ask_for_word
+		@searcher.search
 
 
 	end
@@ -111,6 +114,13 @@ class DictionaryUI
 	end
 
 
+	def ask_for_word
+
+		puts "Please enter your word"
+
+		@searcher.word = gets.strip
+
+	end
 
 
 	def close_dictionary

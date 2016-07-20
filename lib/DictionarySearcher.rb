@@ -15,6 +15,8 @@
 
 			#Play with this and verify that searches and saving works properly. What other search types can you come up with?
 
+
+
 class DictionarySearcher
 
 	attr_accessor :search_type, :word
@@ -26,6 +28,15 @@ class DictionarySearcher
 		@word = nil
 
 	end
+
+
+	def search
+
+		binding.pry
+
+	end
+
+
 
 
 	def exact_match
