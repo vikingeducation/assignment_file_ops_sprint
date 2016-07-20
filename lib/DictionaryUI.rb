@@ -67,9 +67,10 @@ class DictionaryUI
 
 		end
 
-		puts "dictionary loaded successfully"
+		puts "Dictionary loaded successfully"
 		@loader.load
 		print_word_count
+		print_starting_letters
 		@loader.close_file
 
 
@@ -96,6 +97,24 @@ class DictionaryUI
 	def print_word_count
 
 		puts "Total words #{@loader.count_words}"
+
+	end
+
+
+
+
+	def print_starting_letters
+
+		word_hash = @loader.count_starting_letters
+
+		puts "Count of words starting with each letter:"
+
+		word_hash.each do | k, v |
+
+			puts "#{k}: #{v.count}"
+
+		end
+
 
 	end
 

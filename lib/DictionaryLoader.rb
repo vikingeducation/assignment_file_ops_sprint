@@ -61,8 +61,16 @@ class DictionaryLoader
 
 	def count_starting_letters
 
+		word_hash = Hash.new { |h, k| h[k] = Array.new }
 
+		@arr.each do | w |
 
+			w_upcase = w.upcase
+			word_hash[ w_upcase[0] ] << w
+
+		end
+
+		return word_hash
 
 	end
 
