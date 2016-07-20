@@ -27,10 +27,18 @@ class DictionaryLoader
 		print_word_count
 		print_starting_letters
 
-		close_file
-
 
 	end
+
+
+
+
+	def create_dictionary
+
+		return Dictionary.new( @file )
+
+	end
+
 
 
 
@@ -41,12 +49,6 @@ class DictionaryLoader
 	end
 
 
-
-	def close_file
-
-		@file.close
-
-	end
 
 
 	def create_array

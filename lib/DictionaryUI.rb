@@ -46,7 +46,7 @@ require 'pry'
 
 class DictionaryUI
 
-	attr_reader :loader, :searcher
+	attr_reader :loader, :searcher, :dictionary
 
 	def initialize
 
@@ -72,19 +72,21 @@ class DictionaryUI
 
 		@loader.load
 
-		#create_dictionary
-		#print_word_count
-		#print_starting_letters
-		#@loader.close_file
+		@dictionary = @loader.create_dictionary
 
+binding.pry
+		close_dictionary
+
+	end
+
+
+
+	def close_dictionary
+
+		@dictionary.close
 
 	end
 
-	def create_dictionary
-
-		@dictionary = Dictionary.new
-
-	end
 
 
 	def prompt_for_file_location
