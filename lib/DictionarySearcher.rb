@@ -15,3 +15,7 @@
 
 			#Play with this and verify that searches and saving works properly. What other search types can you come up with?
 
+class DictionarySearcher
+
+
+end

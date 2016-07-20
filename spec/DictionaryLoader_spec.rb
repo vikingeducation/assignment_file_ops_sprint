@@ -8,6 +8,10 @@ describe '.DictionaryLoader' do
 
 		it 'should load the file' do
 
+			path = "dict.txt"
+
+			expect()
+
 		end
 
 
