@@ -35,7 +35,7 @@ class DictionaryLoader
 
 	def create_dictionary
 
-		return Dictionary.new( @file )
+		Dictionary.new( @file )
 
 	end
 

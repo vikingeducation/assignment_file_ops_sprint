@@ -53,7 +53,7 @@ class DictionaryUI
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
 		#@saver = ResultsSaver.new
-		@dictionary = nil
+		@dictionary = Dictionary.new
 
 	end
 
@@ -74,10 +74,42 @@ class DictionaryUI
 
 		@dictionary = @loader.create_dictionary
 
-binding.pry
 		close_dictionary
 
+
+
+		ask_for_search
+
+
+
 	end
+
+	def display_options
+
+		puts "Please enter what type of search"
+		puts "1. Exact Match"
+		puts "2. Partial Match"
+		puts "3. Begins With"
+		puts "4. Ends With"
+
+	end
+
+
+	def ask_for_search
+
+		selection = 0
+
+		until (1..4) === selection
+
+			display_options
+			selection = gets.strip.to_i
+
+		end
+
+		@searcher.search_type = selection
+
+	end
+
 
 
 

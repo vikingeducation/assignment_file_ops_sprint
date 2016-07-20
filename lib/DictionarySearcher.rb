@@ -17,5 +17,43 @@
 
 class DictionarySearcher
 
+	attr_accessor :search_type, :word
+
+
+	def initialize
+
+		@search_type = nil
+		@word = nil
+
+	end
+
+
+	def exact_match
+
+
+	end
+
+
+
+	def partial_match
+
+
+	end
+
+
+	def begins_with
+
+
+
+	end
+
+
+
+	def ends_with
+
+
+
+	end
+
 
 end
