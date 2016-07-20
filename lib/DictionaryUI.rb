@@ -67,7 +67,10 @@ class DictionaryUI
 
 		end
 
+		puts "dictionary loaded successfully"
 		@loader.load
+		print_word_count
+		@loader.close_file
 
 
 	end
@@ -88,6 +91,13 @@ class DictionaryUI
 
 	end
 
+
+
+	def print_word_count
+
+		puts "Total words #{@loader.count_words}"
+
+	end
 
 
 end #/.DictionaryUI

@@ -6,6 +6,8 @@ require 'pry'
 
 class DictionaryLoader
 
+	attr_reader :arr
+
 	def initialize
 
 		@file = nil
@@ -19,10 +21,7 @@ class DictionaryLoader
 
 		@file = File.open( @file_path, 'r' )
 
-			create_array
-			count_words
-			close_file
-
+		create_array
 
 	end
 
@@ -50,14 +49,21 @@ class DictionaryLoader
 			@arr << w.strip
 
 		end
-binding.pry
+
 	end
 
 	def count_words
 
-		@file.readlines
+		return @arr.count
 
 	end
 
+
+	def count_starting_letters
+
+
+
+
+	end
 
 end #/.DictionaryLoader
