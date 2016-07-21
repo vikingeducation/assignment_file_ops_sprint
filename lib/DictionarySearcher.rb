@@ -19,7 +19,8 @@
 
 class DictionarySearcher
 
-	attr_accessor :search_type, :word, :file
+	attr_accessor :search_type, :word
+	attr_reader :file, :results
 
 
 
@@ -28,23 +29,24 @@ class DictionarySearcher
 		@search_type = nil
 		@word = nil
 		@file = file
+		@results = []
 
 
 	end
 
 
-	def search
+	def search( file )
 
 		case @search_type
 
 		when 1
-			exact_match
+			exact_match( file )
 		when 2
-			partial_m
+			partial_m( file )
 		when 3
-			begins_with
+			begins_with( file )
 		when 4
-			ends_with
+			ends_with( file )
 		end
 
 
@@ -53,24 +55,24 @@ class DictionarySearcher
 
 
 
-	def exact_match
+	def exact_match( arr )
 
-		arr = []
+		arr.each do | w |
 
-		@file.readlines.each do | w |
+			if @word.upcase == w.upcase
 
-			arr << w.strip
+				@results << w
+
+			end
 
 		end
-
-binding.pry
 
 
 	end
 
 
 
-	def partial_match
+	def partial_match( file )
 
 
 	end

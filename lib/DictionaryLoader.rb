@@ -13,22 +13,13 @@ class DictionaryLoader
 
 		@file = nil
 		@file_path = nil
-		@word_hash = Hash.new { |h, k| h[k] = Array.new }
-		@arr = []
-
 
 	end
 
 
 	def load
 
-		@file = File.open( @file_path, 'r' )
-		create_array
-
-		print_word_count
-		print_starting_letters
-
-
+		return @file = File.open( @file_path, 'r' )
 
 	end
 
@@ -38,14 +29,6 @@ class DictionaryLoader
 		@file.close
 
 	end
-
-
-	def create_dictionary
-
-		return @file
-
-	end
-
 
 
 
@@ -58,60 +41,9 @@ class DictionaryLoader
 
 
 
-	def create_array
-
-		@file.readlines.each do | w |
-
-			@arr << w.strip
-
-		end
-
-	end
-
-
-
-	def count_words
-
-		return @arr.count
-
-	end
-
-
-	def count_starting_letters
-
-		@arr.each do | w |
-
-			w_upcase = w.upcase
-			@word_hash[ w_upcase[0] ] << w
-
-		end
-
-		return @word_hash
-
-	end
-
-	def print_word_count
-
-		puts "The dictionary has #{count_words} words."
-
-	end
 
 
 
 
-	def print_starting_letters
-
-		@word_hash = count_starting_letters
-
-		puts "Count of words starting with each letter:"
-
-		@word_hash.each do | k, v |
-
-			puts "#{k}: #{v.count}"
-
-		end
-
-
-	end
 
 end #/.DictionaryLoader
