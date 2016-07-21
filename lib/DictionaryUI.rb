@@ -99,7 +99,7 @@ class DictionaryUI
 
 	def display_search_results
 
-
+	 puts "For word: #{searcher.word}"
 	 puts "Found #{@searcher.results.count} matches:"
 
 		@searcher.results.each do | x |

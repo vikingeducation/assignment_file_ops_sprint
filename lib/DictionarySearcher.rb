@@ -42,7 +42,7 @@ class DictionarySearcher
 		when 1
 			exact_match( file )
 		when 2
-			partial_m( file )
+			partial_match( file )
 		when 3
 			begins_with( file )
 		when 4
@@ -72,23 +72,55 @@ class DictionarySearcher
 
 
 
-	def partial_match( file )
+	def partial_match( arr )
+
+		word = @word.upcase
+
+		arr.each do | w |
+
+			if /#{word}/ =~ w.upcase
+
+				@results << w
+
+			end
+
+		end
 
 
 	end
 
 
-	def begins_with
+	def begins_with( arr )
 
+		word = @word.upcase
 
+		arr.each do | w |
+
+			if /^#{word}/ =~ w.upcase
+
+				@results << w
+
+			end
+
+		end
 
 	end
 
 
 
-	def ends_with
+	def ends_with( arr )
 
+		word = @word.upcase
 
+		arr.each do | w |
+
+			if /#{word}$/ =~ w.upcase
+
+				@results << w
+
+			end
+
+		end
 
 	end
 
