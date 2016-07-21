@@ -16,6 +16,7 @@ class DictionaryLoader
 		@word_hash = Hash.new { |h, k| h[k] = Array.new }
 		@arr = []
 
+
 	end
 
 
@@ -27,7 +28,6 @@ class DictionaryLoader
 		print_word_count
 		print_starting_letters
 
-		close
 
 
 	end
@@ -42,7 +42,7 @@ class DictionaryLoader
 
 	def create_dictionary
 
-		Dictionary.new( @file )
+		return @file
 
 	end
 

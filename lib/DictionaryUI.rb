@@ -53,7 +53,7 @@ class DictionaryUI
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
 		#@saver = ResultsSaver.new
-		#@dictionary = Dictionary.new
+		@dictionary = Dictionary.new
 
 	end
 
@@ -72,14 +72,13 @@ class DictionaryUI
 
 		@loader.load
 
-		@loader.create_dictionary
-
+		@dictionary.dictionary = @loader.create_dictionary
 
 		ask_for_search
 		ask_for_word
 		@searcher.search
 
-		$dictionary.close
+		@loader.close
 
 	end
 

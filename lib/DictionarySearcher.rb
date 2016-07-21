@@ -19,20 +19,21 @@
 
 class DictionarySearcher
 
-	attr_accessor :search_type, :word
+	attr_accessor :search_type, :word, :file
 
 
-	def initialize
+
+	def initialize( file = nil )
 
 		@search_type = nil
 		@word = nil
+		@file = file
+
 
 	end
 
 
 	def search
-
-
 
 		case @search_type
 
@@ -54,6 +55,15 @@ class DictionarySearcher
 
 	def exact_match
 
+		arr = []
+
+		@file.readlines.each do | w |
+
+			arr << w.strip
+
+		end
+
+binding.pry
 
 
 	end

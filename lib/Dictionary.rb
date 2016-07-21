@@ -5,9 +5,9 @@ class Dictionary
 
 	attr_accessor :file, :dictionary
 
-	def initialize( file )
+	def initialize( file = nil )
 
-		$dictionary = File.open( file, 'r' )
+		@dictionary = file
 
 	end
 
