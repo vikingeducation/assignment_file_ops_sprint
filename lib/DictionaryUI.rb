@@ -90,11 +90,17 @@ class DictionaryUI
 
 	end
 
+
+
+
 	def close
 
 		@dictionary.close
 
 	end
+
+
+
 
 
 	def display_search_results
