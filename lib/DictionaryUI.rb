@@ -7,8 +7,6 @@ require_relative 'Dictionary'
 
 class DictionaryUI
 
-	attr_reader :loader, :searcher, :dictionary
-
 	def initialize
 
 		@loader = DictionaryLoader.new
@@ -80,7 +78,6 @@ class DictionaryUI
 	def display_dictionary_stats
 
 		print_word_count
-
 		print_starting_letters
 
 	end
@@ -116,6 +113,8 @@ class DictionaryUI
 
 	end
 
+
+
 	def ask_for_search
 
 		selection = 0
@@ -132,6 +131,8 @@ class DictionaryUI
 	end
 
 
+
+
 	def display_options
 
 		puts "Please enter what type of search"
@@ -141,6 +142,8 @@ class DictionaryUI
 		puts "4. Ends With"
 
 	end
+
+
 
 
 	def ask_for_word
@@ -158,6 +161,8 @@ class DictionaryUI
 		@searcher.search( @loader.arr )
 
 	end
+
+
 
 
 
@@ -196,12 +201,14 @@ class DictionaryUI
 
 
 
+
+
 	def save( input )
 
 
 		if input == 'Y'
 
-			generate_save_data
+			create_save_data
 			get_file_path
 
 		else
@@ -225,11 +232,15 @@ class DictionaryUI
 	end
 
 
-	def generate_save_data
 
-		@save_hash = { 'word' => @searcher.word, 'results' => @searcher.results }
+
+	def create_save_data
+
+		@save_hash = @saver.save_data( @searcher.word, @searcher.results)
 
 	end
+
+
 
 
 
@@ -247,7 +258,6 @@ class DictionaryUI
 		end
 
 		input == 'Y' ? @saver.save( @save_hash ) :	get_file_path
-
 
 	end
 

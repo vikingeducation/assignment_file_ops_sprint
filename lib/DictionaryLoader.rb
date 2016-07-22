@@ -31,7 +31,6 @@ class DictionaryLoader
 	def process_dictionary
 
 		create_array
-
 		count_starting_letters
 
 	end

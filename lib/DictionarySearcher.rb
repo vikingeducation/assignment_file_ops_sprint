@@ -1,7 +1,7 @@
 class DictionarySearcher
 
 	attr_accessor :search_type, :word
-	attr_reader :file, :results
+	attr_reader :results
 
 
 
@@ -10,7 +10,6 @@ class DictionarySearcher
 		@search_type = nil
 		@word = nil
 		@results = []
-
 
 	end
 

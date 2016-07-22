@@ -33,6 +33,11 @@ class ResultsSaver
 	end
 
 
+	def save_data( word, results)
+
+		return { "word" => word, "results" => results}
+
+	end
 
 
 end
