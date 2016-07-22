@@ -41,7 +41,7 @@ require_relative 'DictionaryLoader'
 require_relative 'DictionarySearcher'
 require_relative 'ResultsSaver'
 require_relative 'Dictionary'
-require 'pry'
+
 
 
 class DictionaryUI
@@ -227,8 +227,7 @@ class DictionaryUI
 
 	def save( input )
 
-		input == 'Y' ? get_file_path : exit
-binding.pry
+
 		if input == 'Y'
 
 			generate_save_data
@@ -257,8 +256,8 @@ binding.pry
 
 	def generate_save_data
 
-		@save_hash = { 'word' => @searcher.word, 'results' => @loader.word_hash }
-binding.pry
+		@save_hash = { 'word' => @searcher.word, 'results' => @searcher.results }
+
 	end
 
 
