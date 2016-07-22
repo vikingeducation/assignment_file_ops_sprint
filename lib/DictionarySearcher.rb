@@ -24,11 +24,10 @@ class DictionarySearcher
 
 
 
-	def initialize( file = nil )
+	def initialize
 
 		@search_type = nil
 		@word = nil
-		@file = file
 		@results = []
 
 

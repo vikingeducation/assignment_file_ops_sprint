@@ -65,7 +65,7 @@ class DictionaryUI
 	def run
 
 		loop do
-			# put into a loop that checks in loader if file exists
+
 			prompt_for_file_location
 
 			break if @loader.valid_file_path?( get_location_of_file )
@@ -73,7 +73,6 @@ class DictionaryUI
 		end
 
 		puts "Dictionary loaded successfully"
-
 
 		@loader.load
 
@@ -88,126 +87,6 @@ class DictionaryUI
 		display_search_results
 
 		close
-
-	end
-
-
-
-
-	def close
-
-		@dictionary.close
-
-	end
-
-
-	def display_dictionary_stats
-
-		print_word_count
-
-		print_starting_letters
-
-	end
-
-
-
-
-
-	def display_search_results
-
-	 puts "For word: #{searcher.word}"
-	 puts "Found #{@searcher.results.count} matches:"
-
-		@searcher.results.each do | x |
-
-			puts x
-
-		end
-
-
-
-
-	end
-
-
-	def prompt_search
-
-		ask_for_search
-		ask_for_word
-
-	end
-
-
-	def search
-
-		@searcher.search( @loader.arr )
-
-	end
-
-
-
-
-
-
-
-
-	def print_word_count
-
-		puts "The dictionary has #{@loader.arr.count} words."
-
-	end
-
-
-
-
-	def print_starting_letters
-
-		puts "Count of words starting with each letter:"
-
-		@loader.word_hash.each do | k, v |
-
-			puts "#{k}: #{v.count}"
-
-		end
-
-
-	end
-
-
-
-
-	def display_options
-
-		puts "Please enter what type of search"
-		puts "1. Exact Match"
-		puts "2. Partial Match"
-		puts "3. Begins With"
-		puts "4. Ends With"
-
-	end
-
-
-	def ask_for_search
-
-		selection = 0
-
-		until (1..4) === selection
-
-			display_options
-			selection = gets.strip.to_i
-
-		end
-
-		@searcher.search_type = selection
-
-	end
-
-
-	def ask_for_word
-
-		puts "Please enter your word"
-
-		@searcher.word = gets.strip
 
 	end
 
@@ -229,6 +108,111 @@ class DictionaryUI
 
 
 
+	def display_dictionary_stats
+
+		print_word_count
+
+		print_starting_letters
+
+	end
+
+
+	def print_word_count
+
+		puts "The dictionary has #{@loader.arr.count} words."
+
+	end
+
+
+
+	def print_starting_letters
+
+		puts "Count of words starting with each letter:"
+
+		@loader.word_hash.each do | k, v |
+
+			puts "#{k}: #{v.count}"
+
+		end
+
+
+	end
+
+
+
+	def prompt_search
+
+		ask_for_search
+		ask_for_word
+
+	end
+
+	def ask_for_search
+
+		selection = 0
+
+		until (1..4) === selection
+
+			display_options
+			selection = gets.strip.to_i
+
+		end
+
+		@searcher.search_type = selection
+
+	end
+
+
+	def display_options
+
+		puts "Please enter what type of search"
+		puts "1. Exact Match"
+		puts "2. Partial Match"
+		puts "3. Begins With"
+		puts "4. Ends With"
+
+	end
+
+
+	def ask_for_word
+
+		puts "Please enter your word"
+
+		@searcher.word = gets.strip
+
+	end
+
+
+
+	def search
+
+		@searcher.search( @loader.arr )
+
+	end
+
+
+
+	def display_search_results
+
+	 puts "For word: #{searcher.word}"
+	 puts "Found #{@searcher.results.count} matches:"
+
+		@searcher.results.each do | x |
+
+			puts x
+
+		end
+
+	end
+
+
+
+
+	def close
+
+		@dictionary.close
+
+	end
 
 
 
