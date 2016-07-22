@@ -52,12 +52,10 @@ class DictionaryUI
 
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
-		#@saver = ResultsSaver.new
+		@saver = ResultsSaver.new
 		@dictionary = Dictionary.new
 
-
-
-
+		@save_hash = Hash.new
 
 	end
 
@@ -85,6 +83,8 @@ class DictionaryUI
 		search
 
 		display_search_results
+
+		prompt_save
 
 		close
 
@@ -194,7 +194,7 @@ class DictionaryUI
 
 	def display_search_results
 
-	 puts "For word: #{searcher.word}"
+	 puts "For word: #{@searcher.word}"
 	 puts "Found #{@searcher.results.count} matches:"
 
 		@searcher.results.each do | x |
@@ -205,6 +205,81 @@ class DictionaryUI
 
 	end
 
+
+	def prompt_save
+
+		input = ""
+
+		until input == 'Y' || input == 'N'
+
+			puts "Would you like to save your results?"
+			puts "Y or N?"
+
+			input = gets.strip.upcase
+
+		end
+
+		save( input )
+
+	end
+
+
+
+	def save( input )
+
+		input == 'Y' ? get_file_path : exit
+binding.pry
+		if input == 'Y'
+
+			generate_save_data
+			get_file_path
+
+		else
+
+			exit
+
+		end
+
+	end
+
+
+
+	def get_file_path
+
+		puts "Where would you like to save?"
+
+		file_path = gets.strip
+
+		@saver.check_file( file_path ) ? prompt_overwite : @saver.save( @save_hash )
+
+	end
+
+
+	def generate_save_data
+
+		@save_hash = { 'word' => @searcher.word, 'results' => @loader.word_hash }
+binding.pry
+	end
+
+
+
+	def prompt_overwite
+
+		input = ''
+
+		until input == 'Y' || input == 'N' do
+
+			puts "That file already exists. Overwrite?"
+			puts "Y or N"
+
+			input = gets.strip.upcase
+
+		end
+
+		input == 'Y' ? @saver.save( @save_hash ) :	get_file_path
+
+
+	end
 
 
 

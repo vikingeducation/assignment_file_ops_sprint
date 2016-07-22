@@ -1,12 +1,40 @@
 # After displaying results, prompt the user whether to save the results to a file.
 # If saving to a file, prompt the user for the name of the file to save results to. If it already exists, ask whether to overwrite it or not. Create a ResultsSaver class which takes a batch of results and writes them to a file.
 
+require_relative 'DictionarySearcher'
+
 class ResultsSaver
 
-	def initialize
+	def initialize( file_path = nil )
 
-		@file = nil
+		@file_path = file_path
 
 	end
+
+
+	def check_file( file_path )
+
+		if File.exist?( file_path )
+
+			@file_path = file_path
+			true
+
+		else
+
+			false
+
+		end
+
+	end
+
+
+
+	def save( save_file )
+binding.pry
+puts "hello"
+	end
+
+
+
 
 end
