@@ -1,42 +1,3 @@
-# Create a DictionaryUI class to handle the user interaction loop. The first prompt is for the location of your dictionary file.
-
-# DictionaryUI
-	# @file_name
-	# initializes :
-		# DictionaryLoader
-		# DictionarySearcher
-		# DictionarySaver
-	# prompts the user for the file
-	# prompts the user for saving the file
-	# asks the user overwrite file
-	# raises errors if no file is found
-
-	# displays results from DictionarySearches
-
-# DictionaryLoader
-	# loads the file
-	# creates the Dictionary
-	# reads the file
-	# determines # words
-	# determines # words starting letters
-
-# Dictionary
-	# intializes instance of dictionary ( file )
-
-
-# DictionarySearcher
-	# takes instance of Dictionary
-	# exact_matches
-	# partial_matches
-	# begins_with
-	# ends with
-
-# DictionarySaver
-	# takes the name to save
-	# takes in the file to save
-	# checks if that file exists
-	# takes in the mode to save
-
 require_relative 'DictionaryLoader'
 require_relative 'DictionarySearcher'
 require_relative 'ResultsSaver'
@@ -72,11 +33,11 @@ class DictionaryUI
 
 		puts "Dictionary loaded successfully"
 
-		@loader.load
+		@loader.load_dictionary
 
 		display_dictionary_stats
 
-		@dictionary.dictionary = @loader.file
+		create_instance_of_dictionary
 
 		prompt_search
 
@@ -89,6 +50,14 @@ class DictionaryUI
 		close
 
 	end
+
+
+	def create_instance_of_dictionary
+
+		@dictionary.dictionary = @loader.file
+
+	end
+
 
 
 
@@ -204,6 +173,8 @@ class DictionaryUI
 		end
 
 	end
+
+
 
 
 	def prompt_save

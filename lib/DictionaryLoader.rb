@@ -1,10 +1,3 @@
-# Create a class DictionaryLoader whose purpose is to perform the loading and processing of the specified dictionary file before returning it as an instance of a Dictionary. Remember that classes don't need to be big!
-
-# # Return statistics about your dictionary when it is first loaded, including word count and words by starting letter:
-
-require 'pry'
-
-
 class DictionaryLoader
 
 	attr_reader :arr, :file, :word_hash
@@ -19,7 +12,7 @@ class DictionaryLoader
 	end
 
 
-	def load
+	def load_dictionary
 
 		@file = File.open( @file_path, 'r' )
 		process_dictionary

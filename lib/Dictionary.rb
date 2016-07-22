@@ -1,6 +1,3 @@
-require 'pry'
-
-
 class Dictionary
 
 	attr_accessor :file, :dictionary
