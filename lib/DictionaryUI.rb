@@ -54,11 +54,10 @@ class DictionaryUI
 		@searcher = DictionarySearcher.new
 		#@saver = ResultsSaver.new
 		@dictionary = Dictionary.new
-		@file
 
 
-		@word_hash = Hash.new { |h, k| h[k] = Array.new }
-		@arr = []
+
+
 
 	end
 
@@ -75,10 +74,12 @@ class DictionaryUI
 
 		puts "Dictionary loaded successfully"
 
-		@file = @loader.load
-		@dictionary.dictionary = @file
 
-		process_dictionary
+		@loader.load
+
+		display_dictionary_stats
+
+		@dictionary.dictionary = @loader.file
 
 		prompt_search
 
@@ -96,6 +97,15 @@ class DictionaryUI
 	def close
 
 		@dictionary.close
+
+	end
+
+
+	def display_dictionary_stats
+
+		print_word_count
+
+		print_starting_letters
 
 	end
 
@@ -130,59 +140,20 @@ class DictionaryUI
 
 	def search
 
-		@searcher.search( @arr )
+		@searcher.search( @loader.arr )
 
 	end
 
 
 
 
-	def process_dictionary
 
-		create_array
-		count_words
-		print_word_count
-		count_starting_letters
-		print_starting_letters
-
-	end
-
-	def create_array
-
-		@file.readlines.each do | w |
-
-			@arr << w.strip
-
-		end
-
-	end
-
-
-	def count_starting_letters
-
-		@arr.each do | w |
-
-			w_upcase = w.upcase
-			@word_hash[ w_upcase[0] ] << w
-
-		end
-
-		return @word_hash
-
-	end
-
-
-	def count_words
-
-		return @arr.count
-
-	end
 
 
 
 	def print_word_count
 
-		puts "The dictionary has #{count_words} words."
+		puts "The dictionary has #{@loader.arr.count} words."
 
 	end
 
@@ -191,11 +162,9 @@ class DictionaryUI
 
 	def print_starting_letters
 
-		@word_hash = count_starting_letters
-
 		puts "Count of words starting with each letter:"
 
-		@word_hash.each do | k, v |
+		@loader.word_hash.each do | k, v |
 
 			puts "#{k}: #{v.count}"
 
