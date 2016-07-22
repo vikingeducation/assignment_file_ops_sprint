@@ -17,6 +17,8 @@ class DictionarySearcher
 
 	def search( file )
 
+		@word.upcase!
+
 		case @search_type
 
 		when 1
@@ -33,13 +35,11 @@ class DictionarySearcher
 	end
 
 
-
-
 	def exact_match( arr )
 
 		arr.each do | w |
 
-			if @word.upcase == w.upcase
+			if @word == w.upcase
 
 				@results << w
 
@@ -54,11 +54,10 @@ class DictionarySearcher
 
 	def partial_match( arr )
 
-		word = @word.upcase
 
 		arr.each do | w |
 
-			if /#{word}/ =~ w.upcase
+			if /#{@word}/ =~ w.upcase
 
 				@results << w
 
@@ -72,11 +71,10 @@ class DictionarySearcher
 
 	def begins_with( arr )
 
-		word = @word.upcase
 
 		arr.each do | w |
 
-			if /^#{word}/ =~ w.upcase
+			if /^#{@word}/ =~ w.upcase
 
 				@results << w
 
@@ -90,7 +88,6 @@ class DictionarySearcher
 
 	def ends_with( arr )
 
-		word = @word.upcase
 
 		arr.each do | w |
 
