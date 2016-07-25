@@ -9,6 +9,8 @@ class DictionaryLoader
 		@word_hash = Hash.new { |h, k| h[k] = Array.new }
 		@arr = []
 
+		@dictionary = nil
+
 	end
 
 
@@ -17,16 +19,22 @@ class DictionaryLoader
 		@file = File.open( @file_path, 'r' )
 		process_dictionary
 
+		@dictionary = Dictionary.new( @file )
+		return @dictionary.dictionary
+
 	end
+
 
 
 
 	def valid_file_path?( file_path )
 
 		@file_path = file_path
-		File.file?( @file_path ) ? true : false
+		File.file?( @file_path )
 
 	end
+
+
 
 	def process_dictionary
 

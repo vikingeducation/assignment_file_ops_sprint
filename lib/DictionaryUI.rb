@@ -4,7 +4,7 @@ require_relative 'ResultsSaver'
 require_relative 'Dictionary'
 
 
-
+require 'pry'
 class DictionaryUI
 
 	def initialize
@@ -12,7 +12,7 @@ class DictionaryUI
 		@loader = DictionaryLoader.new
 		@searcher = DictionarySearcher.new
 		@saver = ResultsSaver.new
-		@dictionary = Dictionary.new
+		@dictionary = nil
 
 		@save_hash = Hash.new
 
@@ -33,9 +33,7 @@ class DictionaryUI
 
 		@loader.load_dictionary
 
-		display_dictionary_stats
-
-		create_instance_of_dictionary
+		@dictionary = display_dictionary_stats
 
 		prompt_search
 
@@ -48,14 +46,6 @@ class DictionaryUI
 		close
 
 	end
-
-
-	def create_instance_of_dictionary
-
-		@dictionary.dictionary = @loader.file
-
-	end
-
 
 
 
