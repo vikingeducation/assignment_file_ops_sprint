@@ -4,7 +4,7 @@ require_relative 'ResultsSaver'
 require_relative 'Dictionary'
 
 
-require 'pry'
+
 class DictionaryUI
 
 	def initialize
@@ -21,19 +21,11 @@ class DictionaryUI
 
 	def run
 
-		loop do
+		prompt_for_file_location
 
-			prompt_for_file_location
+		@dictionary = @loader.load_dictionary( get_location_of_file )
 
-			break if @loader.valid_file_path?( get_location_of_file )
-
-		end
-
-		puts "Dictionary loaded successfully"
-
-		@loader.load_dictionary
-
-		@dictionary = display_dictionary_stats
+		display_dictionary_stats
 
 		prompt_search
 

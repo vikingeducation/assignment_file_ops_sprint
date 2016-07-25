@@ -14,7 +14,11 @@ class DictionaryLoader
 	end
 
 
-	def load_dictionary
+	def load_dictionary( file_path )
+
+		valid_file_path?( file_path )
+
+		puts "Dictionary loaded successfully"
 
 		@file = File.open( @file_path, 'r' )
 		process_dictionary
@@ -29,8 +33,14 @@ class DictionaryLoader
 
 	def valid_file_path?( file_path )
 
+		until File.file?( file_path )
+
+			puts "Enter valid file path"
+			file_path = gets.strip
+
+		end
+
 		@file_path = file_path
-		File.file?( @file_path )
 
 	end
 

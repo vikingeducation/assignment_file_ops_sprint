@@ -13,7 +13,7 @@ class ResultsSaver
 
 		@file_path = file_path
 
-		File.exist?( file_path ) ? true : false
+		File.exist?( file_path )
 
 
 	end
