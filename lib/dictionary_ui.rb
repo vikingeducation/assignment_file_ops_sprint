@@ -5,8 +5,8 @@ class DictionaryUI
   end
 
   def run
+    get_dictionary
     loop do
-      get_dictionary
       results = get_search
       save(results)
     end
@@ -20,7 +20,6 @@ class DictionaryUI
     @searcher = DictionarySearcher.new(@dictionary)
     puts "Dictionary successfully loaded."
     print_statistics
-    print @dictionary.entries
   end
 
   def get_search
