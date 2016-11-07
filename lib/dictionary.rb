@@ -1,0 +1,30 @@
+class Dictionary
+  attr_reader :entries
+
+  include Enumerable
+
+  def initialize(entries)
+    @entries = entries
+    @entry_count = entries.length
+    @words_by_letter = words_by_letter
+  end
+
+  def each
+    entries.each do |entry|
+      yield(entry)
+    end
+  end
+
+  def words_by_letter
+    # TODO @words_by_letter ||= 
+    words_by_letter = Hash.new(0)
+    ("A".."Z").each do |char|
+      words_by_letter[char] = 0
+    end
+    @entries.each do |entry|
+      starting_letter = entry[0].upcase
+      words_by_letter[starting_letter] += 1
+    end
+    @words_by_letter = words_by_letter
+  end
+end

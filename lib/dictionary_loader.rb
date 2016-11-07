@@ -1,7 +1,7 @@
 class DictionaryLoader
 
   def self.load(dictionary_path)
-    dictionary = File.open(dictionary_path, 'r')
+    dictionary = File.readlines(dictionary_path)
     Dictionary.new(dictionary)
   end
 

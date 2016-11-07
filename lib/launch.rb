@@ -1,0 +1,5 @@
+require 'dictionary.rb'
+require 'dictionary_ui.rb'
+require 'dictionary_loader.rb'
+require 'dictionary_searcher.rb'
+require 'results_saver.rb'

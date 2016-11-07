@@ -1,5 +1,9 @@
 class DictionaryUI
 
+  def initialize
+
+  end
+
   def run
     loop do
       get_dictionary
@@ -17,6 +21,9 @@ class DictionaryUI
   def get_search
     puts "What kind of search?"
     puts "1: Exact", "2: Partial", "3: Begins with", "4: Ends with"
+    mode = gets.chomp
+    puts "Enter the search term:"
+    term = gets.chomp
     # get contents
     # check fo rq
   end
