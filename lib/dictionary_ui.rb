@@ -15,7 +15,7 @@ class DictionaryUI
   #
   #
   # 
-  # return wordcount 
+  # 
   # number of words by starting letter
 
   # In the dictionary_searcher
@@ -33,10 +33,12 @@ class DictionaryUI
     location = get_user_input
     @loader = DictionaryLoader.new(location)
     @dictionary = @loader.dictionary
-    # @dictionary_searcher = DictionarySearcher.new(@dictionary)
     puts "Dictionary successfully loaded"
-    puts "Your dictionary has #{@dictionary.file.class} words"
+    puts "Your dictionary has #{@dictionary.file.length} words"
+    @dictionary.frequency
   end
+
+  # puts a line "#{letter}: #{frequency}"
 
 
   def get_user_input
