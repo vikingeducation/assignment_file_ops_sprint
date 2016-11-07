@@ -41,6 +41,7 @@ class DictionaryUI
   def ask_save
     puts "Do you want to save your results? (y/n)? 'q' quits"
     decision = gets.chomp.downcase
+    exit if decision == 'q'
     decision == 'y'  
   end
 

@@ -11,10 +11,12 @@ class ResultsSaver
 
   def get_path
     puts "What file path should we write the results to?"
-    @file_path = gets.chomp
+    path = gets.chomp
+    @file_path = File.expand_path(File.dirname(__FILE__)) + "/../data/#{path}"
     if file_exists?
       puts "That file exists. Overwrite? (y/n) 'q' quits"
       overwrite = gets.chomp.downcase
+      exit if overwrite == 'q'
       get_path if overwrite == 'n'
     end
   end
