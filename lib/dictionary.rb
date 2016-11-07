@@ -1,5 +1,5 @@
 class Dictionary
-  attr_reader :entries
+  attr_reader :entries, :entry_count, :words_by_letter
 
   include Enumerable
 

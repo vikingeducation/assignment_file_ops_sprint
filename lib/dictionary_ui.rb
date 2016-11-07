@@ -15,10 +15,12 @@ class DictionaryUI
   def get_dictionary
     puts "What is the path to your dictionary?"
     path = gets.chomp
+    path = File.expand_path(File.dirname(__FILE__)) + "/../#{path}"
     @dictionary = DictionaryLoader.load(path)
     @searcher = DictionarySearcher.new(@dictionary)
     puts "Dictionary successfully loaded."
     print_statistics
+    print @dictionary.entries
   end
 
   def get_search
@@ -27,25 +29,20 @@ class DictionaryUI
     mode = gets.chomp
     puts "Enter the search term:"
     term = gets.chomp
-    # get contents
     results = @searcher.search(mode, term)
     print_results(results)
     results
-    # check fo rq
+    # check for q
   end
 
   def save(results)
-    save_to_file(results) if ask_save
+    ResultsSaver.new(results).save if ask_save
   end
 
   def ask_save
     puts "Do you want to save your results? (y/n)? 'q' quits"
     decision = gets.chomp.downcase
-    decision == 'y' ? true : false
-  end
-
-  def save_to_file(results)
-    
+    decision == 'y'  
   end
 
   def print_statistics

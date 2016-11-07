@@ -22,7 +22,7 @@ class DictionarySearcher
   end
 
   def exact_search(term)
-    @dictionary.select { |entry| entry == term }
+    @dictionary.select { |entry| entry.strip == term }
   end
   
   def partial_search(term)
@@ -37,6 +37,6 @@ class DictionarySearcher
 
   def ends_with_search(term)
     search = /.*#{Regexp.quote(term)}\z/
-    @dictionary.select { |entry| entry =~ search }
+    @dictionary.select { |entry| entry.strip =~ search }
   end
 end
