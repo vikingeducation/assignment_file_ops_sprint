@@ -4,7 +4,7 @@ class Dictionary
   include Enumerable
 
   def initialize(entries)
-    @entries = entries
+    @entries = upcase_entries(entries)
     @entry_count = entries.length
     @words_by_letter = words_by_letter
   end
@@ -13,6 +13,10 @@ class Dictionary
     entries.each do |entry|
       yield(entry)
     end
+  end
+
+  def upcase_entries(entries)
+    entries.map { |entry| entry.upcase }
   end
 
   def words_by_letter
