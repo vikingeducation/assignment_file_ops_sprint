@@ -13,6 +13,10 @@ class ResultsSaver
     puts "What file path should we write the results to?"
     path = gets.chomp
     @file_path = File.expand_path(File.dirname(__FILE__)) + "/../data/#{path}"
+    check_for_overwrite
+  end
+
+  def check_for_overwrite
     if file_exists?
       puts "That file exists. Overwrite? (y/n) 'q' quits"
       overwrite = gets.chomp.downcase

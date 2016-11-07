@@ -7,7 +7,7 @@ class DictionaryUI
   def run
     get_dictionary
     loop do
-      results = get_search
+      results = search
       save(results)
     end
   end
@@ -22,16 +22,23 @@ class DictionaryUI
     print_statistics
   end
 
-  def get_search
+  def search
     puts "What kind of search?"
     puts "1: Exact", "2: Partial", "3: Begins with", "4: Ends with"
-    mode = gets.chomp
+    mode = get_mode
     puts "Enter the search term:"
     term = gets.chomp
     results = @searcher.search(mode, term)
     print_results(results)
     results
-    # check for q
+  end
+
+  def get_mode
+    mode = gets.chomp
+    if !(1..4).include?(mode.to_i)
+      puts "Please enter an integer from 1 to 4"
+      get_mode
+    end
   end
 
   def save(results)

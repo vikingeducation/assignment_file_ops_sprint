@@ -20,15 +20,18 @@ class Dictionary
   end
 
   def words_by_letter
-    # TODO @words_by_letter ||= 
-    words_by_letter = Hash.new(0)
-    ("A".."Z").each do |char|
-      words_by_letter[char] = 0
+    if @words_by_letter
+      @words_by_letter
+    else 
+      words_by_letter = {}
+      ("A".."Z").each do |char|
+        words_by_letter[char] = 0
+      end
+      @entries.each do |entry|
+        starting_letter = entry[0].upcase
+        words_by_letter[starting_letter] += 1
+      end
+      @words_by_letter = words_by_letter
     end
-    @entries.each do |entry|
-      starting_letter = entry[0].upcase
-      words_by_letter[starting_letter] += 1
-    end
-    @words_by_letter = words_by_letter
   end
 end
