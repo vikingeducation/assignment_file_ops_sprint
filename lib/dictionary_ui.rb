@@ -1,7 +1,6 @@
 require_relative 'dictionary'
 require_relative 'dictionary_loader'
 
-
 class DictionaryUI
 
   attr_accessor :path
@@ -24,4 +23,4 @@ class DictionaryUI
 
 end
 
-#just figured out how to load file
+t = DictionaryUI.new
