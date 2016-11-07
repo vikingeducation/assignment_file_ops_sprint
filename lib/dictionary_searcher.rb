@@ -10,7 +10,8 @@ class DictionarySearcher
   end
 
   def word_frequency_by_letter
-    dictionary.words.group_by{ |w| w[0] }
+    word_hash = dictionary.words.group_by{ |w| w[0] }
+    word_hash
   end
 
 end
