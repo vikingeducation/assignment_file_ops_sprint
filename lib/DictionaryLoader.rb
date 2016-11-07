@@ -1,18 +1,16 @@
+require_relative 'Dictionary'
+
 class DictionaryLoader
 
-
-  attr_reader :words
-
-  def initialize path
-    @words = load(path)
-  end
-
-  def load(path)
+  def self.file_load(path)
     file = File.open(path, 'r')
     text = file.read.scan(/\b\w+\b/)
     file.close
     text
   end
 
+  def self.createDictionaryFrom(path)
+    Dictionary.new(DictionaryLoader.file_load(path))
+  end
 
 end
