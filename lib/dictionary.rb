@@ -9,7 +9,7 @@ class Dictionary
     get_words
   end
 
-  def get_words 
+  def get_words
     IO.foreach(@file) do |line|
       @words << line.strip
     end
@@ -28,7 +28,7 @@ class Dictionary
         @letter_freq[first_let] = 1
       end
     end
+    @letter_freq
   end
 
 end
-
