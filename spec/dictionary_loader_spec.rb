@@ -14,7 +14,5 @@ describe DictionaryLoader do
       expect{ DictionaryLoader.load(5) }.to raise_error(ArgumentError)
 
     end
-
   end
-
 end
