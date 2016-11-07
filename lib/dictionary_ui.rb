@@ -7,8 +7,8 @@ class DictionaryUI
   def run
     loop do
       get_dictionary
-      get_search
-      ask_save
+      results = get_search
+      save(results)
     end
   end
 
@@ -30,11 +30,22 @@ class DictionaryUI
     # get contents
     results = @searcher.search(mode, term)
     print_results(results)
+    results
     # check fo rq
   end
 
+  def save(results)
+    save_to_file(results) if ask_save
+  end
+
   def ask_save
-    #
+    puts "Do you want to save your results? (y/n)? 'q' quits"
+    decision = gets.chomp.downcase
+    decision == 'y' ? true : false
+  end
+
+  def save_to_file(results)
+    
   end
 
   def print_statistics

@@ -26,8 +26,17 @@ class DictionarySearcher
   end
   
   def partial_search(term)
-    search = "/.*#{term}.*/"
-    @dictionary.select { |entry| entry =~ Regex.new(search)}
-    /.*term.*/
+    search = /.*#{Regexp.quote(term)}.*/
+    @dictionary.select { |entry| entry =~ search }
+  end
+
+  def begins_with_search(term)
+    search = /\A#{Regexp.quote(term)}.*/
+    @dictionary.select { |entry| entry =~ search }
+  end
+
+  def ends_with_search(term)
+    search = /.*#{Regexp.quote(term)}\z/
+    @dictionary.select { |entry| entry =~ search }
   end
 end
