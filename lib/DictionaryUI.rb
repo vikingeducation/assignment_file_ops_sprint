@@ -3,8 +3,7 @@ require_relative 'DictionaryLoader'
 require_relative 'DictionarySearcher'
 require_relative 'ResultsSaver'
 
-require 'pry'
-require 'pry-byebug'
+
 
 class DictionaryUI
 
@@ -17,6 +16,14 @@ class DictionaryUI
     path = gets.chomp
     path = "5desk.txt" if path == ""
     path
+  end
+
+  def prompt_for_search
+    puts "What kind of search would you like to perform?"
+    puts "1: Exact"
+    puts "2: Partial"
+    puts "3: Begins With"
+    puts "4: Ends With"
   end
 
   def main

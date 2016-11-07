@@ -1,8 +1,12 @@
 class Dictionary
+
+  attr_reader :words
+
   def initialize(words)
     @words = words
+    show_status
   end
-  attr_reader :words
+
   def word_count
     @words.length
   end
@@ -14,4 +18,17 @@ class Dictionary
       # p letters_key[first_letter]
     end
   end
+
+  def show_status
+    puts "Dictionary successfully loaded!"
+    puts "Your dictionary contains #{words.length} words"
+    puts "Word frequency by starting letter:"    
+    words_by_letter.each do |letter, words|
+      puts "#{letter}: #{words.length}"
+    end
+  end
+
+  
+
+
 end
