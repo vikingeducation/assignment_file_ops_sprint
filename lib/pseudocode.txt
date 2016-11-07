@@ -1,7 +1,7 @@
 
 Program launches                  # Executable/ launcher file
 User receives welcome message     # DictionaryUI#welcome
-Prompt for path to dictionary     # DictionaryUI#dictionary_path_prompt
+Prompt for path to dictionary     # DictionaryUI#prompt_for_dictionary
 Render result of attempted load   # loop until success or quit
   Failure                         # DictionaryUI#failed_dictionary_load
   Success w/ dictionary stats     # DictionaryUI#dictionary_statistics
