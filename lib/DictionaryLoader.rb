@@ -1,10 +1,18 @@
 class DictionaryLoader
-  def initialize
+
+
+  attr_reader :words
+
+  def initialize path
+    @words = load(path)
   end
-  def load_file(path)
+
+  def load(path)
     file = File.open(path, 'r')
     text = file.read.scan(/\b\w+\b/)
     file.close
     text
   end
+
+
 end
