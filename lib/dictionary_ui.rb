@@ -7,6 +7,7 @@ class DictionaryUI
 
   def run
     filepath = gets_dictionary_filepath
+    dictionary = DictionaryLoader.load(filepath)
   end
 
 end
