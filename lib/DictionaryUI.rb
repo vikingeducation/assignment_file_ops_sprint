@@ -22,7 +22,6 @@ class DictionaryUI
   def main
     path = prompt_for_file_path
     dict = DictionaryLoader.createDictionaryFrom(path)
-    p dict
   end
 
 end
