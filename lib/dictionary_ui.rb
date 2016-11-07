@@ -15,7 +15,8 @@ class DictionaryUI
   end
 
   def get_search
-    # ask for search
+    puts "What kind of search?"
+    puts "1: Exact", "2: Partial", "3: Begins with", "4: Ends with"
     # get contents
     # check fo rq
   end
