@@ -3,6 +3,13 @@ class Dictionary
   def initialize(file_data = [])
     @data = file_data
   end
+data
 
-  
+data
+data
+
+  def data
+    @data.strip
+  end
+
 end
