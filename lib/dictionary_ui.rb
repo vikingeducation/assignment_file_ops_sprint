@@ -9,7 +9,7 @@ class DictionaryUI
 
   def initialize(args = {})
     @listener = args[:listener] || UIListener
-    @loader   = args[:loader]   || DictionaryLoader
+    @loader   = args[:loader]   || DictionaryLoader.new
     @renderer = args[:renderer] || UIRenderer
     @saver    = args[:saver]    || ResultsSaver
     @searcher = args[:searcher] || DictionarySearcher.new
@@ -17,7 +17,22 @@ class DictionaryUI
 
   def run
     welcome
-    prompt_user_for_dictionary
+
+    begin
+      path = prompt_for_dictionary
+    end until dictionary = loader.load(path)
+
+    searcher.dictionary = dictionary
+
+    loop do
+      user_input = prompt_for_search
+      break if user_input == "q"
+      command = user_input.split(" ")
+      result = searcher.public_send("#{command[0]}_match", command[1])
+      renderer.render(result)
+      save_path = prompt_for_save
+      saver.save(save_path, results) unless save_path.empty?
+    end
   end
 
   def welcome(welcome_message = nil)
@@ -26,11 +41,29 @@ class DictionaryUI
     renderer.render(welcome_message)
   end
 
-  def prompt_user_for_dictionary
-    path_prompt = "Where's your dictionary"
-    #renderer.render(path_prompt)
+
+  def prompt_for_dictionary(prompt = nil)
+    default_prompt = "Where's your dictionary?"
+    prompt = prompt || default_prompt
+    renderer.render(prompt)
+    listener.get_stripped_input
   end
 
+  def prompt_for_search
+    default_prompt = "Please enter a search type (exact, partial, begins, ends) and term. Example: exact fuzzy"
+    prompt = prompt || default_prompt
+    renderer.render(prompt)
+    listener.get_formatted_input
+  end
+
+  def prompt_for_save
+    default_prompt = "Where do you want to save your results?  Press enter if you don't want to save."
+    prompt = prompt || default_prompt
+    renderer.render(prompt)
+    listener.get_formatted_input
+  end
+
+
   private
-    attr_reader :renderer
+    attr_reader :renderer, :loader, :saver, :searcher, :listener
 end

@@ -1,0 +1,2 @@
+class ResultsSaver
+end
