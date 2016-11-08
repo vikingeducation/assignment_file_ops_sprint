@@ -11,7 +11,7 @@ class DictionaryUI
     @listener = args[:listener] || UIListener
     @loader   = args[:loader]   || DictionaryLoader.new
     @renderer = args[:renderer] || UIRenderer
-    @saver    = args[:saver]    || ResultsSaver
+    @saver    = args[:saver]    || ResultsSaver.new
     @searcher = args[:searcher] || DictionarySearcher.new
   end
 
@@ -28,10 +28,20 @@ class DictionaryUI
       user_input = prompt_for_search
       break if user_input == "q"
       result = searcher.search(user_input)
+
+      if result == searcher.unknown_search_type_message
+        renderer.render(result)
+        next
+      end
+
       result = format_result(result)
       renderer.render(result)
-      save_path = prompt_for_save unless result == searcher.unknown_search_type_message
-      saver.save(save_path, results) unless save_path.nil? || save_path.empty?
+
+      loop do
+        save_path = prompt_for_save unless result == searcher.unknown_search_type_message
+        save_result = saver.save(save_path, result) unless save_path.nil? || save_path.empty?
+        renderer.render(save_result)
+      end
     end
   end
 
@@ -64,11 +74,7 @@ class DictionaryUI
   end
 
   def format_result(result)
-    output = <<-EOM
-    Found #{result.length}:
-    #{result.join("\n")}
-    EOM
-    output.strip!
+    "Found #{result.length}:\n#{result.join("\n")}"
   end
 
   private

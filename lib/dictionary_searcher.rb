@@ -35,7 +35,7 @@ class DictionarySearcher
   end
 
   def ends_match(term)
-    dictionary.select { |word| word.ends_with?(term) }
+    dictionary.select { |word| word.end_with?(term) }
   end
 
 end
