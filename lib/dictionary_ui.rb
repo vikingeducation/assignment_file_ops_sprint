@@ -12,12 +12,6 @@ class DictionaryUI
   def initialize
   end
 
-  #
-  #
-  # 
-  # 
-  # number of words by starting letter
-
   # In the dictionary_searcher
     # exact match search
     # partial match search
@@ -34,21 +28,29 @@ class DictionaryUI
     @loader = DictionaryLoader.new(location)
     @dictionary = @loader.dictionary
     puts "Dictionary successfully loaded"
-    puts "Your dictionary has #{@dictionary.file.length} words"
-    @dictionary.frequency
+    word_frequency
+    puts "How do you want to search?"
+    puts "1: Exact match, 2: Partial match, 3: Begins with, 4: Ends with"
+    choice = get_user_input
+    puts "Enter the search term"
+    search_term = get_user_input
+    @searcher = DictionarySearcher.new
+    @searcher.which_match(choice, search_term)
   end
-
-  # puts a line "#{letter}: #{frequency}"
-
 
   def get_user_input
     input = gets.chomp
-    if input == 'q'
-      exit
-    else
-      input
-    end
+    exit if input == 'q'
   end
 
+  def word_frequency
+    puts "Your dictionary has #{@dictionary.file.length} words"
+    puts "Word frequency by starting letter."
+
+    @dictionary.frequency
+    @dictionary.frequency_hash.each do |key, value|
+      puts "#{key}: #{value}"
+    end
+  end
 end
 
