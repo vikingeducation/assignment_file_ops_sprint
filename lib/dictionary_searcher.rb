@@ -1,14 +1,17 @@
-#DictionarySearcher is an analysis class whose sole responsibility is to perform any analysis on the dictionary you provide it.
+# DictionarySearcher is an analysis class whose sole responsibility is to perform any analysis on the dictionary you provide it.
 
 class DictionarySearcher
 
+  attr_accessor :dictionary_file
 
-  def which_match(input, word, dictionary)
-    puts "I'm running which match!"
-    puts "#{input}: #{word}"
-    case input
+  def initialize(dictionary_file)
+    @dictionary_file = dictionary_file
+  end
+
+  def which_match(choice, search_term)
+    case choice
     when "1" 
-      exact_match(word, dictionary)
+      exact_match(search_term)
     when "2"
       partial_match
     when "3" 
@@ -18,11 +21,11 @@ class DictionarySearcher
     end
   end
 
-  def exact_match(search_string, dictionary)
-    puts "exact_match!"
-    regex = /#{search_string}/
-    match_array = dictionary.file.scan(regex)
-    puts match_array
+  def exact_match(search_term)
+    binding.pry
+    @dictionary_file.select do |word|
+      word.include?(search_term)
+    end
   end  
 
 end

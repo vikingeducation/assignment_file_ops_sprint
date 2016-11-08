@@ -1,13 +1,8 @@
 # DictionaryUI is the main class which handles the user interaction loop.
-
-require_relative 'dictionary'
-require_relative 'dictionary_loader'
-require_relative 'dictionary_searcher'
-require_relative 'results_saver'
-
+require 'pry'
 class DictionaryUI
 
-  attr_accessor :loader, :dictionary, :searcher, :results_saver
+  attr_accessor :dictionary, :searcher, :results_saver
 
   def initialize
   end
@@ -30,9 +25,9 @@ class DictionaryUI
 
   def load_the_file
     puts "Where is your dictionary? ('q' to quit)"
-    location = get_user_input
-    @loader = DictionaryLoader.new(location)
-    @dictionary = @loader.dictionary
+    dictionary_location = get_user_input
+    @loader = DictionaryLoader.new(dictionary_location)
+    @dictionary = Dictionary.new(@loader.file_array)
     puts "Dictionary successfully loaded"
   end
 
@@ -42,9 +37,9 @@ class DictionaryUI
     choice = get_user_input
     puts "Enter the search term"
     search_term = get_user_input
-    @searcher = DictionarySearcher.new
-    match_array = @searcher.which_match(choice, search_term, @dictionary)
-    puts "Your number of matches is #{match_array.length}"
+
+    matches = @dictionary.search_match(choice, search_term)
+    puts matches
   end
 
   def get_user_input
@@ -56,9 +51,8 @@ class DictionaryUI
   def word_frequency
     puts "Your dictionary has #{@dictionary.file.length} words"
     puts "Word frequency by starting letter."
-
-    @dictionary.frequency
-    @dictionary.frequency_hash.each do |key, value|
+    alphabet_hash = @dictionary.letter_frequency
+    alphabet_hash.each do |key, value|
       puts "#{key}: #{value}"
     end
   end

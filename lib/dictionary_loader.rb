@@ -2,15 +2,10 @@
 
 class DictionaryLoader
 
-  attr_accessor :dictionary
+  attr_accessor :file_array
 
   def initialize(file_path)
-  	arr = []
-    File.open(file_path, "r") do |item|
-    	arr = item.readlines
-    end
-    @dictionary = Dictionary.new(arr)
+    @file_array = File.readlines(file_path)
   end
-
 
 end
