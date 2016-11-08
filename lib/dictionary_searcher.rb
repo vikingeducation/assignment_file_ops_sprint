@@ -9,23 +9,24 @@ class DictionarySearcher
   end
 
   def partial_matches(input)
+    # matches(input)
     @words.select{ |word| word.include?(input) }
   end
 
   def begins_with(input)
-    # matches("\A" + input)
+    # matches("^" + input)
     @words.select{ |word| word.start_with?(input) }
   end
 
   def ends_with(input)
-    # matches(input + "\z")
+    # matches(input + "$")
     @words.select{ |word| word.end_with?(input) }
   end
 
-  # def matches(input)
+  # def matches(input) why doesn't this work...
   #   return_words = []
   #   @words.each do | word |
-  #     if word.match(Regexp.new(input))
+  #     if word.match(/#{input}/)
   #       return_words << word
   #     end
   #   end
