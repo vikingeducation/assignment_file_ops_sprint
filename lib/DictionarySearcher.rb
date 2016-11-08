@@ -5,39 +5,65 @@ class DictionarySearcher
   end
 
   def search_exact(query)
-    # binding.pry
-
+    results = []
+    @dictionary.words.each do |word|
+      if word == query
+        results << word
+      end
+    end
+    results
   end
 
   def search_partial(query)
-    puts 'b'
+    results = []
+    @dictionary.words.each do |word|
+      if word.match(/#{query}/)
+        results << word
+      end
+    end
+    results
   end
 
   def search_begins_with(query)
-
+    results = []
+    @dictionary.words.each do |word|
+      if word.match(/^#{query}/)
+        results << word
+      end
+    end
+    results
   end
 
   def search_ends_with(query)
-
+    results = []
+    @dictionary.words.each do |word|
+      if word.match(/#{query}\z/)
+        results << word
+      end
+    end
+    results
   end
 
+  def show_results(results)
+    puts "Found #{results.length} matches:"
+    results.each { |word| puts word.upcase }
+  end
 
   def search(search_kind, term)
-
+    results = []
     case search_kind
     when 1
-      search_exact(term)
+      results = search_exact(term)
     when 2
-      search_partial(term)
+      results = search_partial(term)
     when 3
-      search_begins_with(term)
+      results = search_begins_with(term)
     when 4
-      search_ends_with(term)
+      results = search_ends_with(term)
     end
+    show_results(results)
+    results
+
   end
 
-
-
 end
-
-
