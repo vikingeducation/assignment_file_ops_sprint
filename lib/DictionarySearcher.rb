@@ -4,7 +4,26 @@ class DictionarySearcher
     @dictionary = dictionary
   end
 
-  def self.search(search_kind, term)
+  def search_exact(query)
+    # binding.pry
+
+  end
+
+  def search_partial(query)
+    puts 'b'
+  end
+
+  def search_begins_with(query)
+
+  end
+
+  def search_ends_with(query)
+
+  end
+
+
+  def search(search_kind, term)
+
     case search_kind
     when 1
       search_exact(term)
@@ -17,20 +36,8 @@ class DictionarySearcher
     end
   end
 
-  def search_exact(query)
-    
-  end
 
-  def search_partial(query)
-
-  end
-
-  def search_begins_with(query)
-
-  end
-
-  def search_ends_with(query)
-
-  end
 
 end
+
+

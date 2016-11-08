@@ -2,7 +2,8 @@ require_relative 'Dictionary'
 require_relative 'DictionaryLoader'
 require_relative 'DictionarySearcher'
 require_relative 'ResultsSaver'
-
+require 'pry'
+require 'pry-byebug'
 
 
 class DictionaryUI
@@ -20,7 +21,8 @@ class DictionaryUI
 
   def prompt_for_search
     choice = nil
-    until (1..4).includes?(choice)
+    
+    until (1..4).include?(choice)
       puts "What kind of search would you like to perform?"
       puts "1: Exact"
       puts "2: Partial"
@@ -28,6 +30,9 @@ class DictionaryUI
       puts "4: Ends With"
       choice = gets.chomp.to_i
     end
+
+    choice
+
   end
 
   def prompt_for_term
@@ -35,8 +40,9 @@ class DictionaryUI
     gets.chomp.downcase
   end
 
-  def search_results(search_kind, term)
-    DictionarySearcher.search(search_kind, term)
+  def search_results(search_kind, term, dict)
+    ds = DictionarySearcher.new(dict)
+    ds.search(search_kind, term)
   end
 
   def main
@@ -44,7 +50,7 @@ class DictionaryUI
     dict = DictionaryLoader.createDictionaryFrom(path)
     search_kind = prompt_for_search
     term = prompt_for_term
-    search_results(search_kind, term)
+    search_results(search_kind, term, dict)
   end
 
 end
