@@ -8,6 +8,7 @@ class DictionarySearcher
   end
 
   def search(user_input)
+    user_input.downcase!
     type, term = user_input.split(" ")
     search_type = "#{type}_match"
     return unknown_search_type_message unless respond_to?(search_type)

@@ -17,15 +17,10 @@ class DictionaryUI
 
   def run
     welcome
-
-    begin
-      path = prompt_for_dictionary
-    end until dictionary = loader.load(path)
-
-    searcher.dictionary = dictionary
+    searcher.dictionary = get_user_dictionary
 
     loop do
-      user_input = prompt_for_search
+      user_input = prompt_user("Please enter a search type (exact, partial, begins, ends) and term. Example: exact fuzzy")
       break if user_input == "q"
       result = searcher.search(user_input)
 
@@ -37,11 +32,7 @@ class DictionaryUI
       result = format_result(result)
       renderer.render(result)
 
-      loop do
-        save_path = prompt_for_save unless result == searcher.unknown_search_type_message
-        save_result = saver.save(save_path, result) unless save_path.nil? || save_path.empty?
-        renderer.render(save_result)
-      end
+      save_result_file(result) unless result == searcher.unknown_search_type_message
     end
   end
 
@@ -51,30 +42,28 @@ class DictionaryUI
     renderer.render(welcome_message)
   end
 
-
-  def prompt_for_dictionary(prompt = nil)
-    default_prompt = "Where's your dictionary?"
-    prompt = prompt || default_prompt
+  def prompt_user(prompt)
     renderer.render(prompt)
     listener.get_stripped_input
   end
 
-  def prompt_for_search
-    default_prompt = "Please enter a search type (exact, partial, begins, ends) and term. Example: exact fuzzy"
-    prompt = prompt || default_prompt
-    renderer.render(prompt)
-    listener.get_formatted_input
-  end
-
-  def prompt_for_save
-    default_prompt = "Where do you want to save your results?  Press enter if you don't want to save."
-    prompt = prompt || default_prompt
-    renderer.render(prompt)
-    listener.get_formatted_input
-  end
-
   def format_result(result)
     "Found #{result.length}:\n#{result.join("\n")}"
+  end
+
+  def get_user_dictionary
+    begin
+      path = prompt_user("Where's your dictionary?")
+    end until dictionary = loader.load(path)
+    dictionary
+  end
+
+  def save_result_file(result)
+    begin
+      save_path = prompt_user("Where do you want to save your results?  Press enter if you don't want to save.")
+      save_result = saver.save(save_path, result) unless save_path.nil? || save_path.empty?
+      renderer.render(save_result)
+    end until save_result == "Save successful." || save_path.empty?
   end
 
   private
