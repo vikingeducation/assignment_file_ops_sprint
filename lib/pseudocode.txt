@@ -1,0 +1,21 @@
+
+Program launches                  # Executable/ launcher file
+User receives welcome message     # DictionaryUI#welcome
+Prompt for path to dictionary     # DictionaryUI#prompt_for_dictionary
+Render result of attempted load   # loop until success or quit
+  Failure                         # DictionaryUI#failed_dictionary_load
+  Success w/ dictionary stats     # DictionaryUI#dictionary_statistics
+Program loop                      # DictionaryUI#run
+  Perform search                  # DictionaryUI#run => DictionarySearcher#
+    Exact match                   # DictionarySearcher#exact_match(string)
+    Partial match                 # DictionarySearcher#partial_match(string)
+    Begins with                   # DictionarySearcher#begins_with(string)
+    Ends with                     # DictionarySearcher#ends_with(string)
+  Render Results                  # DictionaryUI#return_results
+    Number of matches             # DictionarySearcher#<matching_method>
+    Matching words                # DictionarySearcher#<matching_method>
+  Ask if save results             # DictionaryUI#save_results
+    Yes                           #
+      Prompt for path             # DictionaryUI#prompt_results_path
+      Write to file               # ResultsSaver#write_resutls(<file path>, <contents>)
+    No                            # Nothing
