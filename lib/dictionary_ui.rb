@@ -7,7 +7,9 @@ class DictionaryUI
     display_dictionary_stats(dictionary_searcher)
     choice = prompt_for_search_type
     term = prompt_for_search_term
-    dictionary_searcher.parse_input(choice, term)
+    matches = dictionary_searcher.parse_input(choice.to_i, term)
+    parse_output(matches)
+    save_file if prompt_save_file?
   end
 
   def gets_dictionary_filepath
@@ -40,6 +42,27 @@ class DictionaryUI
   def prompt_for_search_term
     puts "Enter that search criterion, yo"
     search_term = gets.chomp
+  end
+
+  def parse_output(matches)
+    puts "Found #{matches.length} matches for your search"
+    if matches.length > 0
+      puts "Here they are:"
+      puts matches
+    end
+  end
+
+  def prompt_save_file?
+    puts "Would you like to save the results to a file? y/n"
+    if gets.chomp == "y"
+      prompt_for_file_name
+    else
+      puts "Thanks for searching"
+  end
+
+  def prompt_for_file_name
+    puts ""
+    file_name = gets.chomp
   end
 
 end

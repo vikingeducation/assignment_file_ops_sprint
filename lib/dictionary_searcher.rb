@@ -1,3 +1,6 @@
+require 'pry'
+require 'pry-byebug'
+
 class DictionarySearcher
   attr_reader :dictionary
 
@@ -24,11 +27,18 @@ class DictionarySearcher
     when 2 then partial_search(search_term)
     when 3 then begins_with(search_term)
     when 4 then ends_with(search_term)
+    else
+      puts "Error, invalid search choice"
     end
+
   end
 
   def exact_search(search_term)
-    dictionary.words.include?(search_term)
+    if dictionary.words.include?(search_term)
+      [search_term]
+    else
+      []
+    end
   end
 
   def partial_search(search_term)
@@ -46,5 +56,15 @@ class DictionarySearcher
     end
     matches
   end
+
+  def ends_with(search_term)
+    matches = []
+    dictionary.words.each do |word|
+      matches << word if word.end_with?(search_term)
+    end
+    matches
+  end
+
+
 
 end
