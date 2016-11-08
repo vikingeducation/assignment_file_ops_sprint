@@ -5,7 +5,7 @@ class Dictionary
   def initialize(file)
     @file = file
     @words = []
-    @letter_freq = {}
+    @letter_freq = Hash.new(0)
     get_words
   end
 
@@ -13,6 +13,7 @@ class Dictionary
     IO.foreach(@file) do |line|
       @words << line.strip.downcase
     end
+    @file.close
   end
 
   def word_count
@@ -21,12 +22,8 @@ class Dictionary
 
   def freq_start_letters
     @words.each do |word|
-      first_let = word[0]
-      if @letter_freq.has_key?(first_let)
-        @letter_freq[first_let] += 1
-      else
-        @letter_freq[first_let] = 1
-      end
+      first_letter = word[0]
+      @letter_freq[first_letter] += 1
     end
     @letter_freq
   end

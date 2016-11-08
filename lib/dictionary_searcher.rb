@@ -18,18 +18,7 @@ class DictionarySearcher
   end
 
   def ends_with(input)
-    # matches(input + "\z")
     @words.select{ |word| word.end_with?(input) }
   end
-
-  # def matches(input)
-  #   return_words = []
-  #   @words.each do | word |
-  #     if word.match(Regexp.new(input))
-  #       return_words << word
-  #     end
-  #   end
-  #   return_words
-  # end
 
 end

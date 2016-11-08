@@ -11,6 +11,7 @@ class DictionaryUI
     @search_choice = nil
     @search_term = nil
     @save_response = nil
+    run
   end
 
   def run
@@ -18,28 +19,16 @@ class DictionaryUI
     get_path
     load_dictionary
     load_message
+    search_loop
+  end
+
+  def search_loop
     match_prompt
-    loop do
-      @search_choice = gets.chomp
-      break if valid_input?(@search_choice)
-    end
     search_term_prompt
-    loop do
-      @search_term = gets.chomp.downcase
-      break if @search_term.is_a?(String)
-    end
     results = get_match_type(@search_choice, @search_term)
     display_results(results)
     save_prompt
-    loop do
-      @save_response = gets.chomp.downcase
-      break if %w(y n q).include?(@save_response)
-    end
-    return if %w(n q).include?(@save_response)
-    save = ResultsSaver.new(results)
-
-
-
+    search_again
   end
 
   def get_path
@@ -68,14 +57,23 @@ class DictionaryUI
     puts "2: Partial"
     puts "3: Begins With"
     puts "4: Ends With"
+    @search_choice = valid_input(gets.chomp, %w(1 2 3 4))
   end
 
-  def valid_input?(input)
-    %w(1 2 3 4).include? input
+  def valid_input(input, acceptable_values)
+    if input == 'q'
+      exit
+    elsif acceptable_values.include? input
+      input
+    else
+      puts "Please enter a valid selection!"
+      valid_input(gets.chomp, acceptable_values)
+    end
   end
 
   def search_term_prompt
     print "Enter the search term: "
+    @search_term = gets.chomp.downcase
   end
 
   def get_match_type(choice, term)
@@ -100,8 +98,18 @@ class DictionaryUI
 
   def save_prompt
     puts "Do you want to save results (y/n)? \'q\' quits."
+    @save_response = valid_input(gets.chomp.downcase, %w(y n q))
   end
 
+  def search_again
+    if @save_response == 'q'
+      exit
+    elsif @save_response == 'y'
+      save = ResultsSaver.new(results)
+    else
+      search_loop
+    end
+  end
 end
 
 t = DictionaryUI.new
