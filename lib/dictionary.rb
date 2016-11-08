@@ -5,12 +5,12 @@ class Dictionary
   def initialize(file)
     @file = file
     @words = []
-    @letter_freq = {}
+    @letter_freq = {} # keys -> alphabet
     get_words
   end
 
   def get_words
-    IO.foreach(@file) do |line|
+    File.foreach(@file) do |line|
       @words << line.strip.downcase
     end
   end

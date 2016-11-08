@@ -3,8 +3,6 @@ class ResultsSaver
   def initialize(results)
     @results = results
     @filepath = nil
-    get_filepath
-    write_file
   end
 
   def get_filepath
@@ -20,11 +18,13 @@ class ResultsSaver
 
   def write_file
     File.open(@filepath, "w") do | file |
-      file.write(@results)
+      file.write(@results) # print out line by line
     end
+    File.close(@filepath)
   end
 
   # def valid_input(response)
   #   %w(y n q).include?(response)
   # end
+  
 end

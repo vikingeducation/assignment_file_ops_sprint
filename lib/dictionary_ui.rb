@@ -14,35 +14,22 @@ class DictionaryUI
   end
 
   def run
-    puts 'Where is your dictionary? (\'q\' to quit)'
     get_path
     load_dictionary
-    load_message
-    match_prompt
-    loop do
-      @search_choice = gets.chomp
-      break if valid_input?(@search_choice)
-    end
-    search_term_prompt
-    loop do
-      @search_term = gets.chomp.downcase
-      break if @search_term.is_a?(String)
-    end
+    display_load_msg
+    match_type
+    search_term
     results = get_match_type(@search_choice, @search_term)
     display_results(results)
-    save_prompt
-    loop do
-      @save_response = gets.chomp.downcase
-      break if %w(y n q).include?(@save_response)
-    end
+    save_file
     return if %w(n q).include?(@save_response)
-    save = ResultsSaver.new(results)
-
-
-
+    results_saver = ResultsSaver.new(results)
+    results_saver.get_filepath
+    results_saver.write_file
   end
 
   def get_path
+    puts 'Where is your dictionary? (\'q\' to quit)'
     @path = gets.chomp
   end
 
@@ -52,7 +39,7 @@ class DictionaryUI
     @searcher = DictionarySearcher.new(@dictionary.words)
   end
 
-  def load_message
+  def display_load_msg
     puts "Dictionary successfully loaded"
     puts "Your dictionary contains #{@dictionary.word_count} words."
     puts "Word frequency by starting letter:"
@@ -62,20 +49,28 @@ class DictionaryUI
     puts
   end
 
-  def match_prompt
+  def match_type
     puts "What kind of search?"
     puts "1: Exact"
     puts "2: Partial"
     puts "3: Begins With"
     puts "4: Ends With"
+    loop do
+      @search_choice = gets.chomp
+      break if valid_input?(@search_choice)
+    end
   end
 
   def valid_input?(input)
     %w(1 2 3 4).include? input
   end
 
-  def search_term_prompt
+  def search_term
     print "Enter the search term: "
+    loop do
+      @search_term = gets.chomp.downcase
+      break if @search_term.is_a?(String)
+    end
   end
 
   def get_match_type(choice, term)
@@ -98,10 +93,17 @@ class DictionaryUI
     puts results
   end
 
-  def save_prompt
+  def save_file
     puts "Do you want to save results (y/n)? \'q\' quits."
+    loop do
+      @save_response = gets.chomp.downcase
+      break if %w(y n q).include?(@save_response)
+    end
   end
 
 end
 
+# run code
+
 t = DictionaryUI.new
+t.run
