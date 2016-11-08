@@ -9,7 +9,6 @@ class DictionaryLoader
     File.open(file_path, "r") do |item|
     	arr = item.readlines
     end
-
     @dictionary = Dictionary.new(arr)
   end
 

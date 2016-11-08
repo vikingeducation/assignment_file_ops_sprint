@@ -23,24 +23,34 @@ class DictionaryUI
   # ask for the name of the file that they want to save to
 
   def run
+    load_the_file
+    word_frequency
+    match_the_word
+  end
+
+  def load_the_file
     puts "Where is your dictionary? ('q' to quit)"
     location = get_user_input
     @loader = DictionaryLoader.new(location)
     @dictionary = @loader.dictionary
     puts "Dictionary successfully loaded"
-    word_frequency
+  end
+
+  def match_the_word
     puts "How do you want to search?"
     puts "1: Exact match, 2: Partial match, 3: Begins with, 4: Ends with"
     choice = get_user_input
     puts "Enter the search term"
     search_term = get_user_input
     @searcher = DictionarySearcher.new
-    @searcher.which_match(choice, search_term)
+    match_array = @searcher.which_match(choice, search_term, @dictionary)
+    puts "Your number of matches is #{match_array.length}"
   end
 
   def get_user_input
     input = gets.chomp
     exit if input == 'q'
+    input
   end
 
   def word_frequency

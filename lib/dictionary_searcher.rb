@@ -2,26 +2,27 @@
 
 class DictionarySearcher
 
-  def which_match(input, word)
+
+  def which_match(input, word, dictionary)
+    puts "I'm running which match!"
+    puts "#{input}: #{word}"
     case input
-    when 1 
-      exact_match(word)
-    when 2
+    when "1" 
+      exact_match(word, dictionary)
+    when "2"
       partial_match
-    when 3 
+    when "3" 
       begins_with
-    when 4
+    when "4"
       ends_with
     end
   end
 
-  def exact_match(search_string)
-# display the number of matches
-# display the matches
+  def exact_match(search_string, dictionary)
+    puts "exact_match!"
     regex = /#{search_string}/
-    @match_array = @dictionary.file.scan(regex)
-    @number_of_matches = match_array.length
-
+    match_array = dictionary.file.scan(regex)
+    puts match_array
   end  
 
 end
