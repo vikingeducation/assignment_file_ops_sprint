@@ -10,13 +10,15 @@ class DictionaryUI
     @path = nil
     @search_choice = nil
     @search_term = nil
+    @save_response = nil
   end
 
   def run
     puts 'Where is your dictionary? (\'q\' to quit)'
     get_path
+    load_dictionary
     load_message
-    get_match_prompt
+    match_prompt
     loop do
       @search_choice = gets.chomp
       break if valid_input?(@search_choice)
@@ -30,9 +32,14 @@ class DictionaryUI
     display_results(results)
     save_prompt
     loop do
-      save_response = gets.chomp.downcase
-      break if @search_term.is_a?(String)
-    end   
+      @save_response = gets.chomp.downcase
+      break if %w(y n q).include?(@save_response)
+    end
+    return if %w(n q).include?(@save_response)
+    save = ResultsSaver.new(results)
+
+
+
   end
 
   def get_path
