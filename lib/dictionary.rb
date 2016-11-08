@@ -1,15 +1,6 @@
 class Dictionary
-  attr_reader :data
+  attr_reader :words
   def initialize(file_data = [])
-    @data = file_data
+    @words = file_data
   end
-data
-
-data
-data
-
-  def data
-    @data.strip
-  end
-
 end
