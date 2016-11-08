@@ -1,7 +1,7 @@
-require 'dictionary_searcher'
+# require 'dictionary_searcher'
 
-describe DictionarySearcher do
+# describe DictionarySearcher do
 
 
 
-end
+# end

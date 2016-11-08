@@ -11,7 +11,7 @@ class Dictionary
 
   def get_words
     IO.foreach(@file) do |line|
-      @words << line.strip
+      @words << line.strip.downcase
     end
   end
 
@@ -21,7 +21,7 @@ class Dictionary
 
   def freq_start_letters
     @words.each do |word|
-      first_let = word[0].downcase
+      first_let = word[0]
       if @letter_freq.has_key?(first_let)
         @letter_freq[first_let] += 1
       else
