@@ -10,7 +10,7 @@ class DictionarySearcher
     matches(regex)
   end
 
-  def search(str)
+  def find(str)
     regex = /#{str.strip.downcase}/
     matches(regex)
   end

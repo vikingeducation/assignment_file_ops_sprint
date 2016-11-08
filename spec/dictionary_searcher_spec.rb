@@ -19,11 +19,11 @@ describe DictionarySearcher do
 
   describe "#search" do
     it "accepts a string" do
-      expect{searcher.search("three")}.not_to raise_error
+      expect{searcher.find("three")}.not_to raise_error
     end
 
     it "returns an array of matches" do
-      expect(searcher.search("wo")).to eq(["two", "word", "words"])
+      expect(searcher.find("wo")).to eq(["two", "word", "words"])
     end
   end
 
