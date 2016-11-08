@@ -1,14 +1,17 @@
 class DictionarySearcher
 
-  attr_reader :dictionary, :dictionary_length, :midpoint
+  attr_accessor :dictionary, :unknown_search_type_message
 
   def initialize(args = {})
     @dictionary = args[:dictionary]
+    @unknown_search_type_message = "Search type not known."
   end
 
-  def dictionary=(dictionary)
-    @dictionary_length = dictionary.words.length
-    @dictionary = dictionary
+  def search(user_input)
+    type, term = user_input.split(" ")
+    search_type = "#{type}_match"
+    return unknown_search_type_message unless respond_to?(search_type)
+    public_send(search_type, term)
   end
 
   def exact_match(term, search_area = dictionary.words)

@@ -45,7 +45,12 @@ describe DictionaryUI do
   end
 
   describe '#prompt_user_for_dictionary' do
-    it 'prompts'
+    it 'prompts user for input path' do
+      prompt = "Where's your dictionary"
+      expect(renderer).to receive(:render).with(prompt)
+      # expect listner to get formatted input
+      dictionary_ui.prompt_user_for_dictionary(prompt)
+    end
   end
 
 end

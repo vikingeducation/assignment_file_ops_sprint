@@ -27,11 +27,11 @@ class DictionaryUI
     loop do
       user_input = prompt_for_search
       break if user_input == "q"
-      command = user_input.split(" ")
-      result = searcher.public_send("#{command[0]}_match", command[1])
+      result = searcher.search(user_input)
+      result = format_result(result)
       renderer.render(result)
-      save_path = prompt_for_save
-      saver.save(save_path, results) unless save_path.empty?
+      save_path = prompt_for_save unless result == searcher.unknown_search_type_message
+      saver.save(save_path, results) unless save_path.nil? || save_path.empty?
     end
   end
 
@@ -63,6 +63,13 @@ class DictionaryUI
     listener.get_formatted_input
   end
 
+  def format_result(result)
+    output = <<-EOM
+    Found #{result.length}:
+    #{result.join("\n")}
+    EOM
+    output.strip!
+  end
 
   private
     attr_reader :renderer, :loader, :saver, :searcher, :listener
