@@ -4,7 +4,7 @@ class ResultsSaver
     @results = results
   end
 
-  def save()
+  def save
     get_path
     write_file
   end

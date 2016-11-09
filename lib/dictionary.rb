@@ -23,6 +23,7 @@ class Dictionary
     if @words_by_letter
       @words_by_letter
     else 
+      # TODO group_by
       words_by_letter = {}
       ("A".."Z").each do |char|
         words_by_letter[char] = 0
