@@ -10,6 +10,7 @@ class Dictionary
   def word_count
     @words.length
   end
+  
   def words_by_letter
     @words.each_with_object({}) do |word, letters_key|
       first_letter = word[0].upcase
