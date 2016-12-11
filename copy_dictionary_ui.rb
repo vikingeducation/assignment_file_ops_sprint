@@ -16,17 +16,8 @@ class DictionaryUI
       puts "Your dictionary contains #{dictionary.word_count} words."
       puts "Word frequency by starting letter:"
       dictionary.display_words_by_numbers
-
-      puts "What kind of search?"
-      puts "1: Exact"
-      puts "2: Partial"
-      puts "3: Begins With"
-      puts "4: Ends With"
-      search_method = gets.chomp
-      searcher = DictionarySearcher.new
-
-
-
+      searcher = DictionarySearcher.new(dictionary)
+      searcher.choose_search_and_display
     end
   end
 
@@ -77,38 +68,69 @@ class Dictionary
 end
 
 class DictionarySearcher
-  #return the DictionaryLoader file
+  
+  def initialize(file)
+    @file = file
+  end
 
-  case (n)
-  when 1
-    exact_match()
-  when 2
-  when 3
-  when 4
+  def choices_display
+    puts "What kind of search?"
+    puts "1: Exact"
+    puts "2: Partial"
+    puts "3: Begins With"
+    puts "4: Ends With"
+  end
+
+  def ask_for_search_type
+    choices_display
+    gets.chomp.to_i
+  end
+
+  def ask_for_search_term
+    gets.chomp
+  end
+
+  def choose_search_and_display
+    search_type = ask_for_search_type
+    term = ask_for_search_term
+    case search_type
+      when 1
+        exact_match(term)
+      when 2
+        partial_match(term)
+      when 3
+        begins_with_match(term)
+      when 4
+        ends_with_match(term)
+    end
+  end
+
+  def find_and_display(user_input)
+    regex = %r[#{user_input}]
+    result = @file.join(" ").scan(regex)
+    print "Found #{result.size} match"
+    print "es /n" if result.size > 1
+    result.each {|word| puts "#{word}"}
   end
 
   def exact_match(user_input)
-    count = 0
-    @file.each {|word| count+=1 if word == user_input.capitalize }
-    count
+    find_and_display(user_input)
   end
 
   def partial_match(user_input)
-    regex = /#{Regexp.quote(user_input)}/  
-    result = @file.join(" ").scan(regex)
+    user_input = user_input + ".*\s+"
+    find_and_display(user_input)
   end
 
   def begins_with_match(user_input)
-
-    # Return MatchData object for last match
-    # "string".match(/USER_INPUT.* /)
-    # /.*/ =~ "string"
+    user_input = user_input + ".*\s+"
+    find_and_display(user_input)
   end
 
   def ends_with_match(user_input)
-
+    user_input = ".?" + user_input + "\s+"
+    find_and_display(user_input)
   end
-
 
 end
 
