@@ -87,7 +87,25 @@ class DictionarySearcher
   when 4
   end
 
-  def exact_match(word)
+  def exact_match(user_input)
+    count = 0
+    @file.each {|word| count+=1 if word == user_input.capitalize }
+    count
+  end
+
+  def partial_match(user_input)
+    regex = /#{Regexp.quote(user_input)}/  
+    result = @file.join(" ").scan(regex)
+  end
+
+  def begins_with_match(user_input)
+
+    # Return MatchData object for last match
+    # "string".match(/USER_INPUT.* /)
+    # /.*/ =~ "string"
+  end
+
+  def ends_with_match(user_input)
 
   end
 
