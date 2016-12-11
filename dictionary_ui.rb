@@ -17,7 +17,9 @@ class DictionaryUI
       puts "Word frequency by starting letter:"
       dictionary.display_words_by_numbers
       searcher = DictionarySearcher.new(dictionary.file)
-      searcher.choose_search_and_display
+      search_results = searcher.choose_search_and_display
+      saver = ResultsSaver.new(search_results)
+      break if saver.results_saver
     end
   end
 
@@ -141,5 +143,46 @@ class DictionarySearcher
 end
 
 class ResultsSaver
+  attr_accessor :search_results
+
+  def initialize(search_results)
+    @search_results = search_results
+  end
+
+  def get_save_or_quit
+    puts "Do you want to save results? y/n? 'q' quits."
+    gets.chomp
+  end
+
+  def ask_file_path_to_save
+    puts "What filepath should we write results to?"
+    gets.chomp
+  end
+
+  def results_saver
+    choice = get_save_or_quit
+    if choice == "y"
+      loop do
+        save_choice = ""
+        path = ask_file_path_to_save
+        if !File.file?(path)
+          File.write(path, search_results)
+          save_choice = "y"
+        else
+          save_choice = prompt_overwriting
+          if save_choice == "y"
+            file.write search_results
+            print "File successfully overwritten!"
+          end
+        end
+        break if save_choice == "y" || save_choice == "q"
+      end
+    end
+  end
+
+  def prompt_overwriting
+    puts "That file exists, overwrite? y/n? 'q' quits."
+    gets.chomp
+  end
 
 end
