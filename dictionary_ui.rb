@@ -17,6 +17,12 @@ class DictionaryUI
       puts "Word frequency by starting letter:"
       dictionary.display_words_by_numbers
 
+      puts "What kind of search?"
+      puts "1: Exact"
+      puts "2: Partial"
+      puts "3: Begins With"
+      puts "4: Ends With"
+
 
     end
   end
@@ -52,7 +58,7 @@ class Dictionary
 
   def words_count_by_first_letter
     words_frequency = {}
-    alphabet = "ABCDEFHIJKLMNOPQRSTWXYZ".split("")
+    alphabet = "ABCDEFGHIJKLMNOPQRSTWXYZ".split("")
     alphabet.each do |letter|
       counter = 0
       @file.each {|word| counter += 1 if word[0] == letter }
@@ -68,8 +74,12 @@ class Dictionary
 end
 
 class DictionarySearcher
+  #return the DictionaryLoader file
 
-  
+  def exact_match(word)
+
+  end
+
 
 end
 
