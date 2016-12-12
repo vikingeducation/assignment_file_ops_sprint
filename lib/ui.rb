@@ -1,5 +1,3 @@
-require_relative 'loader'
-
 class DictionaryUI 
 
   #handles user interaction loop
@@ -10,8 +8,8 @@ class DictionaryUI
   def run
     prompt_for_path
     provide_statistics
-    search? ? display_results(conduct_search) : goodbye
-    save_results ? save : goodbye
+    search? ? conduct_search : goodbye
+    save_results? ? save : goodbye
     goodbye
   end
 
@@ -33,9 +31,9 @@ class DictionaryUI
   end
 
   def number_of_words(letter=0)
-    return @dictionary.size if letter == 0
+    return @dictionary.processed.size if letter == 0
     number = 0
-    @dictionary.each { |word| number += 1 if word.start_with?(letter)} 
+    @dictionary.processed.each { |word| number += 1 if word.start_with?(letter)} 
     number
   end
 
@@ -77,7 +75,8 @@ class DictionaryUI
     puts "Enter the search term:"
     print "> "
     term = gets.chomp.strip.downcase
-    @dictionary.search(type, term)
+    @results = @dictionary.search(type, term)
+    display_results(@results)
   end
 
   def display_results(results)
@@ -97,10 +96,34 @@ class DictionaryUI
   end
 
   def save
+    get_filepath
+    if @saver.file_exist?
+      overwrite
+    else 
+      @saver.save
+      puts "File has been saved!"
+    end
+  end
+
+  def get_filepath
     puts "What filepath should we write results to?"
     print "> "
     path = gets.chomp.strip
+    @saver = ResultsSaver.new(path, @results)
   end
+
+  def overwrite
+    puts "That file exists, overwrite? (y/n)"
+    print "> "
+    response = gets.chomp.strip.downcase
+    until %(y n).include?(response)
+      puts "Please enter 'y' for yes and 'n' for no."
+      response = gets.chomp.strip.downcase
+    end
+    response == 'y' ? @saver.save : goodbye
+    puts "File was successfully overwritten!"
+  end
+
 
   def goodbye
     puts puts
@@ -117,6 +140,3 @@ class DictionaryUI
 
 #class ends here
 end
-
-a = DictionaryUI.new
-a.run
