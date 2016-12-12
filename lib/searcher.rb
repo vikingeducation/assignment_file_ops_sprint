@@ -1,14 +1,22 @@
 class DictionarySearcher
 
-#takes dictionary, contains methods that perform searchers on it
+  def initialize(dictionary)
+    @dictionary = dictionary
+  end
 
-#exact matches
+  def exact(term)
+    @dictionary.select {|word| word == term}
+  end
 
-#partial matches
+  def partial(term)
+    @dictionary.select {|word| word.include?(term)}
+  end
 
-#begins with matches
+  def begins_with(term)
+    @dictionary.select {|word| word.start_with?(term)}
+  end
 
-#ends with matches
-
-
+  def ends_with(term)
+    @dictionary.select {|word| word.end_with?(term)}
+  end
 end
