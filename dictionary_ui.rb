@@ -1,10 +1,12 @@
-require_relative 'dictionary_loader.rb'
+require_relative 'dictionary_loader'
 require_relative 'dictionary'
 require_relative 'dictionary_searcher'
 require_relative 'results_saver'
 
 
 class DictionaryUI
+  def initialize
+  end
 
   def run
     loop do
@@ -22,5 +24,7 @@ class DictionaryUI
       break if saver.results_saver
     end
   end
-
 end
+
+play = DictionaryUI.new
+play.run

@@ -9,12 +9,12 @@ class ResultsSaver
       loop do
         path = ask_file_path_to_save
         if !File.file?(path)
-          File.write(path, search_results)
+          File.write(path, @search_results)
           break
         end
         prompt_question = prompt_overwriting
         if prompt_question == "y"
-          file.write search_results
+          file.write @search_results
           print "File successfully overwritten!"
           break
         elsif prompt_question == "n"
