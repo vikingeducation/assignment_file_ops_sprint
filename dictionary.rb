@@ -11,8 +11,7 @@ class Dictionary
 
   def words_count_by_first_letter
     words_frequency = {}
-    alphabet = "ABCDEFGHIJKLMNOPQRSTWXYZ".split("")
-    alphabet.each do |letter|
+    ("A".."Z").each do |letter|
       counter = 0
       @file.each {|word| counter += 1 if word[0] == letter }
       words_frequency[letter] = counter

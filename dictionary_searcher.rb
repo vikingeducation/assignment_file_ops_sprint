@@ -4,9 +4,7 @@ class DictionarySearcher
     @file = file
   end
 
-  def choose_search_and_display
-    search_type = ask_for_search_type
-    term = ask_for_search_term
+  def choose_search_and_display(search_type, term)
     case search_type
       when 1
         exact_match(term)
@@ -20,24 +18,6 @@ class DictionarySearcher
   end
 
   private
-
-  def choices_display
-    puts "What kind of search?"
-    puts "1: Exact"
-    puts "2: Partial"
-    puts "3: Begins With"
-    puts "4: Ends With"
-  end
-
-  def ask_for_search_type
-    choices_display
-    gets.chomp.to_i
-  end
-
-  def ask_for_search_term
-    puts "Enter the search term"
-    gets.chomp
-  end
 
   def find_and_display(user_input)
     regex = %r[#{user_input}]
