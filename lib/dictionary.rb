@@ -4,11 +4,12 @@ class Dictionary
 
   def initialize(entries)
     @entries = entries
+    @words = {}
+    calculate_word_frequency
     print_stats
   end
 
   def print_stats
-    calculate_word_frequency
     puts "Your dictionary contains #{@entries.size} words. (A wordy dictionary indeed!)"
     @words.each do |letter, count|
       puts "#{letter.upcase}: #{count}"
@@ -17,7 +18,6 @@ class Dictionary
   end
 
   def calculate_word_frequency
-    @words = {}
     @entries.each do |word|
       l = word[0].downcase.to_sym
       if @words[l]
