@@ -5,13 +5,8 @@ require_relative 'results_saver'
 
 class DictionaryUI
 
-  def initialize
-    @search_term
-    @search_type
-  end
-
   def run
-    ask_for_path until valid_path?
+    get_path until valid_path?
     @dictionary = DictionaryLoader.load(@file_path)
     @searcher = DictionarySearcher.new(@dictionary)
     set_up_search
@@ -22,7 +17,7 @@ class DictionaryUI
   end
 
   def save_to_file
-    ask_for_save_path until safe_to_save?
+    get_save_path until safe_to_save?
     save
   end
 
@@ -67,7 +62,7 @@ class DictionaryUI
     puts
   end
 
-  def ask_for_save_path
+  def get_save_path
     puts "What filepath should we write the results to?"
     @save_path = gets.strip
     check_quit(@save_path)
@@ -107,7 +102,7 @@ class DictionaryUI
 
   def set_up_search
     ask_for_search_type until valid_search_type?
-    ask_for_term until valid_search_term?
+    get_search_term until valid_search_term?
     @searcher.term = @search_term
   end
 
@@ -118,7 +113,7 @@ class DictionaryUI
     true
   end
 
-  def ask_for_term
+  def get_search_term
     puts
     puts 'Enter your search term'
     puts '(No spaces or digits allowed)'
@@ -151,7 +146,7 @@ class DictionaryUI
     true
   end
 
-  def ask_for_path
+  def get_path
     puts "Where is your dictionary? ('q' to quit)"
     @file_path = gets.strip
     check_quit(@file_path)
