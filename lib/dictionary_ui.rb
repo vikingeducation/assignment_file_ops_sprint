@@ -5,13 +5,29 @@ require_relative 'results_saver'
 
 class DictionaryUI
 
+  def initialize
+    @dictionary, @save_path, @overwrite, @search_results, @save, @search_term, @file_path, @search_type = nil
+  end
+
   def run
     load_dictionary
+    print_stats
     set_up_search
     perform_search
     print_search_results
     save_to_file if save_file?
     say_goodbye
+  end
+
+  private
+
+  def print_stats
+    puts "Your dictionary contains #{@dictionary.entries.size} words. (A wordy dictionary indeed!)"
+    puts "Word frequency by starting letter:"
+    @dictionary.words.each do |word, count|
+      puts "#{word.upcase}: #{count}"
+    end
+    puts
   end
 
   def load_dictionary
@@ -152,7 +168,7 @@ class DictionaryUI
 
   def get_path
     puts "Where is your dictionary? ('q' to quit)"
-    @file_path = gets.strip
+    @file_path = STDIN.gets.strip
     check_quit(@file_path)
   end
 
