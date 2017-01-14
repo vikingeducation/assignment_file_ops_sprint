@@ -6,14 +6,17 @@ require_relative 'results_saver'
 class DictionaryUI
 
   def run
-    get_path until valid_path?
-    @dictionary = DictionaryLoader.load(@file_path)
-    @searcher = DictionarySearcher.new(@dictionary)
+    load_dictionary
     set_up_search
-    @search_results = perform_search
+    perform_search
     print_search_results
     save_to_file if save_file?
     say_goodbye
+  end
+
+  def load_dictionary
+    get_path until valid_path?
+    @dictionary = DictionaryLoader.load(@file_path)
   end
 
   def save_to_file
@@ -92,7 +95,7 @@ class DictionaryUI
   end
 
   def perform_search
-    case
+    @search_results = case
     when @search_type == 1 then @searcher.exact
     when @search_type == 2 then @searcher.partial
     when @search_type == 3 then @searcher.begins_with
@@ -101,6 +104,7 @@ class DictionaryUI
   end
 
   def set_up_search
+    @searcher = DictionarySearcher.new(@dictionary)
     ask_for_search_type until valid_search_type?
     get_search_term until valid_search_term?
     @searcher.term = @search_term
@@ -158,7 +162,6 @@ class DictionaryUI
       exit
     end
   end
-
 end
 
 d = DictionaryUI.new

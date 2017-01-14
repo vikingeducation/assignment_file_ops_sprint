@@ -1,5 +1,4 @@
 # the class which wraps the loaded dictionary.
-
 class Dictionary
   attr_reader :entries
 
