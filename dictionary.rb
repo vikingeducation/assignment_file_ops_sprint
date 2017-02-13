@@ -2,24 +2,20 @@
 
 class Dictionary
 
-  attr_reader :total_words
+  attr_reader :words
 
   def initialize(word_array)
-    @dictionary = word_array
+    @words = word_array
     @word_count = Hash.new(0)
-    @total_words = @dictionary.size
   end
 
-  def each
-    @dictionary.each do |word|
-      yield word
-    end
-    @dictionary
+  def total_words
+    @words.size
   end
 
   def word_count
     if @word_count.empty?
-      @dictionary.each do |word|
+      @words.each do |word|
         @word_count[word[0].downcase] += 1
       end
     end

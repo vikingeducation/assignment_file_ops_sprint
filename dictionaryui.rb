@@ -1,14 +1,9 @@
 require_relative 'dictionary_loader.rb'
 require_relative 'dictionary.rb'
 require_relative 'dictionary_searcher.rb'
+require_relative 'results_saver.rb'
 
 class DictionaryUI
-
-  def initialize
-    @file_name = nil
-    @dictionary = nil
-    @kind_of_search = 0
-  end
 
   def run
     prompt_for_location
@@ -17,6 +12,7 @@ class DictionaryUI
     kind_of_search
     search_term
     @searcher.search
+    save
   end
 
   private
@@ -24,7 +20,9 @@ class DictionaryUI
   def prompt_for_location
     puts "Where is your dictionary? ('q' to quit) "
     print "> "
-    @file_name = gets.chomp
+    @file_name = ""
+    @file_name = gets.chomp until File.file?(@file_name) || @file_name == "q"
+    quit if @file_name == 'q'
   end
 
   def quit
@@ -34,9 +32,8 @@ class DictionaryUI
   end
 
   def get_dictionary
-    quit if @file_name == 'q'
     @dictionary = DictionaryLoader.new(@file_name).load
-    puts "Dictionary succesfully loaded"
+    puts "Dictionary succesfully loaded" if @dictionary
   end
 
   def print_statistics
@@ -48,7 +45,8 @@ class DictionaryUI
   end
 
   def kind_of_search
-    until @kind_of_search <= 4 && @kind_of_search >= 1
+    @kind_of_search = nil
+    until (1..4).include?(@kind_of_search)
       puts "What kind of search?"
       puts "1: Exact"
       puts "2: Partial"
@@ -62,8 +60,62 @@ class DictionaryUI
   def search_term
     puts "Enter the search term"
     print "> "
-    @search_term = gets.chomp.downcase
+    @search_term = ""
+    @search_term = gets.chomp.downcase while @search_term.empty?
     @searcher = DictionarySearcher.new(@dictionary, @kind_of_search, @search_term)
   end
+
+  def save
+    prompt_for_saving
+    overwrite if file_exists?
+    ResultsSaver.new(@filepath, @searcher.matches, @search_term).save
+    puts "Your results are saved!"
+    exit
+  end
+
+  def prompt_for_saving
+    puts "Do you want to save results? y/n 'q' quits."
+    print "> "
+    answer = ""
+    answer = gets.chomp.downcase until ["y", "n", "q"].include?(answer)
+    if answer == "n"
+      puts "User chose not to save. Goodbye!"
+      exit
+    elsif answer == "q"
+      quit
+      exit
+    end
+    prompt_for_filepath
+  end
+
+  def prompt_for_filepath
+    puts "What filepath should we write results to?"
+    print "> "
+    @filepath = ""
+    @filepath = gets.chomp while @filepath.empty?
+  end
+
+  def overwrite
+    answer = ""
+    until answer == "y" || !file_exists?
+      puts "That file exists, overwrite? y/n? 'q' quits."
+      print "> "
+      answer = ""
+      answer = gets.chomp.downcase until ["y", "n", "q"].include?(answer)
+      if answer == "n"
+        puts "Choose another filepath!"
+        print "> "
+        @filepath = gets.chomp
+      elsif answer == "q"
+        quit
+        exit
+      end
+    end
+  end
+
+  def file_exists?
+    File.file?(@filepath)
+  end
+
 
 end

@@ -1,6 +1,8 @@
 
 class DictionarySearcher
 
+  attr_reader :matches
+
   def initialize(dictionary, type_of_search, search_term)
     @dictionary = dictionary
     @type = type_of_search
@@ -9,7 +11,7 @@ class DictionarySearcher
   end
 
   def search
-    @dictionary.each do |word|
+    @dictionary.words.each do |word|
       case @type
       when 1
         @matches << word if exact_matches?(word)
@@ -25,6 +27,7 @@ class DictionarySearcher
     @matches.each do |match|
       puts match.upcase
     end
+    puts "*" * 4
   end
 
   private
