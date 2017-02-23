@@ -1,9 +1,17 @@
 # DictionaryUI is the main class which handles the user interaction loop.
 
+require 'dictionary_loader'
+require 'dictionary_searcher'
+require 'dictionary'
+require 'results_saver'
+
 class DictionaryUI
 
-  def initialize
+  attr_accessor :dictionaryL, :dictionaryS
 
+  def initialize
+    @dictionaryL = DictionaryLoader.new
+    @dictionaryS = DictionarySearcher.new
   end
 
   def run
@@ -11,20 +19,24 @@ class DictionaryUI
       puts "Where is your dictionary? ('q' to quit)"
       file_path = gets.chomp
 
-      if file_path != "q"
-        puts "What kind of search? "
-        puts "1. Exact matches"
-        puts "2. Partial matches"
-        puts "3. Begins With"
-        puts "4. Ends With"
-        search_method = gets.chomp
-      end
+      break if file_path == "q"
+      dictionaryL.read_file
 
-      puts "Enter the search term"
-      searh_term =  gets.chomp
-      
-      while  file_path != 'q'
+        
+
     end
+  end
+
+  def search
+    puts "What kind of search? "
+    puts "1. Exact matches"
+    puts "2. Partial matches"
+    puts "3. Begins With"
+    puts "4. Ends With"
+    search_method = gets.chomp
+
+    puts "Enter the search term"
+    search_term =  gets.chomp
   end
 
   def prompt_user_to_save
