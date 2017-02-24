@@ -1,9 +1,8 @@
 # DictionaryUI is the main class which handles the user interaction loop.
 
-require 'dictionary_loader'
-require 'dictionary_searcher'
-require 'dictionary'
-require 'results_saver'
+require_relative 'dictionary_loader'
+# require 'dictionary_searcher'
+# require 'results_saver'
 
 class DictionaryUI
 
@@ -11,7 +10,7 @@ class DictionaryUI
 
   def initialize
     @dictionaryL = DictionaryLoader.new
-    @dictionaryS = DictionarySearcher.new
+    # @dictionaryS = DictionarySearcher.new
   end
 
   def run
@@ -20,10 +19,7 @@ class DictionaryUI
       file_path = gets.chomp
 
       break if file_path == "q"
-      dictionaryL.read_file
-
-        
-
+      @dictionaryL.read_file
     end
   end
 

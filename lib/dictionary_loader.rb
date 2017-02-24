@@ -1,17 +1,13 @@
 # DictionaryLoader is a helper class whose single responsibility is to load in the dictionary.
 
+require_relative'dictionary'
+
 class DictionaryLoader
-
-
+  attr_accessor :dict_file
 
   def load
-    dict = read_file
-    dictionary = Dictionary.new(dict)
-    # puts "Dictionary successfully loaded"
-    # puts "Your dictionary contains 12345 words"
-    # puts "Word frequency by starting letter:"
-    # # A: 123
-    # B: 456"
+    dict_arr = read_file
+    @dict_file = Dictionary.new(dict_arr)
   end
 
   def read_file
@@ -21,6 +17,15 @@ class DictionaryLoader
     end
     arr
   end
+
+  def dict_loaded
+    puts "Dictionary successfully loaded"
+    puts "Your dictionary contains #{num_words} words"
+    puts "Word frequency by starting letter:"
+    # # A: 123
+    # B: 456"
+  end
+
 end
 
 

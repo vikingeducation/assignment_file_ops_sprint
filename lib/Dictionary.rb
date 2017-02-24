@@ -4,30 +4,37 @@ class Dictionary
 
   attr_accessor :file, :words
 
-  def initialize(file)
-    @file = DictionaryLoader.new(file)
+  def initialize(arr)
+    @file = DictionaryLoader.new(arr)
   end
 
   def word_count
     @file.size
   end
 
-  def words_count_by_first_letter
-    words_frequency = {}
-    alphabet = "ABCDEFGHIJKLMNOPQRSTWXYZ".split("")
+  def first_letter_count
+    # words_frequency = {}
+    letter_freq = Hash.new
+    # alphabet = "ABCDEFGHIJKLMNOPQRSTWXYZ".split("")
     alphabet.each do |letter|
       counter = 0
       @file.each {|word| counter += 1 if word[0] == letter }
-      words_frequency[letter] = counter
+      letter_freq[letter] = counter
+
+
+    # If the hash key is already present append to it or add it as a new key
+    if(letter_freq.key?(word[0).upcase)
+      letter_freq[word[0).upcase] += [(word[0).upcase]
+    else
+      # Add a new key to the hash - words are stored in an array
+      letter_freq[word[0).upcase = 1
+    end
+  end
     end
     words_frequency
   end
 
-  def display_words_by_numbers
-    words_count_by_first_letter.each{|key, value| puts "#{key}: #{value}"}
-  end
 
-end
 
 end
 
