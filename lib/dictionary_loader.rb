@@ -1,6 +1,6 @@
 # DictionaryLoader is a helper class whose single responsibility is to load in the dictionary.
 
-require_relative'dictionary'
+require_relative 'dictionary'
 
 class DictionaryLoader
   attr_accessor :dict_file
@@ -18,12 +18,13 @@ class DictionaryLoader
     arr
   end
 
+
   def dict_loaded
     puts "Dictionary successfully loaded"
-    puts "Your dictionary contains #{num_words} words"
+    puts "Your dictionary contains #{@dict_file.num_words} words"
     puts "Word frequency by starting letter:"
-    # # A: 123
-    # B: 456"
+    freq_letters = @dict_file.first_letter_count
+    @dict_file.output_letter_freq(freq_letters)
   end
 
 end

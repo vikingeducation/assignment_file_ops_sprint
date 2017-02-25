@@ -1,16 +1,17 @@
 # DictionaryUI is the main class which handles the user interaction loop.
 
 require_relative 'dictionary_loader'
-# require 'dictionary_searcher'
-# require 'results_saver'
+require 'dictionary_searcher'
+require 'results_saver'
 
 class DictionaryUI
 
-  attr_accessor :dictionaryL, :dictionaryS
+  attr_accessor :dictionaryL, :dictionaryS, :results_saver
 
   def initialize
     @dictionaryL = DictionaryLoader.new
-    # @dictionaryS = DictionarySearcher.new
+    @dictionaryS = DictionarySearcher.new
+    # @results_saver = ResultsSaver.new
   end
 
   def run
@@ -18,8 +19,13 @@ class DictionaryUI
       puts "Where is your dictionary? ('q' to quit)"
       file_path = gets.chomp
 
+      until file_path == "5desk.txt" || file_path == "q"
+        puts 'Dictionary not found, please specify your file again'
+        file_path = gets.chomp
+      end
+
       break if file_path == "q"
-      @dictionaryL.read_file
+      @dictionaryL.load
     end
   end
 
@@ -31,8 +37,16 @@ class DictionaryUI
     puts "4. Ends With"
     search_method = gets.chomp
 
+    until search_method == "1" || search_method == "2" ||search_method == "3" || search_method == "4" 
+      puts 'Search method not valid, please specify your search method again'
+      search_method = gets.chomp
+      
+    end
+
     puts "Enter the search term"
     search_term =  gets.chomp
+
+    @dictionaryS.search(search_method, search_term)
   end
 
   def prompt_user_to_save
