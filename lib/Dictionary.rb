@@ -37,8 +37,5 @@ class Dictionary
       puts "#{x}: #{y}"
     end
   end
-
-
-
 end
 

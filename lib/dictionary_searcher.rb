@@ -3,14 +3,15 @@
 
 require_relative 'dictionary'
 
-# Find a way to make dictionary know about this class to use for seacrhing words - the array
-
 class DictionarySearcher
 
-  attr_accessor :words_found
+  attr_accessor :words_found, :word_count, :word_arr
 
+  def search(method, user_input, word_arr)
+    @word_arr  = word_arr
+    @word_count = 0
+    @words_found = []
 
-  def search(method, user_input)
     case(method)
       when 1
         exact_match(user_input)
@@ -23,33 +24,65 @@ class DictionarySearcher
     end
   end
 
-  def exact_match(user_input)
-    count = 0
-    @file.each do |word| 
-      count+=1 if word == user_input.capitalize 
-      @words_found << word
+  def output_matches
+    puts "Found #{@word_count} word(s)" 
+    if(@word_count != 0) 
+      @words_found.each do |word|
+        puts "#{word}"
+      end
     end
-    count
+    puts "***"
+  end
+
+  def exact_match(user_input)
+    
+
+    @word_arr.each do |word| 
+      if word.upcase == user_input.upcase 
+        @word_count += 1 
+        @words_found << word
+      end
+    end
+
+    puts "#{@words_found} words_found arr"
   end
 
   def partial_match(user_input)
-    count = 0
-    regex = /#{Regexp.quote(user_input)}/  
-    result = @file.join(" ").scan(regex)
-    @words_found << word
     
-    count
+
+    regex = /#{user_input.upcase}/
+
+    @word_arr.each do |word| 
+      if word.upcase.match(regex) 
+        @word_count += 1 
+        @words_found << word
+      end
+    end
+
+    # regex = /#{Regexp.quote(user_input)}/  
+    # result = @file.join(" ").scan(regex)
   end
+    
 
   def begins_with_match(user_input)
+    regex = /\A#{user_input.upcase}/
 
-    # Return MatchData object for last match
-    # "string".match(/USER_INPUT.* /)
-    # /.*/ =~ "string"
+    @word_arr.each do |word| 
+      if word.upcase.match(regex) 
+        @word_count += 1 
+        @words_found << word
+      end
+    end
   end
 
   def ends_with_match(user_input)
+    regex = /\z#{user_input.upcase}/
 
+    @word_arr.each do |word| 
+      if word.upcase.match(regex) 
+        @word_count += 1 
+        @words_found << word
+      end
+    end
   end
-
 end

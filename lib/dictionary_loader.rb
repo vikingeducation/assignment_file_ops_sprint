@@ -7,7 +7,6 @@ class DictionaryLoader
 
   def load(file_path)
     dict_arr = read_file(file_path)
-    puts "#{dict_arr}"
     @dict_file = Dictionary.new(dict_arr)
     output_dict_loaded
   end
