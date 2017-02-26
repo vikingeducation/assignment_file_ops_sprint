@@ -1,7 +1,7 @@
 # DictionarySearcher is an analysis class whose sole responsibility is to perform any analysis on the dictionary you provide it.
 
 
-require 'dictionary'
+require_relative 'dictionary'
 
 # Find a way to make dictionary know about this class to use for seacrhing words - the array
 

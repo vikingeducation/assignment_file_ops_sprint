@@ -5,23 +5,26 @@ require_relative 'dictionary'
 class DictionaryLoader
   attr_accessor :dict_file
 
-  def load
-    dict_arr = read_file
+  def load(file_path)
+    dict_arr = read_file(file_path)
+    puts "#{dict_arr}"
     @dict_file = Dictionary.new(dict_arr)
+    output_dict_loaded
   end
 
-  def read_file
+  def read_file(file_path)
     arr = []
-    file_lines = File.readlines("5desk.txt", "r") do |file|
+    File.readlines(file_path).each do |line|
       arr << line.strip
     end
     arr
   end
 
 
-  def dict_loaded
+  def output_dict_loaded
+    num_words = @dict_file.num_words
     puts "Dictionary successfully loaded"
-    puts "Your dictionary contains #{@dict_file.num_words} words"
+    puts "Your dictionary contains #{num_words} words"
     puts "Word frequency by starting letter:"
     freq_letters = @dict_file.first_letter_count
     @dict_file.output_letter_freq(freq_letters)

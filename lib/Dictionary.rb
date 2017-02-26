@@ -5,7 +5,6 @@ class Dictionary
   attr_accessor :words
 
   def initialize(arr)
-    # @file = DictionaryLoader.new(arr)
     @words = arr
   end
 
@@ -15,19 +14,22 @@ class Dictionary
 
   def first_letter_count
     letter_freq = Hash.new
-    #
     @words.each do |word|
       # If the hash key is already present append to it or add it as a new key
-      if(letter_freq.key?(word[0].upcase)
+      if(letter_freq.key?(word[0].upcase))
         letter_freq[word[0].upcase] += 1
       else
         # Add a new key to the hash 
-        letter_freq[word[0].upcase = 1
+        letter_freq[word[0].upcase] = 1
       end
     end
 
+    # puts "sorted letter_freq #{letter_freq}"
+
     # Sort the hash keys in alphabetical order
-    letter_freq = Hash.new[letter_freq.sort]
+    # sorted_letter_freq = Hash.new[letter_freq.sort]
+    # puts "sorted letter_freq #{sorted_letter_freq}"
+    letter_freq
   end
 
   def output_letter_freq(letter_count)
