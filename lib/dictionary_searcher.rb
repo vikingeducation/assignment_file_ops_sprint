@@ -43,35 +43,21 @@ class DictionarySearcher
         @words_found << word
       end
     end
-
   end
 
   def partial_match(user_input)
     regex = /#{user_input.upcase}/
-
-    @word_arr.each do |word| 
-      if word.upcase.match(regex) 
-        @word_count += 1 
-        @words_found << word
-      end
-    end
+    regex_searches(regex)
   end
     
 
   def begins_with_match(user_input)
     regex = /\A#{user_input.upcase}/
-
-    @word_arr.each do |word| 
-      if word.upcase.match(regex) 
-        @word_count += 1 
-        @words_found << word
-      end
-    end
+    regex_searches(regex)
   end
 
   def ends_with_match(user_input)
     regex = /\z#{user_input.upcase}/
-
     regex_searches(regex)
   end
 
