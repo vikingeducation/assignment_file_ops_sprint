@@ -11,20 +11,21 @@ class DictionaryUI
   def initialize
     @dictionaryL = DictionaryLoader.new
     @dictionaryS = DictionarySearcher.new
-    # @results_saver = ResultsSaver.new
+    @results_saver = ResultsSaver.new
   end
 
   def run
     get_dictionary
     search_dictionary
     ask_user_to_save
+
   end
 
   def get_dictionary
     puts "Where is your dictionary? ('q' to quit)"
     file_path = gets.chomp
 
-    until file_path == "../5desk.txt" || file_path == "q"
+    until File.file?(file_path)
       puts 'Dictionary not found, please specify your file again'
       file_path = gets.chomp
     end
@@ -34,7 +35,7 @@ class DictionaryUI
     @dictionary = @dictionaryL.dict_file
   end
 
-  def search_dictonary
+  def search_dictionary
     puts "What kind of search?"
     puts "1. Exact matches"
     puts "2. Partial matches"
@@ -67,22 +68,31 @@ class DictionaryUI
         
       if File.file?(save_filepath)
         puts "That file exists, overwrite? y/n? 'q' quits."
-        
         overwrite = gets.chomp 
         if(overwrite == "y")       
-          # @results_saver.save(results, save_filepath)
+          @results_saver.save(@dictionaryS.words_found, save_filepath)
+          puts "File successfully overwritten!"
+        elsif(overwrite == "n")  
+          puts "Choose another filepath"
+          save_filepath = gets.chomp     
+          @results_saver.save(@dictionaryS.words_found, save_filepath) 
         end     
-
+      elsif(save_file == "q")
+        quit
       else
-        # @results_saver.save(results, save_filepath)
-        puts "File successfully overwritten!"
+        @results_saver.save(@dictionaryS.words_found, save_filepath)
+        puts "File saved"
       end
+    elsif (save_file == "n")
+      puts "You chose not to save"
     end
+    
+
   end
 
 
-def quit
-  puts "Goodbye! See you next time!"
-  exit  end
-end
+  def quit
+    puts "Goodbye! See you next time!"
+    exit  end
+  end
 
