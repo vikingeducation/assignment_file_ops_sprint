@@ -17,8 +17,7 @@ class DictionaryUI
   def run
     get_dictionary
     search_dictionary
-    ask_user_to_save
-
+    process_save
   end
 
   def get_dictionary
@@ -35,12 +34,17 @@ class DictionaryUI
     @dictionary = @dictionaryL.dict_file
   end
 
-  def search_dictionary
+  def search_instructions
     puts "What kind of search?"
     puts "1. Exact matches"
     puts "2. Partial matches"
     puts "3. Begins With"
     puts "4. Ends With"
+  end
+
+  def search_dictionary
+
+    search_instructions
     search_method = gets.chomp
 
     until search_method == "1" || search_method == "2" ||search_method == "3" || search_method == "4"
@@ -58,41 +62,49 @@ class DictionaryUI
     @dictionaryS.output_matches
   end
 
-  def ask_user_to_save
+  def request_save
     puts "Do you want to save results? y/n? 'q' quits."
-    save_file = gets.chomp
+    gets.chomp
+  end
+
+  def process_save
     
+    save_file = request_save
+
     if(save_file == "y")
       puts "What filepath should we write results to?"
       save_filepath = gets.chomp
-        
+       
+      # Should we overwrite? 
       if File.file?(save_filepath)
         puts "That file exists, overwrite? y/n? 'q' quits."
         overwrite = gets.chomp 
-        if(overwrite == "y")       
-          @results_saver.save(@dictionaryS.words_found, save_filepath)
-          puts "File successfully overwritten!"
-        elsif(overwrite == "n")  
-          puts "Choose another filepath"
-          save_filepath = gets.chomp     
-          @results_saver.save(@dictionaryS.words_found, save_filepath) 
-        end     
-      elsif(save_file == "q")
-        quit
+        overwrite_process(overwrite)
       else
         @results_saver.save(@dictionaryS.words_found, save_filepath)
         puts "File saved"
       end
+    elsif(save_file == "q")
+        quit
     elsif (save_file == "n")
       puts "You chose not to save"
     end
-    
-
   end
 
+  def overwrite_process(overwrite)
+    if(overwrite == "y")       
+      @results_saver.save(@dictionaryS.words_found, save_filepath)
+      puts "File successfully overwritten!"
+    elsif(overwrite == "n")  
+      puts "Choose another filepath"
+      save_filepath = gets.chomp     
+      @results_saver.save(@dictionaryS.words_found, save_filepath) 
+    end     
+  end
 
   def quit
     puts "Goodbye! See you next time!"
-    exit  end
+    exit  
   end
+end
 

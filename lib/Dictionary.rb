@@ -24,9 +24,6 @@ class Dictionary
       end
     end
 
-    # Sort the hash keys in alphabetical order
-    # sorted_letter_freq = Hash.new[letter_freq.sort]
-    # puts "sorted letter_freq #{sorted_letter_freq}"
     letter_freq
   end
 
