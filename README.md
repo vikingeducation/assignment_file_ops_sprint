@@ -1,2 +1,15 @@
+Andrea A
+
 # assignment_file_ops_sprint
-I can haz spellz
+
+Load a dictionary and search for words in the dictionary
+
+## To run:
+
+Go to the lib folder, run pry
+
+load "dictionaryUI.rb"
+
+DictionaryUI.new.run
+
+
