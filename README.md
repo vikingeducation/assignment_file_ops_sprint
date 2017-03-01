@@ -3,11 +3,12 @@ Andrea A
 # assignment_file_ops_sprint
 
 
-To run:
+## To run:
 
-# Go to the lib folder, run pry
+Go to the lib folder, run pry
 
-# load "dictionaryUI.rb"
-# DictionaryUI.new.run
+load "dictionaryUI.rb"
+
+DictionaryUI.new.run
 
 
