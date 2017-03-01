@@ -15,25 +15,26 @@ class DictionaryUI
   end
 
   def run
-    loop do
-      puts "Where is your dictionary? ('q' to quit)"
-      file_path = gets.chomp
-
-      until file_path == "../5desk.txt" || file_path == "q"
-        puts 'Dictionary not found, please specify your file again'
-        file_path = gets.chomp
-      end
-
-      break if file_path == "q"
-      @dictionaryL.load(file_path)
-      @dictionary = @dictionaryL.dict_file
-
-      search
-      prompt_user_to_save
-    end
+    get_dictionary
+    search_dictionary
+    ask_user_to_save
   end
 
-  def search
+  def get_dictionary
+    puts "Where is your dictionary? ('q' to quit)"
+    file_path = gets.chomp
+
+    until file_path == "../5desk.txt" || file_path == "q"
+      puts 'Dictionary not found, please specify your file again'
+      file_path = gets.chomp
+    end
+
+    quit if file_path == "q"
+    @dictionaryL.load(file_path)
+    @dictionary = @dictionaryL.dict_file
+  end
+
+  def search_dictonary
     puts "What kind of search?"
     puts "1. Exact matches"
     puts "2. Partial matches"
@@ -56,7 +57,7 @@ class DictionaryUI
     @dictionaryS.output_matches
   end
 
-  def prompt_user_to_save
+  def ask_user_to_save
     puts "Do you want to save results? y/n? 'q' quits."
     save_file = gets.chomp
     
@@ -78,5 +79,10 @@ class DictionaryUI
       end
     end
   end
+
+
+def quit
+  puts "Goodbye! See you next time!"
+  exit  end
 end
 

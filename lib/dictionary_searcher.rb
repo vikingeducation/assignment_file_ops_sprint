@@ -35,8 +35,6 @@ class DictionarySearcher
   end
 
   def exact_match(user_input)
-    
-
     @word_arr.each do |word| 
       if word.upcase == user_input.upcase 
         @word_count += 1 
