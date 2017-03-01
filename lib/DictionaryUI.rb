@@ -35,6 +35,7 @@ class DictionaryUI
   end
 
   def search_instructions
+    puts "*******************"
     puts "What kind of search?"
     puts "1. Exact matches"
     puts "2. Partial matches"
@@ -79,7 +80,7 @@ class DictionaryUI
       if File.file?(save_filepath)
         puts "That file exists, overwrite? y/n? 'q' quits."
         overwrite = gets.chomp 
-        overwrite_process(overwrite)
+        overwrite_process(overwrite, save_filepath)
       else
         @results_saver.save(@dictionaryS.words_found, save_filepath)
         puts "File saved"
@@ -91,7 +92,7 @@ class DictionaryUI
     end
   end
 
-  def overwrite_process(overwrite)
+  def overwrite_process(overwrite, save_filepath)
     if(overwrite == "y")       
       @results_saver.save(@dictionaryS.words_found, save_filepath)
       puts "File successfully overwritten!"
@@ -99,6 +100,7 @@ class DictionaryUI
       puts "Choose another filepath"
       save_filepath = gets.chomp     
       @results_saver.save(@dictionaryS.words_found, save_filepath) 
+      puts "File saved"
     end     
   end
 
