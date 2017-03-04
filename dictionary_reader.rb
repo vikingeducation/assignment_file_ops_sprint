@@ -16,21 +16,24 @@ class Dictionary
 		@dictionary_loader.load_file(file)
 		#calls stats method
 		@dictionary_loader.stats
-    #calls search method
+
 		@dictionary_searcher.search_dictionary
-  end
+
+	end
 end
 #class for loading and stats
 class DictionaryLoader
 	attr_accessor :dictionary, :file
+	def initialize
 	
+  end
+
 	def load_file(file)
 		#gets file and puts it into variable
 		@@dictionary = File.readlines(file)
 		#calls dictionary array method
 		dictionary_array
 	end
-
 	def dictionary_array
 		#initialize empty array
 		@@dictionary_array = []
@@ -38,7 +41,8 @@ class DictionaryLoader
 		@@dictionary.each do |word|
 			#gets word from dictionary and downcase letters & pushes into array
       @@dictionary_array << word.strip.downcase
-		end	
+		end
+		
 	end
 
 	def stats
@@ -55,7 +59,6 @@ class DictionaryLoader
 		puts "Number of words per letter:\n#{@frequency}"
 	end
 end
-
 #class for user interaction
 class DictionaryUI
 	attr_accessor :file, :dictionary
@@ -70,6 +73,7 @@ class DictionaryUI
   	#returns file
   	return @file
   end
+
 end
 
 class DictionarySearcher < DictionaryLoader
@@ -102,13 +106,14 @@ class DictionarySearcher < DictionaryLoader
   	search_exact_word
   when "q"
   	exit
+
   else
   	"invalid selection"
   end
   #stops loop if user inputs q
 	break if @user_input = "q".to_i
-    end
   end
+end
 
   def search_exact_word
   	#gets word to search
