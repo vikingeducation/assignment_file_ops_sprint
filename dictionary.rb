@@ -12,6 +12,7 @@ class DictionaryUI
   	ask_source_filepath
     show_stats
     enter_search_term if search?
+    @loader.dict.search_query.search(search_type, enter_search_term)
     save_results if save?
   end
 
@@ -84,7 +85,7 @@ end
 class Dictionary
 
   attr_accessor :dictionary
-  attr_reader :word_count, 
+  attr_reader :word_count, :search_query
 
   def initialize(processed_dictionary)
     @dictionary = processed_dictionary
