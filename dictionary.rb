@@ -1,4 +1,5 @@
 class Dictionary
+	attr_reader :word_list
 	def initialize(word_list)
 		@word_list = word_list
 	end

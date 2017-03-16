@@ -1,7 +1,7 @@
 class DictionaryUI
 	require './dictionary_loader'
 	require './dictionary'
-
+	require './dictionary_searcher'
 	def initialize
 	end
 
@@ -11,6 +11,10 @@ class DictionaryUI
 		dictionary = DictionaryLoader.load(file_location)
 		dictionary.word_count
 		dictionary.frequency
+		ds = DictionarySearcher.new(dictionary)
+		search_type = ds.ask_search
+		search_term = ds.ask_term
+		ds.search(search_type, search_term)
 	end
 end
 
