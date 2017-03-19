@@ -6,46 +6,35 @@ class DictionarySearcher
 
 	def display_matches(array)
 		puts "Found #{array.size} matches:"
-		array.each {|word| puts word}
+		array.each { |word| puts word }
 		array.size
 	end
 
 	def exact(words_list, term)
-		arr = []
-		words_list.each do |word|
-			arr << word if word == term 
-		end
-		display_matches(arr)
-		@results = arr
+		word_match = words_list.select { |word| word == term }
+		display_matches(word_match)
+		@results = word_match
 	end
 
 	def partial(words_list, term)
-		arr = []
-		words_list.each do |word|
-			arr << word if word.include? (term)
-		end
-		display_matches(arr)
-		@results = arr
+		word_match = words_list.select { |word| word.include?(term) }
+		display_matches(word_match)
+		@results = word_match
 	end
 
 	def begins_with(words_list, term)
-		arr = []
-		words_list.each do |word|
-			arr << word unless (/\A#{term}/ =~ word) == nil 
-		end
-		display_matches(arr)
-		@results = arr
+		word_match = words_list.select { |word| (/\A#{term}/ =~ word) != nil }
+		display_matches(word_match)
+		@results = word_match
 	end
 
 	def ends_with(words_list, term)
-		arr = []
-		words_list.each do |word|
-			arr << word unless (/#{term}\z/ =~ word) == nil
-		end
-		display_matches(arr)
-		@results = arr
+		word_match = words_list.select { |word| (/#{term}\z/ =~ word) != nil }
+		display_matches(word_match)
+		@results = word_match
 	end
 end
+ 
 
 
 

@@ -3,7 +3,7 @@ require_relative "DictionaryLoader.rb"
 require_relative "DictionarySearcher.rb"
 require_relative "ResultsSaver.rb"
 
-class DictionaryUI
+class DictionaryUI	
 	attr_reader :search_type, :search_term, :file_name, :results
 	def initialize 
 		@user_dictionary = Dictionary.new
