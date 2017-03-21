@@ -8,6 +8,8 @@ describe "DictionaryLoader" do
   end
 
   describe "load" do
+    it "raises an error if the number of arguments is 0"
+
     it "raises an error if the file does not exist"
 
     it "returns an instance of Dictionary"
