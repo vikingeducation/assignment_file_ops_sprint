@@ -12,10 +12,20 @@ describe "DictionaryUI" do
   end
 
   describe "prompt" do
-    it "prompts the user for the location of the dictionary file"
+    it "prompts the user for the location of the dictionary file" do
+      allow(dict_ui).to receive(:gets).and_return("my_dictionary_file.txt")
+      expect(dict_ui).to receive(:gets)
+      dict_ui.prompt
+    end
 
-    it "exits the program if the user has entered 'q'"
+    it "exits the program if the user has entered 'q'" do
+      allow(dict_ui).to receive(:gets).and_return('q')
+      expect { dict_ui.prompt }.to raise_error(SystemExit)
+    end
 
-    it "returns the user input"
+    it "returns the user input" do
+      allow(dict_ui).to receive(:gets).and_return("my_dictionary_file.txt")
+      expect(dict_ui.prompt).to eq("my_dictionary_file.txt")
+    end
   end
 end
