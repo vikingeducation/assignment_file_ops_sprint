@@ -39,8 +39,14 @@ describe "DictionarySearcher" do
   end
 
   context "searching for words in the dictionary" do
+    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "donkey", "elephant", "fox", "foxfire", "foxglove", "foxhole"]) }
+    let(:ds) { DictionarySearcher.new(dictionary) }
+
     describe "#exact_matches" do
-      it "returns the list of words that exactly match the search term"
+      it "returns the list of words that exactly match the search term" do
+        expect(ds.exact_matches("aardvark")).to eq(["aardvark"])
+        expect(ds.exact_matches("fox")).to eq(["fox"])
+      end
     end
 
     describe "#partial_matches" do
