@@ -5,9 +5,9 @@ class DictionarySearcher
     @dictionary = dictionary
   end
 
-  def exact_matches(word)
+  def exact_matches(search_term)
     result = []
-    result << word if dictionary.words.include?(word)
+    result << search_term if dictionary.words.include?(search_term)
     result
   end
 end
