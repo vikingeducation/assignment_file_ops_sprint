@@ -27,9 +27,13 @@ describe "Dictionary" do
   end
 
   context "instance variables" do
-    it "does not allow @words to be modified after object instantiation"
+    it "does not allow @words to be modified after object instantiation" do
+      expect { dict.words = "blah" }.to raise_error(NoMethodError)
+    end
 
-    it "allows @words to be read"
+    it "allows @words to be read" do
+      expect { dict.words }.not_to raise_error
+    end
   end
 
   describe "#word_count" do
