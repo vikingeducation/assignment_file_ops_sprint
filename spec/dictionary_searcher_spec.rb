@@ -50,7 +50,9 @@ describe "DictionarySearcher" do
     end
 
     describe "#partial_matches" do
-      it "returns the list of words that partially match the search term"
+      it "returns the list of words that partially match the search term" do
+        expect(ds.partial_matches("fox")).to eq(["fox", "foxfire", "foxglove", "foxhole"])
+      end
     end
 
     describe "#begins_with_matches" do
