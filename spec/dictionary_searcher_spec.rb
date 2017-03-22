@@ -3,16 +3,27 @@
 require 'dictionary_searcher'
 
 describe "DictionarySearcher" do
-  describe "#initialize" do
-    it "creates an instance of DictionarySearcher"
+  context "object instantiation" do
+    describe ".new" do
+      it "creates an instance of DictionarySearcher" do
+        expect(DictionarySearcher.new).to be_a(DictionarySearcher)
+      end
 
-    it "sets @dictionary to the provided argument"
-  end
+      it "takes one argument" do
+        expect { DictionarySearcher.new("my argument") }.not_to raise_error
+      end
 
-  describe ".new" do
-    it "takes one argument"
+      it "raises an error if more than one argument is provided" do
+        expect { DictionarySearcher.new("argument 1", "argument 2") }.to raise_error(ArgumentError)
+      end
+    end
 
-    it "raises an error for any other number of arguments"
+    describe "#initialize" do
+      it "sets @dictionary to the provided argument" do
+        string = "dictionary"
+        expect(DictionarySearcher.new(string).dictionary).to eq(string)
+      end
+    end
   end
 
   context "instance variables" do
