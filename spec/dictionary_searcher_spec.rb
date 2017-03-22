@@ -39,7 +39,7 @@ describe "DictionarySearcher" do
   end
 
   context "searching for words in the dictionary" do
-    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "donkey", "elephant", "fox", "foxfire", "foxglove", "foxhole", "outfox"]) }
+    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "fox", "foxfire", "foxglove", "foxhole", "outfox"]) }
     let(:ds) { DictionarySearcher.new(dictionary) }
 
     describe "#exact_matches" do
