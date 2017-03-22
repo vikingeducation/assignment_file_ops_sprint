@@ -51,8 +51,4 @@ describe "Dictionary" do
       end
     end
   end
-
-  describe "#display_statistics" do
-    it "prints the word count and word frequency to screen"
-  end
 end
