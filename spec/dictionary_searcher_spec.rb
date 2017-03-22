@@ -65,7 +65,12 @@ describe "DictionarySearcher" do
     end
 
     describe "#ends_with_matches" do
-      it "returns the list of words that end with the search term"
+      it "returns the list of words that end with the search term" do 
+        matches = ds.ends_with_matches("fox")
+
+        expect(matches).to eq(["fox", "outfox"])
+        expect(matches).not_to include("foxfire", "foxglove", "foxhole")
+      end
     end
   end
 
