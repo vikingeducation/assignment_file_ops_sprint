@@ -2,7 +2,7 @@ require_relative './dictionary_loader'
 require_relative './dictionary'
 
 class DictionaryUI
-  def prompt
+  def ask_for_filename
     puts "Where is your dictionary? ('q' to quit)"
 
     filename = gets.chomp.downcase
@@ -12,7 +12,7 @@ class DictionaryUI
 
   def run
     # get filename of dictionary file
-    filename = prompt
+    filename = ask_for_filename
 
     # get Dictionary object
     dict = DictionaryLoader.new.load(filename)
