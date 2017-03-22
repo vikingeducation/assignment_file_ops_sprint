@@ -14,9 +14,7 @@ class DictionarySearcher
 
   def partial_matches(search_term)
     result = []
-    dictionary.words.each do |word|
-      result << word if word.match(/#{search_term}/)
-    end
+    dictionary.words.each { |word| result << word if word.match(/#{search_term}/) }
     
     result
   end
