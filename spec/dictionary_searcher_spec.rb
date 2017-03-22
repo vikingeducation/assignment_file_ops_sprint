@@ -27,9 +27,15 @@ describe "DictionarySearcher" do
   end
 
   context "instance variables" do
-    it "does not allow the dictionary to be modified after initialization"
+    it "does not allow the dictionary to be modified after initialization" do
+      expect { DictionarySearcher.new.dictionary = "new dictionary" }.to raise_error(NoMethodError)
+    end
       
-    it "allows @dictionary to be read"
+    it "allows @dictionary to be read" do
+      argument = "blah"
+      ds = DictionarySearcher.new(argument)
+      expect(ds.dictionary).to eq(argument)
+    end
   end
 
   context "searching for words in the dictionary" do
