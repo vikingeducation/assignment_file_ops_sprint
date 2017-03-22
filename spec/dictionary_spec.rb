@@ -37,7 +37,9 @@ describe "Dictionary" do
   end
 
   describe "#word_count" do
-    it "returns the number of words in the dictionary"
+    it "returns the number of words in the dictionary" do
+      expect(dict.word_count).to eq(3)
+    end
   end
 
   describe "#word_frequency" do
