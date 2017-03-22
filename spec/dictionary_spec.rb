@@ -4,10 +4,10 @@ require 'dictionary'
 
 describe "Dictionary" do
   let(:words) { ["aardvark", "bonobo", "cheetah"]}
+  let(:dict) { Dictionary.new(words) }
 
   describe "#initialize" do
     it "sets @words to the provided argument" do
-      dict = Dictionary.new(words)
       expect(dict.words).to eq(words)
     end
   end
