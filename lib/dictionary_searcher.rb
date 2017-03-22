@@ -6,31 +6,31 @@ class DictionarySearcher
   end
 
   def exact_matches(search_term)
-    result = []
-    result << search_term if dictionary.words.include?(search_term)
+    results = []
+    results << search_term if dictionary.words.include?(search_term)
 
-    result
+    results
   end
 
   def partial_matches(search_term)
-    result = []
-    dictionary.words.each { |word| result << word if word.match(/#{search_term}/) }
+    results = []
+    dictionary.words.each { |word| results << word if word.match(/#{search_term}/) }
 
-    result
+    results
   end
 
   def begins_with_matches(search_term)
-    result = []
-    dictionary.words.each { |word| result << word if word.match(/^#{search_term}/) }
+    results = []
+    dictionary.words.each { |word| results << word if word.match(/^#{search_term}/) }
 
-    result
+    results
   end
 
   def ends_with_matches(search_term)
-    result = []
-    dictionary.words.each { |word| result << word if word.match(/.*#{search_term}$/) }
+    results = []
+    dictionary.words.each { |word| results << word if word.match(/.*#{search_term}$/) }
 
-    result
+    results
   end
 
   def display_results(results)
