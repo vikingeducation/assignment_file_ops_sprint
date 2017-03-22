@@ -11,8 +11,15 @@ class DictionaryUI
   end
 
   def run
+    # get filename of dictionary file
     filename = prompt
+
+    # get Dictionary object
     dict = DictionaryLoader.new.load(filename)
+
+    # print initial statistics
     puts dict
+
+    # prompt user for type of search
   end
 end
