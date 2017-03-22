@@ -10,7 +10,6 @@ class Dictionary
   end
 
   def word_frequency
-    # { "a": 1, "b": 1, "c": 1 }
     frequency = {}
     ('a'..'z').each do |char|
       frequency[char] = 0
