@@ -1,6 +1,6 @@
 class DictionarySearcher
   attr_reader :dictionary
-  
+
   def initialize(dictionary = nil)
     @dictionary = dictionary
   end
@@ -8,14 +8,14 @@ class DictionarySearcher
   def exact_matches(search_term)
     result = []
     result << search_term if dictionary.words.include?(search_term)
-    
+
     result
   end
 
   def partial_matches(search_term)
     result = []
     dictionary.words.each { |word| result << word if word.match(/#{search_term}/) }
-    
+
     result
   end
 
@@ -31,5 +31,11 @@ class DictionarySearcher
     dictionary.words.each { |word| result << word if word.match(/.*#{search_term}$/) }
 
     result
+  end
+
+  def display_results(results)
+    puts "Found #{results.length} matches: "
+
+    results.each { |result| puts result }
   end
 end

@@ -30,7 +30,7 @@ describe "DictionarySearcher" do
     it "does not allow the dictionary to be modified after initialization" do
       expect { DictionarySearcher.new.dictionary = "new dictionary" }.to raise_error(NoMethodError)
     end
-      
+
     it "allows @dictionary to be read" do
       argument = "blah"
       ds = DictionarySearcher.new(argument)
@@ -65,7 +65,7 @@ describe "DictionarySearcher" do
     end
 
     describe "#ends_with_matches" do
-      it "returns the list of words that end with the search term" do 
+      it "returns the list of words that end with the search term" do
         matches = ds.ends_with_matches("fox")
 
         expect(matches).to eq(["fox", "outfox"])
@@ -75,10 +75,37 @@ describe "DictionarySearcher" do
   end
 
   context "displaying search results" do
-    describe "#display_results" do
-      it "displays the number of search results"
+    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "fox", "foxfire", "foxglove", "foxhole", "outfox"]) }
+    let(:ds) { DictionarySearcher.new(dictionary) }
 
-      it "displays the whole list of search results"
+    describe "#display_results" do
+      it "displays the number of search results" do
+        matches = ds.exact_matches("aardvark")
+        expect { ds.display_results(matches) }.to output(/Found 1 matches/).to_stdout
+
+        matches = ds.partial_matches("fox")
+        expect { ds.display_results(matches) }.to output(/Found 5 matches/).to_stdout
+
+        matches = ds.begins_with_matches("fox")
+        expect { ds.display_results(matches) }.to output(/Found 4 matches/).to_stdout
+
+        matches = ds.ends_with_matches("fox")
+        expect { ds.display_results(matches) }.to output(/Found 2 matches/).to_stdout
+      end
+
+      it "displays the whole list of search results" do
+        matches = ds.exact_matches("aardvark")
+        expect { ds.display_results(matches) }.to output(/aardvark\n/).to_stdout
+
+        matches = ds.partial_matches("fox")
+        expect { ds.display_results(matches) }.to output(/fox\nfoxfire\nfoxglove\nfoxhole\noutfox\n/).to_stdout
+
+        matches = ds.begins_with_matches("fox")
+        expect { ds.display_results(matches) }.to output(/fox\nfoxfire\nfoxglove\nfoxhole\n/).to_stdout
+
+        matches = ds.ends_with_matches("fox")
+        expect { ds.display_results(matches) }.to output(/fox\noutfox\n/).to_stdout
+      end
     end
   end
 end
