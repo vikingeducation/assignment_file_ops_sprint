@@ -43,7 +43,13 @@ describe "Dictionary" do
   end
 
   describe "#word_frequency" do
-    it "returns the frequency of words in the dictionary by starting letter"
+    it "returns the frequency of words in the dictionary by starting letter" do
+      word_frequency = dict.word_frequency
+      ("a".."c").each do |key|
+        expect(word_frequency.has_key?(key)).to be true
+        expect(word_frequency[key]).to eq(1)
+      end
+    end
   end
 
   describe "#display_statistics" do
