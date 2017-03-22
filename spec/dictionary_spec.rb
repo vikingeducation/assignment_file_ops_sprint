@@ -3,14 +3,27 @@
 require 'dictionary'
 
 describe "Dictionary" do
+  let(:words) { ["aardvark", "bonobo", "cheetah"]}
+
   describe "#initialize" do
-    it "sets @words to the provided argument"
+    it "sets @words to the provided argument" do
+      dict = Dictionary.new(words)
+      expect(dict.words).to eq(words)
+    end
   end
 
   describe ".new" do
-    it "takes one argument"
+    it "takes one argument" do
+      # this seems to always pass..?
+      # expect(Dictionary).to respond_to(:new).with(1).argument
 
-    it "raises an error for any other number of arguments"
+      expect { Dictionary.new(words) }.not_to raise_error
+    end
+
+    it "raises an error for any other number of arguments" do
+      expect { Dictionary.new }.to raise_error(ArgumentError)
+      expect { Dictionary.new(words, words) }.to raise_error(ArgumentError)
+    end
   end
 
   context "instance variables" do
