@@ -11,7 +11,7 @@ describe "DictionaryUI" do
     end
   end
 
-  describe "prompt" do
+  describe "#prompt" do
     it "prompts the user for the location of the dictionary file" do
       allow(dict_ui).to receive(:gets).and_return("my_dictionary_file.txt")
       expect(dict_ui).to receive(:gets)
