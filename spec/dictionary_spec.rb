@@ -7,6 +7,10 @@ describe "Dictionary" do
   let(:dict) { Dictionary.new(words) }
 
   describe "#initialize" do
+    it "creates an instance of Dicitonary" do
+      expect(dict).to be_a(Dictionary)
+    end
+
     it "sets @words to the provided argument" do
       expect(dict.words).to eq(words)
     end
