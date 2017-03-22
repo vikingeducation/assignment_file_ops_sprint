@@ -20,4 +20,11 @@ class DictionarySearcher
     
     result
   end
+
+  def begins_with_matches(search_term)
+    result = []
+    dictionary.words.each { |word| result << word if word.match(/^#{search_term}/) }
+
+    result
+  end
 end

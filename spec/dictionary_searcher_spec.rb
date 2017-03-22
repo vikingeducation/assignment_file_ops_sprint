@@ -39,24 +39,29 @@ describe "DictionarySearcher" do
   end
 
   context "searching for words in the dictionary" do
-    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "donkey", "elephant", "fox", "foxfire", "foxglove", "foxhole"]) }
+    let(:dictionary) { instance_double("Dictionary", words: ["aardvark", "bonobo", "cheetah", "donkey", "elephant", "fox", "foxfire", "foxglove", "foxhole", "outfox"]) }
     let(:ds) { DictionarySearcher.new(dictionary) }
 
     describe "#exact_matches" do
       it "returns the list of words that exactly match the search term" do
         expect(ds.exact_matches("aardvark")).to eq(["aardvark"])
-        expect(ds.exact_matches("fox")).to eq(["fox"])
+        expect(ds.exact_matches("cheetah")).to eq(["cheetah"])
       end
     end
 
     describe "#partial_matches" do
       it "returns the list of words that partially match the search term" do
-        expect(ds.partial_matches("fox")).to eq(["fox", "foxfire", "foxglove", "foxhole"])
+        expect(ds.partial_matches("fox")).to eq(["fox", "foxfire", "foxglove", "foxhole", "outfox"])
       end
     end
 
     describe "#begins_with_matches" do
-      it "returns the list of words that begin with the search term"
+      it "returns the list of words that begin with the search term" do
+        matches = ds.begins_with_matches("fox")
+
+        expect(matches).to eq(["fox", "foxfire", "foxglove", "foxhole"])
+        expect(matches).not_to include("outfox")
+      end
     end
 
     describe "#ends_with_matches" do
