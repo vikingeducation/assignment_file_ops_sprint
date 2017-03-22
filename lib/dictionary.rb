@@ -23,4 +23,19 @@ class Dictionary
 
     frequency
   end
+
+  def to_s
+    output = ""
+    output += "Dictionary successfully loaded.\n"
+    output += "Your dictionary contains #{self.word_count} words.\n"
+
+    output += "Word frequency by starting letter:\n"
+
+    word_frequency = self.word_frequency
+    word_frequency.keys.each do |key|
+      output += "#{key}: #{word_frequency[key]}\n"
+    end
+
+    output
+  end
 end
