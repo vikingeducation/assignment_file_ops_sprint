@@ -58,4 +58,18 @@ describe "DictionaryUI" do
       expect(dict_ui.ask_for_search_term).to eq("foobar")
     end
   end
+
+  describe "#save_results?" do
+    it "asks the user if results should be saved"
+  end
+
+  describe "#ask_for_filename_to_save_to" do
+    it "asks the user for the filename to save to"
+
+    it "if the file already exists, it asks the user if it should be overwritten"
+
+    it "if the file should not be overwritten, it prompts the user again"
+
+    it "returns the filename to save to"
+  end
 end
