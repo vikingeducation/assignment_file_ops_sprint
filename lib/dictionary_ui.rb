@@ -55,5 +55,11 @@ class DictionaryUI
     # ask user for search type and term
     search_type = ask_for_search_type
     search_term = ask_for_search_term
+
+    # run search
+    results = dictionary_searcher.run_search(search_type, search_term)
+
+    # display results
+    dictionary_searcher.display_results(results)
   end
 end
