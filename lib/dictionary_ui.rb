@@ -23,7 +23,11 @@ class DictionaryUI
 
       search_type = gets.chomp
 
-      break if (1..4).include?(search_type.to_i)
+      if (1..4).include?(search_type.to_i)
+        break
+      else
+        puts "Invalid choice. Please try again."
+      end
     end
 
     search_type
