@@ -5,6 +5,11 @@ require 'dictionary_ui'
 describe "DictionaryUI" do
   let(:dict_ui) { DictionaryUI.new }
 
+  before(:each) do
+    allow(dict_ui).to receive(:print).and_return(nil)
+    allow(dict_ui).to receive(:puts).and_return(nil)
+  end
+
   describe "#initialize" do
     it "creates an instance of DictionaryUI" do
       expect(dict_ui).to be_a(DictionaryUI)
