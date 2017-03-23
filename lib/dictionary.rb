@@ -35,6 +35,7 @@ class Dictionary
       output += "#{key}: #{word_frequency[key]}\n"
     end
 
+    output += "\n"
     output
   end
 end
