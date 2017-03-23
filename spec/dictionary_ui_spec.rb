@@ -60,7 +60,25 @@ describe "DictionaryUI" do
   end
 
   describe "#save_results?" do
-    it "asks the user if results should be saved"
+    it "asks the user if results should be saved" do
+      expect(dict_ui).to receive(:gets).and_return("n")
+      dict_ui.save_results?
+    end
+
+    it "returns true if the user enters 'y'" do
+      allow(dict_ui).to receive(:gets).and_return("y")
+      expect(dict_ui.save_results?).to be true
+    end
+
+    it "returns false if the user enters 'n'" do
+      allow(dict_ui).to receive(:gets).and_return("n")
+      expect(dict_ui.save_results?).to be false
+    end
+
+    it "exits the program if the user enters 'q'" do
+      allow(dict_ui).to receive(:gets).and_return("q")
+      expect { dict_ui.save_results? }.to raise_error(SystemExit)
+    end
   end
 
   describe "#ask_for_filename_to_save_to" do

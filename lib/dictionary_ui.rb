@@ -39,6 +39,21 @@ class DictionaryUI
     search_term = gets.chomp
   end
 
+  def save_results?
+    print "Do you wish to save your search results? (y/n) 'q' quits. > "
+
+    response = gets.chomp.downcase
+
+    case response
+    when "y"
+      true
+    when "n"
+      false
+    when "q"
+      exit
+    end
+  end
+
   def run
     # get filename of dictionary file
     filename = ask_for_filename
