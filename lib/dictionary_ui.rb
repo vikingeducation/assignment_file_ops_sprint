@@ -45,6 +45,11 @@ class DictionaryUI
     # print initial statistics
     puts dictionary
 
-    # prompt user for type of search
+    # create DictionarySearcher
+    dictionary_searcher = DictionarySearcher.new(dictionary)
+
+    # ask user for search type and term
+    search_type = ask_for_search_type
+    search_term = ask_for_search_term
   end
 end
