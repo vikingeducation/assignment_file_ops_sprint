@@ -15,10 +15,10 @@ class DictionaryUI
     filename = ask_for_filename
 
     # get Dictionary object
-    dict = DictionaryLoader.new.load(filename)
+    dictionary = DictionaryLoader.new.load(filename)
 
     # print initial statistics
-    puts dict
+    puts dictionary
 
     # prompt user for type of search
   end
