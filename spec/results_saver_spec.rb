@@ -12,6 +12,17 @@ describe "ResultsSaver" do
   end
 
   describe "#save_to_file" do
-    it "writes the specified data to the specified file"
+    it "writes the search results to the specified file" do
+      filename = "test.txt"
+      test_text = ["Line 1", "Line 2", "Line 3"]
+
+      # stubs
+      allow(File).to receive(:open)
+      allow(File).to receive(:write)
+
+      expect(File).to receive(:open).with(filename, 'w')
+
+      rs.save_to_file(filename, test_text)
+    end
   end
 end
