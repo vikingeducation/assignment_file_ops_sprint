@@ -30,11 +30,21 @@ describe "DictionaryUI" do
   end
 
   describe "#ask_for_search_type" do
-    it "prompts the user for the type of search"
+    it "prompts the user for the type of search" do
+      expect(dict_ui).to receive(:gets).and_return("1")
+      dict_ui.ask_for_search_type
+    end
 
-    it "loops until the user has entered a valid search choice"
+    it "loops until the user has entered a valid search choice" do
+      allow(dict_ui).to receive(:gets).and_return("5", "6", "3")
+      expect(dict_ui).to receive(:gets).exactly(3).times
+      dict_ui.ask_for_search_type
+    end
 
-    it "returns the valid user choice"
+    it "returns the valid user choice" do
+      allow(dict_ui).to receive(:gets).and_return("2")
+      expect(dict_ui.ask_for_search_type).to eq("2")
+    end
   end
 
   describe "#ask_for_search_term" do
