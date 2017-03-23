@@ -29,6 +29,12 @@ class DictionaryUI
     search_type
   end
 
+  def ask_for_search_term
+    print "Enter the search term > "
+
+    search_term = gets.chomp
+  end
+
   def run
     # get filename of dictionary file
     filename = ask_for_filename

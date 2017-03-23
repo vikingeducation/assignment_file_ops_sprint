@@ -48,8 +48,14 @@ describe "DictionaryUI" do
   end
 
   describe "#ask_for_search_term" do
-    it "prompts the user for his search term"
+    it "prompts the user for his search term" do
+      expect(dict_ui).to receive(:gets).and_return("fox")
+      dict_ui.ask_for_search_term
+    end
 
-    it "returns the user's search term"
+    it "returns the user's search term" do
+      allow(dict_ui).to receive(:gets).and_return("foobar")
+      expect(dict_ui.ask_for_search_term).to eq("foobar")
+    end
   end
 end
