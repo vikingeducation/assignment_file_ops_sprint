@@ -50,5 +50,6 @@ class DictionarySearcher
     puts "Found #{results.length} matches: "
 
     results.each { |result| puts result }
+    puts
   end
 end
