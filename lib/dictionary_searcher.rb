@@ -47,6 +47,7 @@ class DictionarySearcher
   end
 
   def display_results(results)
+    puts
     puts "Found #{results.length} matches: "
 
     results.each { |result| puts result }
