@@ -72,6 +72,24 @@ describe "DictionarySearcher" do
         expect(matches).not_to include("foxfire", "foxglove", "foxhole")
       end
     end
+
+    describe "#run_search" do
+      it "runs the appropriate search with the provided search term" do
+        search_term = "blah"
+
+        expect(ds).to receive(:exact_matches).with(search_term)
+        ds.run_search("1", search_term)
+
+        expect(ds).to receive(:partial_matches).with(search_term)
+        ds.run_search("2", search_term)
+
+        expect(ds).to receive(:begins_with_matches).with(search_term)
+        ds.run_search("3", search_term)
+
+        expect(ds).to receive(:ends_with_matches).with(search_term)
+        ds.run_search("4", search_term)
+      end
+    end
   end
 
   context "displaying search results" do

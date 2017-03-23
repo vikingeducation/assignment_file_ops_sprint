@@ -33,6 +33,19 @@ class DictionarySearcher
     results
   end
 
+  def run_search(search_type, search_term)
+    case search_type
+    when "1"
+      exact_matches(search_term)
+    when "2"
+      partial_matches(search_term)
+    when "3"
+      begins_with_matches(search_term)
+    when "4"
+      ends_with_matches(search_term)
+    end
+  end
+
   def display_results(results)
     puts "Found #{results.length} matches: "
 
