@@ -87,12 +87,29 @@ describe "DictionaryUI" do
   end
 
   describe "#ask_for_filename_to_save_to" do
-    it "asks the user for the filename to save to"
+    it "asks the user for the filename to save to" do
+      expect(dict_ui).to receive(:gets).and_return("blah.txt")
+      dict_ui.ask_for_filename_to_save_to
+    end
 
-    it "if the file already exists, it asks the user if it should be overwritten"
+    it "asks the user if it should be overwritten, if the file already exists" do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(dict_ui).to receive(:gets).and_return("blahdeblah.txt", "y")
+      expect(dict_ui).to receive(:gets).exactly(2).times
+      dict_ui.ask_for_filename_to_save_to
+    end
 
-    it "if the file should not be overwritten, it prompts the user again"
+    it "prompts the user again if the file should not be overwritten" do
+      allow(File).to receive(:exist?).and_return(true, false)
+      allow(dict_ui).to receive(:gets).and_return("blah.txt", "n", "blahblah.txt")
+      expect(dict_ui).to receive(:gets).exactly(3).times
+      dict_ui.ask_for_filename_to_save_to
+    end
 
-    it "returns the filename to save to"
+    it "returns the filename to save to" do
+      filename = "return_this_file.txt"
+      allow(dict_ui).to receive(:gets).and_return(filename)
+      expect(dict_ui.ask_for_filename_to_save_to).to eq(filename)
+    end
   end
 end

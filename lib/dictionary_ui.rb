@@ -54,6 +54,30 @@ class DictionaryUI
     end
   end
 
+  def ask_for_filename_to_save_to
+    loop do
+      puts "What filename should we save results to?"
+      filename = gets.chomp
+
+      if File.exist?(filename)
+        puts "That file already exists. Overwrite? (y/n)"
+
+        response = gets.chomp.downcase
+
+        if response == "y"
+          return filename
+        elsif response == "n"
+          next
+        else
+          puts "Invalid response."
+          next
+        end
+      else
+        return filename
+      end
+    end
+  end
+
   def run
     # get filename of dictionary file
     filename = ask_for_filename
