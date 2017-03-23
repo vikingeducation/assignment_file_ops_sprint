@@ -28,4 +28,18 @@ describe "DictionaryUI" do
       expect(dict_ui.ask_for_filename).to eq("my_dictionary_file.txt")
     end
   end
+
+  describe "#ask_for_search_type" do
+    it "prompts the user for the type of search"
+
+    it "loops until the user has entered a valid search choice"
+
+    it "returns the valid user choice"
+  end
+
+  describe "#ask_for_search_term" do
+    it "prompts the user for his search term"
+
+    it "returns the user's search term"
+  end
 end
