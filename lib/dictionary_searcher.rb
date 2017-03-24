@@ -7,7 +7,7 @@ class DictionarySearcher
 
   def exact_matches(search_term)
     results = []
-    results << search_term if dictionary.words.include?(search_term)
+    dictionary.words.each { |word| results << word if word.match(/^#{search_term}$/) }
 
     results
   end
