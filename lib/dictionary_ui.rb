@@ -1,5 +1,7 @@
 require_relative './dictionary_loader'
 require_relative './dictionary'
+require_relative './dictionary_searcher'
+require_relative './results_saver'
 
 class DictionaryUI
   def ask_for_filename
@@ -79,26 +81,42 @@ class DictionaryUI
   end
 
   def run
-    # get filename of dictionary file
-    filename = ask_for_filename
+    begin
+      # get filename of dictionary file
+      filename = ask_for_filename
 
-    # get Dictionary object
-    dictionary = DictionaryLoader.new.load(filename)
+      # get Dictionary object
+      dictionary = DictionaryLoader.new.load(filename)
 
-    # print initial statistics
-    puts dictionary
+      # print initial statistics
+      puts dictionary
 
-    # create DictionarySearcher
-    dictionary_searcher = DictionarySearcher.new(dictionary)
+      # create DictionarySearcher
+      dictionary_searcher = DictionarySearcher.new(dictionary)
 
-    # ask user for search type and term
-    search_type = ask_for_search_type
-    search_term = ask_for_search_term
+      loop do
+        # ask user for search type and term
+        search_type = ask_for_search_type
+        search_term = ask_for_search_term
 
-    # run search
-    results = dictionary_searcher.run_search(search_type, search_term)
+        # run search
+        results = dictionary_searcher.run_search(search_type, search_term)
 
-    # display results
-    dictionary_searcher.display_results(results)
+        # display results
+        dictionary_searcher.display_results(results)
+
+        # ask for filename to save to, if user wants to save results
+        if save_results?
+          filename_to_save_to = ask_for_filename_to_save_to
+          ResultsSaver.new.save_to_file(filename_to_save_to, results)
+        end
+      end
+    rescue Interrupt
+      exit
+    end
   end
+end
+
+if $0 == __FILE__
+  DictionaryUI.new.run
 end
