@@ -1,5 +1,5 @@
 class ResultsSaver
-  def save_file(fname, results)
-    File.open(fname, 'w') { |file| file.write results }
+  def save(fpath, results)
+    File.open(fpath, 'w') { |file| file.write results }
   end
 end
