@@ -1,5 +1,5 @@
 class Dictionary
-  attr_reader :words, :word_count
+  attr_reader :words
 
   def initialize(words)
     @words
