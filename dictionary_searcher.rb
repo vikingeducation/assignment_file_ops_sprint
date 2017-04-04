@@ -2,6 +2,7 @@ class DictionarySearcher
   attr_reader :dict
 
   def initialize(dict)
+<<<<<<< HEAD
     @dict = dict
   end
 
@@ -41,5 +42,36 @@ class DictionarySearcher
   def show_results
     puts "Found #{@matches.length} matches:"
     @matches.each { |word| puts word }
+=======
+    @dict
+  end
+
+  def search
+    # TODO: add case to determine which search method to run
+  end
+
+  def exact(term)
+    matches = []
+    # TODO: add regex
+  end
+
+  def partial(term)
+    matches = []
+    # TODO: add regex
+  end
+
+  def begins_with(term)
+    matches = []
+    # TODO: add regex
+  end
+
+  def ends_with(term)
+    matches = []
+    # TODO: add regex
+  end
+
+  def show_results
+    # TODO: display search results
+>>>>>>> 02c57034b7dd04c1d19ef45d5890d0bec73fd14a
   end
 end
