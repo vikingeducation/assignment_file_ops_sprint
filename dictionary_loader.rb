@@ -1,7 +1,7 @@
 class DictionaryLoader
   def load(fname)
-    @dict = []
-    File.readlines(@fname).map { |word| @dict << word.strip }
-    Dictionary.new(@dict)
+    words = []
+    File.readlines(fname).map { |word| words << word.strip }
+    Dictionary.new(words)
   end
 end

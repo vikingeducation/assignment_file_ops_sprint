@@ -2,7 +2,6 @@ require_relative 'dictionary'
 require_relative 'dictionary_loader'
 require_relative 'dictionary_searcher'
 require_relative 'results_saver'
-require 'pry'
 
 class DictionaryUI
   def run
@@ -85,5 +84,3 @@ class DictionaryUI
     exit
   end
 end
-
-pry.binding
