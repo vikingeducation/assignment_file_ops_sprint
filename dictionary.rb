@@ -1,19 +1,24 @@
 class Dictionary
-  attr_reader :words
+  attr_reader :entries
 
-  def initialize(words)
-    @words
+  def initialize(entries)
+    @entries = entries
   end
 
   def word_count
-    @words.length
+    @entries.length
   end
 
   def word_frequency
-    @occurrences = {}
-    @words.each do |word|
-      first_letter = word[0].downcase
-      @occurrences[first_letter.downcase] += 1
-    end
+    occurrences = Hash.new(0)
+    @entries.each { |entry| occurrences[entry[0].downcase] += 1 }
+    occurrences.each { |key, val| puts "#{key}: #{val}" }
+  end
+
+  def show_stats
+    puts "Dictionary successfully loaded."
+    puts "Your dictionary contains #{word_count} words."
+    puts "Word frequency by starting letter:"
+    word_frequency
   end
 end
