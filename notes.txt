@@ -1,0 +1,6 @@
+1. Move the check_file method to the DictionaryLoad class
+2. initialize the dictionary in the DictionaryUI class
+3. try pseudocoding for a change
+4. figure out the relationship between the DictionaryLoader class and the actual Dictionary instance
+
+https://www.vikingcodeschool.com/dashboard#/professional-development-with-ruby/tic-tac-toe
