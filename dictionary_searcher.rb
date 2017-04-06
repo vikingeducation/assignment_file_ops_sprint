@@ -6,43 +6,38 @@ class DictionarySearcher
   def initialize(search_term, dictionary)
     @search_term = search_term
     @search_dictionary = dictionary
+    @results_array = []
   end
 
   def exact_matches
-    exact_results = []
-    exact_results << find_match(/\b#{@search_term}\b/)
-    puts "found #{exact_results.flatten!.length} exact match(es):"
-    prints_results(exact_results)
+    @results_array << find_match(/\b#{@search_term}\b/)
+    prints_results(@results_array)
   end
 
   def partial_matches
-    partial_results = []
-    partial_results << find_match(/#{@search_term}/)
-    puts "found #{partial_results.flatten!.length} partial match(es):"
-    prints_results(partial_results)
+    @results_array << find_match(/#{@search_term}/)
+    prints_results(@results_array)
   end
 
   def begins_with
-    begins_with_results = []
-    begins_with_results << find_match(/^#{@search_term}.+/)
-    puts "found #{begins_with_results.flatten!.length} words that begin with #{@search_term}:"
-    prints_results(begins_with_results)
+    @results_array << find_match(/^#{@search_term}.+/)
+    prints_results(@results_array)
   end
 
   def ends_with
-    ends_with_results = []
-    ends_with_results << find_match(/.+#{@search_term}$/)
-    puts "Found #{ends_with_results.flatten!.length} words that end with #{@search_term}:"
-    prints_results(ends_with_results)
+    @results_array  << find_match(/.+#{@search_term}$/)
+    prints_results(@results_array)
   end
 
-  private
+ private
 
   def prints_results(array)
+    puts "Found #{@results_array.flatten!.length} match(es):"
     array.each do |word|
       puts word
     end
   end
+
 
   def find_match(regex)
     @search_dictionary.select{ |word| word.match(regex)}
