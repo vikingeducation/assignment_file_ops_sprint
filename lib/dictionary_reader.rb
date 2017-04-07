@@ -5,5 +5,5 @@ require_relative "dictionary"
 require_relative "results_saver"
 
 
-d = Dictionary.new
-d.init
+# d = Dictionary.new
+# d.init
