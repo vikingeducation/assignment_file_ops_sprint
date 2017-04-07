@@ -6,5 +6,4 @@ require_relative "results_saver"
 
 
 d = Dictionary.new
-
 d.init

@@ -1,5 +1,5 @@
 class Dictionary
-  attr_reader :ui, :dictionary_file
+  attr_reader :ui, :dictionary_file, :searcher
 
   def initialize
     @ui = DictionaryUI.new
@@ -13,14 +13,16 @@ class Dictionary
     run
   end
 
+  private
+
   def run
     loop do
       choice = ui.dictionary_menu
-      determine_action(choice)
+      found_words = determine_action(choice)
+      ui.word_found(found_words)
+      save_to_file?(found_words)
     end
   end
-
-
 
   def basic_stats
     num_of_words = dictionary_file.length
@@ -45,17 +47,26 @@ class Dictionary
     ui.close_dictionary?(choice)
     action = ui.search_menu
     word = ui.search_action
-    if action == "1"
-      found_word = @searcher.exact_match(word, dictionary_file)
-    elsif action == "2"
-      found_word = @searcher.partial_match(word, dictionary_file)
-    elsif action == "3"
-      found_word = @searcher.begins_with_match(word, dictionary_file)
-    elsif action == "4"
-      found_word = @searcher.ends_with_match(word, dictionary_file)
+    case action
+    when "1"
+      found_word = searcher.exact_match(word, dictionary_file)
+    when "2"
+      found_word = searcher.partial_match(word, dictionary_file)
+    when "3"
+      found_word = searcher.begins_with_match(word, dictionary_file)
+    when "4"
+      found_word = searcher.ends_with_match(word, dictionary_file)
+    else
+      return
     end
 
-    ui.word_found(word, found_word)
-    return
+    return found_word
+  end
+
+  def save_to_file?(found_words)
+    return if ui.save_results? == false
+    file_path = ui.get_save_path
+    ResultsSaver.write_to_file(found_words, file_path)
+    nil
   end
 end
