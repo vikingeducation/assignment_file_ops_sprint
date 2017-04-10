@@ -14,6 +14,7 @@ class DictionaryUI
     }
   end
 
+
   def run
     get_dictionary
     run_search_loop
@@ -33,19 +34,19 @@ class DictionaryUI
       if type_of_search == "q"
         exit
       elsif type_of_search =~ /[^1-4,q]/
-        puts "That is not a valid entry please try again (please enter answer in form 1, 2, 3, 4, or 'q')."
+        puts "That is not a valid entry (please enter answer in form 1, 2, 3, 4, or 'q' to quit)."
         next
       else
         get_search_term
         case type_of_search
         when "1"
-          @search.exact_matches
+          @search.search_for_matches(@search.exact)
         when "2"
-          @search.partial_matches
+          @search.search_for_matches(@search.partial)
         when "3"
-          @search.begins_with
+          @search.search_for_matches(@search.begins_with)
         when "4"
-          @search.ends_with
+          @search.search_for_matches(@search.ends_with)
         end
       end
       save_results
@@ -86,8 +87,8 @@ class DictionaryUI
 
 
   def save_results
-    try_again = false
-    until try_again != false
+    ask_again = true
+    until ask_again != true
       puts "***"
       puts "Would you like to save results? y/n? or 'q' to quit."
       answer = gets.chomp
@@ -97,14 +98,13 @@ class DictionaryUI
         exit
       when "n"
         puts "These results will not be saved."
-        try_again = false
-        return false
+        ask_again = false
       when "y"
         get_save_path
         if @results_to_save.file_exists? == false
           @results_to_save.save_file
           puts "File saved successfully"
-          return true
+          break
         else
           puts "This file already exists, would you like to overwrite it? y/n? or 'q' to quit."
           overwrite_answer = gets.chomp
@@ -112,7 +112,7 @@ class DictionaryUI
           when "y"
             @results_to_save.save_file
             puts "File succesfully overwritten!"
-            return true
+            break
           when "q"
             puts "These results will not be saved, good bye"
             exit
@@ -120,11 +120,10 @@ class DictionaryUI
             next
           end
         end
-        try_again = false
-        return true
+        ask_again = true
       else
         puts "That is not a valid input, lets try again shall we..."
-        try_again = true
+        ask_again = true
       end
     end
   end
@@ -138,7 +137,6 @@ class DictionaryUI
   end
 
 end # end of class
-
 
 nd = DictionaryUI.new
 nd.run

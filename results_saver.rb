@@ -24,6 +24,4 @@ class ResultsSaver
     end
   end
 
-
-
 end
