@@ -11,8 +11,8 @@ class DictionarySearcher
     @results_array = []
     @exact = /\b#{@search_term}\b/
     @partial = /#{@search_term}/
-    @begins_with = /^#{@search_term}.+/
-    @ends_with = /.+#{@search_term}$/
+    @begins_with = /^#{@search_term}.*/
+    @ends_with = /.*#{@search_term}$/
   end
 
 

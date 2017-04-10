@@ -50,15 +50,26 @@ class DictionaryUI
         end
       end
       save_results
-      puts "Would you like to perform another search? y? or n/q to quit."
-      answer = gets.chomp.downcase
-      if answer == "y"
-        next
-      else
-        exit
-      end
+      run_another_search
     end
   end   # end of run loop method
+
+
+  def run_another_search
+    loop do
+      puts "Would you like to perform another search? y? or n/q to quit."
+      answer = gets.chomp.downcase
+      case answer
+      when "y"
+        break
+      when "n" || "q"
+        exit
+      when /[^y,n,q]/
+        puts "that is not a valid entry..."
+        next
+      end
+    end
+  end
 
 
   def get_dictionary
