@@ -7,6 +7,7 @@ class DictionaryLoader
     @dictionary_array = []
   end
 
+
   def load_file
     a_dictionary = File.readlines(@path)
     a_dictionary.each do |line|
@@ -30,4 +31,5 @@ class DictionaryLoader
       puts key.to_s + ":" + value.to_s
     end
   end
+
 end

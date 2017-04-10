@@ -10,8 +10,7 @@ class Dictionary
   def dictionary_wrap
     new_dictionary = DictionaryLoader.new(@path)
     @dictionary = new_dictionary.load_file
+    @dictionary
   end
-
-  @dictionary
 
 end
