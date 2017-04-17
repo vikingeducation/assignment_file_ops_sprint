@@ -1,7 +1,12 @@
 # holds dictionary instance and provides access
 class Dictionary
-  def initialize(wordArray)
-    @dict_words = wordArray
+  include Enumerable
+  def initialize(word_array)
+    @dict_words = word_array
+  end
+
+  def each(&block)
+    @dict_words.each(&block)
   end
 
   def random_word

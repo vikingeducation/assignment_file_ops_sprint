@@ -1,10 +1,13 @@
 require_relative 'dictionary'
 require_relative 'dictionaryloader'
+require_relative 'dictionarysearcher'
+
 # Handles user interaction
 class DictionaryUI
   def initialize
     @dict_file = ''
     @dict = Dictionary
+    @seach = DictionarySearcher
   end
 
   def run
@@ -14,7 +17,13 @@ class DictionaryUI
     end
     puts 'Dictionary successfully loaded'
     @dict.stats
-    puts "Random word of the day: #{@dict.random_word}"
+    puts "Random word of the day: #{@dict.random_word}\n"
+    @search = DictionarySearcher.new(@dict)
+    begin
+      loop { @search.search }
+    rescue Interrupt
+      puts 'Thanks for using DictionaryUI'
+    end
   end
 
   private
