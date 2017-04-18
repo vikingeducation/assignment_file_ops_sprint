@@ -1,4 +1,5 @@
 require_relative 'dictionary'
+require_relative 'resultssaver'
 # Performs searches in dictionary instance
 class DictionarySearcher
   def initialize(dict_to_search)
@@ -11,22 +12,21 @@ class DictionarySearcher
   def search
     prompt_search_type
     run_search(search_regex)
-    puts "\nFound #{@search_results.length} matches:"
+    puts "\nFound #{@search_results.length} matches for #{@search_term}:"
     puts @search_results
-
+    ResultsSaver.new(@search_term, @search_results)
     reset
   end
 
   private
 
   def prompt_search_type
-    valid_commands = [1, 2, 3, 4]
     puts "\nWhat kind of search?"
     puts '1: Exact'
     puts '2: Partial'
     puts '3: Begins with'
     puts '4: End with'
-    @command = gets.strip.to_i until valid_commands.include?(@command)
+    @command = gets.strip.to_i until [1, 2, 3, 4].include?(@command)
     puts 'Enter search term: '
     @search_term = gets.strip while @search_term.empty?
   end
