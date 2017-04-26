@@ -13,6 +13,7 @@ RSpec.describe DictionaryLoader do
 
   before do
     allow(stream_spy).to receive(:readlines)
+    allow_any_instance_of(Dictionary).to receive :index_words
     allow(File).to receive(:open).and_yield stream_spy
   end
 
