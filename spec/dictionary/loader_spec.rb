@@ -6,11 +6,6 @@ class DictionaryLoader
   end
 end
 
-class Dictionary
-  def initialize(words)
-  end
-end
-
 RSpec.describe DictionaryLoader do
   let(:loader) { DictionaryLoader }
   let(:path) { 'path/to/filename' }
