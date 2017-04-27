@@ -1,18 +1,21 @@
 class DictionaryUI
   attr_reader :loader
 
-  def initialize(loader:, searcher:)
+  def initialize(loader:)
     @loader = loader
-    @searcher = searcher
   end
 
   def run
     path = data_path
+    puts 'Loading dictionary...'
     dictionary = @loader.load path
     puts DictionaryFormatter.stats(dictionary)
+
     search_menu
     search_type = search_type_choice
     term = search_term
+
+    @searcher = DictionarySearcher.new(dictionary)
     search_results = perform_search(search_type, term)
     puts DictionaryFormatter.results(search_results)
   end
@@ -50,7 +53,7 @@ class DictionaryUI
   end
 
   def search_term
-    print 'Enter your search term: '
+    print "\nEnter your search term: "
     gets.chomp
   end
 

@@ -12,7 +12,7 @@ class DictionarySearcher
   end
 
   def exact_match(term)
-    candidates_from_index(term).select { |word| word.casecmp(term) }
+    candidates_from_index(term).select { |word| word.downcase == term.downcase }
   end
 
   def partial_match(term)

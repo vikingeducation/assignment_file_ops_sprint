@@ -1,8 +1,7 @@
 RSpec.describe DictionaryUI do
   let(:loader_spy) { spy('Dictionary::Loader') }
-  let(:searcher_spy) { spy('Dictionary::Searcher') }
   let(:ui) do
-    DictionaryUI.new(loader: loader_spy, searcher: searcher_spy)
+    DictionaryUI.new(loader: loader_spy)
   end
 
   before do
@@ -49,7 +48,8 @@ RSpec.describe DictionaryUI do
       allow(ui).to receive(:search_type_choice) { 2 }
       allow(ui).to receive(:search_term) { search_term }
 
-      expect(searcher_spy).to receive(:partial_match).with search_term
+      expect_any_instance_of(DictionarySearcher)
+        .to receive(:partial_match).with search_term
       ui.run
     end
   end
