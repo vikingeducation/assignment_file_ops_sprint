@@ -9,4 +9,11 @@ class DictionaryFormatter
 
     display
   end
+
+  def self.results(search_results)
+    display = "Matched #{search_results.size}:\n"
+    search_results.each do |r|
+      display += "#{r}\n"
+    end
+  end
 end

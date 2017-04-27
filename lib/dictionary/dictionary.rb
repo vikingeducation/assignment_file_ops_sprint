@@ -1,5 +1,8 @@
 class Dictionary
+  attr_reader :index, :all_words
+
   def initialize(words)
+    @all_words = words
     @index = index_words(words)
   end
 
@@ -9,7 +12,6 @@ class Dictionary
       word_frequency: word_frequency
     }
   end
-
 
   private
 
