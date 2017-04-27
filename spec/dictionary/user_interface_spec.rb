@@ -53,4 +53,52 @@ RSpec.describe DictionaryUI do
       ui.run
     end
   end
+
+  describe 'saving results' do
+    it 'prompts user to save results' do
+      expect(ui).to receive :save_results?
+      ui.run
+    end
+
+    context 'user wishes to save' do
+      before { allow(ui).to receive(:save_results?) { true } }
+
+      it 'prompts user for file path/name' do
+        allow(ui).to receive :file_exists?
+        expect(ui).to receive :file_to_save
+        ui.run
+      end
+
+      context 'file is new' do
+        it 'saves the file' do
+          allow(ui).to receive(:file_to_save)
+          allow(ui).to receive(:file_exists?) { false }
+
+          expect(ResultsSaver).to receive :save
+          ui.run
+        end
+      end
+
+      context 'user file already exists' do
+        before do
+          allow(ui).to receive(:file_to_save)
+          allow(ui).to receive(:file_exists?) { true }
+        end
+
+        it 'prompts user to overwrite the file' do
+          expect(ui).to receive :overwrite_file?
+          ui.run
+        end
+
+        context 'user says overwrite file' do
+          it 'overwrites the file' do
+            allow(ui).to receive(:overwrite_file?) { true }
+
+            expect(ResultsSaver).to receive :save
+            ui.run
+          end
+        end
+      end
+    end
+  end
 end

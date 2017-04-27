@@ -18,6 +18,21 @@ class DictionaryUI
     @searcher = DictionarySearcher.new(dictionary)
     search_results = perform_search(search_type, term)
     puts DictionaryFormatter.results(search_results)
+
+    if save_results?
+      file_path = file_to_save
+
+      if file_exists?(file_path) && overwrite_file?
+        ResultsSaver.save(file_path, search_results)
+        puts 'File successfully overwritten!'
+      else
+        return
+      end
+
+      ResultsSaver.save(file_path, search_results)
+    end
+
+    puts 'OK, bye!'
   end
 
   private
@@ -27,6 +42,18 @@ class DictionaryUI
   def data_path
     print 'Enter file path to dictionary: '
     gets.chomp
+  end
+
+  def file_exists?(file)
+    File.exists? file
+  end
+
+  def file_to_save
+    puts 'What filepath should I write results to?'
+    gets.chomp
+  end
+
+  def overwrite_file?
   end
 
   def perform_search(type, term)
@@ -42,6 +69,11 @@ class DictionaryUI
     else
       puts 'You done fudged up in your search term or search type choice.'
     end
+  end
+
+  def save_results?
+    puts 'Do you want to save results? y/n'
+    gets.chomp == 'y'
   end
 
   def search_menu
