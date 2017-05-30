@@ -34,6 +34,15 @@ class DictionaryUI
     end
   end
 
+  def should_i_save?
+    answer = input "Should I save the results? Y/n"
+    answer == "n" ? false : true
+  end
+
+  def where_to_save
+    input "Enter the name of the file."
+  end
+
   private
 
   def input(prompt)
@@ -60,12 +69,20 @@ class Dictionary
   def initialize
     @interface = DictionaryUI.new
     @loader = DictionaryLoader.new
-    @contents = @loader.run
     @analizer = DictionarySearcher.new
+    @saver = ResultSaver.new
+    @contents = @loader.run
+  end
+
+  def run
     stats = @analizer.stats(@contents)
     @interface.show_stats(stats)
     menu_item, search_term = @interface.search_menu
-    search_hub(menu_item, search_term)
+    response = search_hub(menu_item, search_term)
+    @interface.search_response(response)
+    if @interface.should_i_save?
+      @saver.run(response,@interface.where_to_save)
+    end
   end
 
   def search_hub(menu_item, search_term)
@@ -80,7 +97,6 @@ class Dictionary
     else
       raise(ArgumentError)
     end
-    @interface.search_response(response)
   end
 
 end
@@ -138,6 +154,13 @@ class DictionarySearcher
 end
 
 class ResultSaver
+  require 'yaml'
+  def run(results, filename)
+    File.open("#{filename}.yaml", "a") do |file|
+      file.write results.to_yaml
+    end
+  end
 end
 
-Dictionary.new
+dictionary = Dictionary.new
+dictionary.run
