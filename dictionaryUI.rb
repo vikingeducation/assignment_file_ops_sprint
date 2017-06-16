@@ -5,6 +5,16 @@ class DictionaryUI      # user interaction loop
 	def initialize 
 		@dictionary = Dictionary.new
 	end 
+
+	def run
+		puts "Welcome! Search your dictionary for anything you'd like.. "
+		set_up_dictionary
+	end 
+
+	def set_up_dictionary 
+		@dictionary.get_word_array
+		# @dictionary.print_my_dictionary
+	end
 end 
 
 
@@ -28,27 +38,7 @@ end
 #doesn't care where the dictionary actually comes from  - just class the DictionaryLoader class 
 #delegate the analysis logic and processes to DictionarySearcher 
 
-#first prompt is for the location of your dictionary file. 
-# end
 
-
-
-
-
-
-
-# class DictionarySearcher # contains logic & methds to perform searches 
-			 # Takes a dictionary
-				# initialize 
-				# identify_search_type 
-			# Exact, Partial, "begins with", "ends with"
-				# ask_for_search_term 
-				# find_all_matches 
-				# display_results 
-					# show the number of matches 
-					# show the matches - full word 
-				# want_to_save
-# end 
 
 # class ResultsSaver    
 			# takes a batch of results
@@ -60,5 +50,5 @@ end
 			# write to file 
 # end 
 
-# d = DictionaryUI.new
-# d.run 
+d = DictionaryUI.new
+d.run
