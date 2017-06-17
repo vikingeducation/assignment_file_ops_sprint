@@ -1,4 +1,6 @@
-class DictionarySearcher			# contains search analysis logic & methds for searches
+require_relative 'resultssaver.rb'
+
+class DictionarySearcher            # contains search analysis logic & methds for searches
 	attr_accessor :dictionary, :search_type, :search_phrase 
 	@@search_types = {"1" => "Exact", "2" => "Partial", "3" => "Begins With", "4" => "Ends With"}
 	
@@ -16,20 +18,21 @@ class DictionarySearcher			# contains search analysis logic & methds for searche
 
 	def display_search_type_options
 		puts "We have four search type options:  "
-			@@search_types.each do |number, name|
-	 			puts "   #{number}: #{name}"
-	 		end 
-	 		select_search_type
+		@@search_types.each do |number, name|
+	 		puts "   #{number}: #{name}"
+ 		end 
+	 	select_search_type
 	end
 
 	def select_search_type   
-		print "Please enter a number to choose a search type:  "
+		print "\nPlease enter a number to choose a search type:  "
 		type_selection = gets.to_s.strip
 		validate_selection_format(type_selection)
 	end 
 
 	def validate_selection_format(type_selection)
-		if @@search_types.keys.include?(type_selection) == false
+		# if @@search_types.keys.include?(type_selection) == false
+		if !@@search_types.keys.include?(type_selection)
 			print "Invalid selection. "
 			select_search_type
 		else 
@@ -38,11 +41,11 @@ class DictionarySearcher			# contains search analysis logic & methds for searche
 		end
 	end 
 
-	def ask_for_search_term     #Find out what the user wants to search for 
+	def ask_for_search_term     
 		print "Please enter the search term (Dictionary's are case-sensitive): "
-		search_term = gets.to_s.strip
-		@search_phrase = search_term
-		puts "Searching for #{search_term}...."
+		# search_term = gets.to_s.strip
+		# @search_phrase = search_term
+		@search_phrase = gets.to_s.strip
 	end 
 
 	def find_all_matches 
@@ -59,10 +62,8 @@ class DictionarySearcher			# contains search analysis logic & methds for searche
 
 	def exact_search 
 		if @dictionary.include?(@search_phrase)
-			# puts "true"
 			display_results([@search_phrase])
 		else
-			# puts"false"
 			display_results([])
 		end
 	end
@@ -97,19 +98,20 @@ class DictionarySearcher			# contains search analysis logic & methds for searche
 		display_results(match_results)
 	end 
 
-
 	def display_results (results_array)
-		print "The following results match your search: #{results_array}"
-		# show the number of matches 
-		# show the matches - full word 
+		puts "\n Search Results: "
+		puts "  Number of results returned: #{results_array.length} "
+		print "  The following words match your search: #{results_array}\n\n"
+		want_to_save(results_array)
 	end
 
-	# def want_to_save
+	def want_to_save(results_array)
+		print  "Would you like to save your search results? (y/n)  "
+		save_response = gets.strip
+		if save_response == "y"
+			save_results = ResultsSaver.new 
+			save_results.write 
+		end 
+	end 
 end 
-
-# n = DictionarySearcher.new(dictionary)
-# n.search
-
-
-
 

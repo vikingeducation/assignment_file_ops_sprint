@@ -10,13 +10,12 @@ class DictionaryLoader     # helper class responsible only for loading in the di
 	end 
 
 	def ask_for_file_path
-		print "Where is your dictionary?      " 
+		print "Where is your dictionary?  " 
 		@file_path = gets.strip.to_s
 		validate_file_exist
 	end
 
 	def validate_file_exist
-		# puts File.exists?("#{@file_path}")
 		if File.exists?("#{@file_path}") == false
 			print "No file found. "
 			load_dictionary
