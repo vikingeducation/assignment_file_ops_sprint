@@ -1,6 +1,5 @@
 require_relative 'dictionaryloader.rb'
 
-
 class Dictionary              # wraps the loaded dictionary 
 	attr_accessor :my_dictionary
 
@@ -17,12 +16,11 @@ class Dictionary              # wraps the loaded dictionary
 	end 
 
 
-	# def print_my_dictionary     # Prints dictionary
-	# 	print @my_dictionary
-	# end 
 
-
-	def statistics               # Show intial dictionary stats 
+	private
+	
+	# Show intial dictionary stats
+	def statistics                
 		puts "Inital Dictionary Stats "
 		puts "  Total Words Found: #{@my_dictionary.count}"
 		word_count_by_letter

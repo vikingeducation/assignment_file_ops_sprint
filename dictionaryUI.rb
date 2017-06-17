@@ -1,7 +1,6 @@
 require_relative 'dictionary.rb'
 require_relative 'dictionarysearcher.rb'
 
-
 class DictionaryUI      # user interaction loop
 	attr_accessor :dictionary
 
@@ -14,6 +13,10 @@ class DictionaryUI      # user interaction loop
 		set_up_dictionary
 		search_for_something
 	end 
+
+
+
+	private
 
 	def set_up_dictionary 
 		@dictionary = Dictionary.new.get_word_array
