@@ -109,8 +109,8 @@ class DictionarySearcher            # contains search analysis logic & methds fo
 		print  "Would you like to save your search results? (y/n)  "
 		save_response = gets.strip
 		if save_response == "y"
-			save_results = ResultsSaver.new 
-			save_results.write 
+			save_results = ResultsSaver.new
+			save_results.save_results_array(results_array)
 		end 
 	end 
 end 
