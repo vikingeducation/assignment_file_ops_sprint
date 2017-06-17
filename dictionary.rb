@@ -2,32 +2,32 @@ require_relative 'dictionaryloader.rb'
 
 
 class Dictionary              # wraps the loaded dictionary 
+	attr_accessor :my_dictionary
+
 	def initialize 
 		@my_dictionary = Array.new
 	end 
 
 
-	def get_word_array             # initates the DictionaryLoader functions 
+	def get_word_array       # initates the DictionaryLoader functions 
 		process_input = DictionaryLoader.new
 		@my_dictionary = process_input.load_dictionary
 		statistics
+		return @my_dictionary
 	end 
 
-	def my_dictionary       # Provides access to the @my_dictionary instance variable 
-		@my_dictionary
-	end 
 
-	def print_my_dictionary     # Prints the @my_dictionary instance variable 
-		print @my_dictionary
-	end 
+	# def print_my_dictionary     # Prints dictionary
+	# 	print @my_dictionary
+	# end 
+
 
 	def statistics               # Show intial dictionary stats 
-		puts "Good News! Your dictionary was successfully loaded! "
-		puts " "
 		puts "Inital Dictionary Stats "
 		puts "  Total Words Found: #{@my_dictionary.count}"
 		word_count_by_letter
 	end
+
 
 	def word_count_by_letter
 		puts "  Total Words by Letter:  "
@@ -57,15 +57,6 @@ class Dictionary              # wraps the loaded dictionary
 		puts "		X: #{@my_dictionary.count{|x| x =~ /^x/i}}"
 		puts "		Y: #{@my_dictionary.count{|x| x =~ /^y/i}}"
 		puts "		Z: #{@my_dictionary.count{|x| x =~ /^z/i}}"
+		puts " "
 	end 
-
-
-
-end 
-
-
-
-# s = Dictionary.new
-# s.get_word_array
-# s.print_my_dictionary
-
+end

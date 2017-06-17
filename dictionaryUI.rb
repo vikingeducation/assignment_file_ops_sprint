@@ -1,54 +1,38 @@
 require_relative 'dictionary.rb'
+require_relative 'dictionarysearcher.rb'
 
 
 class DictionaryUI      # user interaction loop
+	attr_accessor :dictionary
+
 	def initialize 
-		@dictionary = Dictionary.new
+		@dictionary = []
 	end 
 
 	def run
 		puts "Welcome! Search your dictionary for anything you'd like.. "
 		set_up_dictionary
+		# dict_status
+		search_for_something
 	end 
 
 	def set_up_dictionary 
-		@dictionary.get_word_array
-		# @dictionary.print_my_dictionary
+		@dictionary = Dictionary.new.get_word_array
 	end
-end 
 
+	def dict_status 
+		puts @dictionary 
+	end 
 
-# 	def search_for_things
-# 		path = ask_for_file_path
-# 		print path 
-# 	end 
+	def search_for_something 
+		# puts "Beginning new search "
+		search_request = DictionarySearcher.new(@dictionary)
+		search_request.search
 
-# 	def ask_for_file_path
-# 		print "Where is your dictionary?   "      
-# 		file_path = gets.to_s
-# 	end 
-# end 
+	end
 
+end
 
-# s = DictionaryUI.new
-# s.search
-
-
-
-#doesn't care where the dictionary actually comes from  - just class the DictionaryLoader class 
-#delegate the analysis logic and processes to DictionarySearcher 
-
-
-
-# class ResultsSaver    
-			# takes a batch of results
-			# writes them to a file 
-			# initialize 
-			# ask_which_file_to_save_to
-			# check_if_file_exists
-			# overwrite?
-			# write to file 
-# end 
 
 d = DictionaryUI.new
 d.run
