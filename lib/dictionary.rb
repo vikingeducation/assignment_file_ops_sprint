@@ -1,5 +1,6 @@
 class Directory
   attr_reader :words
+
   def initialize(words)
     @words = words
   end
@@ -12,7 +13,6 @@ class Directory
     frequency_hash = {}
 
     words.each do |word|
-      # word = word[0].upcase
       frequency_hash[word[0]] ||= 0
       frequency_hash[word[0]] += 1
     end

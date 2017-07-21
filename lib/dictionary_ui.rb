@@ -1,4 +1,6 @@
 class DictionaryUI
+  include Questionable
+
   def run
     load_and_display_dictionary
     search_dictionary_and_display_results
@@ -9,7 +11,7 @@ class DictionaryUI
 
   def load_and_display_dictionary
     answer = ask("Where is your dictionary? ('q' to quit)")
-    return if answer.empty?
+    abort "We can't find the dictionary." unless File.exist?(answer)
 
     @dictionary = DictionaryLoader.new(answer).load
 
@@ -30,7 +32,13 @@ class DictionaryUI
                  MSG
     term = ask("Enter the search term")
     searcher = DictionarySearcher.new(@dictionary)
-    @results = searcher.search(term, type_of_search.to_i)
+
+    @results = case type_of_search.to_i
+               when 1 then searcher.search_exact(term)
+               when 2 then searcher.search_partial(term)
+               when 3 then searcher.search_start_with(term)
+               when 4 then searcher.search_end_with(term)
+               end
 
     say "Found #{@results.size} matches:"
     @results.each { |word| say "# #{word}" }
@@ -48,29 +56,5 @@ class DictionaryUI
 
     ResultsSaver.save(@results, path)
     say "Search results where saved."
-  end
-
-  def ask(prompt, quit_word = 'q')
-    loop do
-      $stdout.puts prompt
-      print '> '
-      answer = $stdin.gets.chomp
-      return answer if !answer.empty? || answer == quit_word
-    end
-  end
-
-  def say(message)
-    $stdout.puts message
-  end
-
-  def yes?(question)
-    answer = loop do
-      $stdout.puts question
-      print '> '
-      answer = $stdin.gets.chomp
-      break answer if %w(q y n).include? answer
-    end
-
-    answer.downcase == 'y'
   end
 end

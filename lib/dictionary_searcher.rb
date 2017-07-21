@@ -3,30 +3,19 @@ class DictionarySearcher
     @dictionary = dictionary
   end
 
-  def search(term, type)
-    term = term.downcase
-
-    case type
-    when 1
-      matches { |word| word == term }
-    when 2
-      matches { |word| word.include? term }
-    when 3
-      matches { |word| word.start_with? term }
-    when 4
-      matches { |word| word.end_with? term }
-    end
+  def search_exact(term)
+    @dictionary.words.select { |word| word.downcase == term.downcase }
   end
 
-  private
+  def search_partial(term)
+    @dictionary.words.select { |word| word.downcase.include? term.downcase }
+  end
 
-  def matches(&block)
-    results = []
+  def search_start_with(term)
+    @dictionary.words.select { |word| word.downcase.start_with? term.downcase }
+  end
 
-    @dictionary.words.each do |word|
-      results << word if yield(word.downcase)
-    end
-
-    results
+  def search_end_with(term)
+    @dictionary.words.select { |word| word.downcase.end_with? term.downcase }
   end
 end
