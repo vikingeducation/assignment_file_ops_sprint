@@ -82,13 +82,13 @@ class DictionarySearcher
       $arr.select{|str| str =~ /\b#{@term}\b/}.each do |match|
         p match
       end
-      #p $arr.select{|str| str =~ /\b#{@term}\b/}
+      $results = $arr.select{|str| str =~ /\b#{@term}\b/}
     elsif @search == "2"
       p "Found #{$arr.select{|str| str =~ /#{@term}/}.count} matches"
       $arr.select{|str| str =~ /#{@term}/}.each do |match|
         p match
       end
-      #p $arr.select{|str| str =~ /#{@term}/}
+      $results = $arr.select{|str| str =~ /#{@term}/}
     elsif @search == "3"
       p "Found #{$arr.select{|str| str =~ /^#{@term}.*$/}.count} matches"
       $arr.select{|str| str =~ /^#{@term}.*$/}.each do |match|
@@ -100,7 +100,7 @@ class DictionarySearcher
       $arr.select{|str| str =~ /^.*#{@term}$/}.each do |match|
         p match
       end
-      #p $arr.select{|str| str =~ /^.*#{@term}$/}
+      $results = $arr.select{|str| str =~ /^.*#{@term}$/}
     else
       p "search term error"
     end
@@ -112,8 +112,43 @@ end
 start = DictionarySearcher.new
 start.searcher
 
-=begin
 class ResultsSaver
   # takes a batch of results and writes them to a file.
+  def initialize()
+    p "Do you want to save results? y/n? 'q' quits."
+  end
+
+  def getresponse()
+    @response = gets.chomp
+  end
+
+  def savefile()
+    p "What filepath should we write results to?"
+    @path = gets.chomp
+    out_file = File.new("#{@path}", "w+")
+    #f = File.new("out", "w")
+    #f.write("1234567890")     #=> 10
+    #f.close
+    $results.each do |str|
+      #File.open("#{@path}", "r+") {|file| file.write("#{str}")}
+      out_file.puts("#{str}")
+    end
+    out_file.close
+  end
+
+  def conditional()
+    if @response == 'y'
+      savefile()
+    elsif @response == 'n'
+    else
+      p "Your response was invalid"
+      p "Do you want to save results? y/n? 'q' quits."
+      getresponse()
+    end
+  end
+
 end
-=end
+
+startsaving = ResultsSaver.new
+startsaving.getresponse
+startsaving.conditional
