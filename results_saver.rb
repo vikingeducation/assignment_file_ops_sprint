@@ -1,3 +1,5 @@
+require 'pathname'
+
 class ResultsSaver
   # takes a batch of results and writes them to a file.
   def initialize()
@@ -8,9 +10,20 @@ class ResultsSaver
     @response = gets.chomp
   end
 
+  def checkpath()
+    pn = Pathname.new(@path)
+    while pn.exist?
+      p "File already exists. Enter another path"
+      @path = gets.chomp
+      pn = Pathname.new(@path)
+      break if pn.exist? != true
+    end
+  end
+
   def savefile()
     p "What filepath should we write results to?"
     @path = gets.chomp
+    checkpath()
     out_file = File.new("#{@path}", "w+")
     $results.each do |str|
       out_file.puts("#{str}")
