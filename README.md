@@ -2,4 +2,8 @@
 I can haz spellz
 
 
-Anne Richardson
+by Anne Richardson
+
+Dictionary located at:
+
+http://scrapmaker.com/data/wordlists/twelve-dicts/5desk.txt
