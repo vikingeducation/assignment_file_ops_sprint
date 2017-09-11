@@ -26,17 +26,16 @@ class DictionaryUI
   end
 
   def conduct_search
-    puts @term
-    puts @type
-    if @type == 1
+    case @type
+    when 1
       @search.search_exact(@term)
-    elsif @type == 2
+    when 2
       @search.search_partial(@term)
-    elsif @type ==3
+    when 3
       @search.search_begins_with(@term)
-    elsif @type == 4
+    when 4
       @search.search_ends_with(@term)
-    else
+    when
       "Invalid Entry"
     end
   end
