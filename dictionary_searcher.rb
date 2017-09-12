@@ -5,7 +5,6 @@ module SearcherFactory
   SEARCH_OPTIONS = {'1'=>'Exact', '2'=>'Partial', '3'=>'Begins with','4'=>'Ends with'}
 
   def self.create(search_type, word, dictionary)
-    # DictionarySearcher.new(word, dictionary)
     case search_type
     when '1'
       Exact.new(word, dictionary)
@@ -17,7 +16,6 @@ module SearcherFactory
       EndsWith.new(word, dictionary)
     end
   end
-
 end
 
 class DictionarySearcher
