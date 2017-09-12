@@ -15,7 +15,7 @@ class DictionaryUI
     display_stats
     type = request_search_type
     word = request_word
-    display_results(type, word)
+    display_results(type, word, @dictionary)
   end
 
   private
@@ -64,8 +64,11 @@ class DictionaryUI
     response = gets.chomp.strip
   end
 
-  def display_results(search_type, word)
-    puts "Placeholder results for '#{search_type}' and '#{word}'"
+  def display_results(search_type, word, dictionary)
+    puts '------------------------------'
+    puts "The results for '#{word}' are:"
+    results = SearcherFactory.create(search_type, word, dictionary)
+    results.find_matches
   end
 
   def quit?(response)
