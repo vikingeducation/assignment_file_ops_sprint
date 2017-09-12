@@ -1,9 +1,11 @@
 # main class which handles the user interaction loop.
 require './dictionary_loader'
+require './dictionary_searcher'
 require 'pry'
 
 class DictionaryUI
   include DictionaryLoader
+  include SearcherFactory
 
   def run
     request_dictionary_path
@@ -40,10 +42,11 @@ class DictionaryUI
 
   def request_search_type
     puts "What kind of search would you like to perform?"
-    options = ['exact', 'partial', 'begins with','ends with']
+    options = SearcherFactory::SEARCH_OPTIONS
+
     display_search_type_options(options)
     response = gets.chomp
-    until options.include?(response.downcase.strip)
+    until options.keys.include?(response.strip)
       puts "I'm sorry #{response} is not an option."
       display_search_type_options(options)
       response = gets.chomp
@@ -52,8 +55,8 @@ class DictionaryUI
   end
 
   def display_search_type_options(options)
-    puts "Enter one of these options:"
-    options.each {|option| puts option}
+    puts "Enter the number of one of these options:"
+    options.each {|num, option| puts "#{num}: #{option}"}
   end
 
   def request_word
