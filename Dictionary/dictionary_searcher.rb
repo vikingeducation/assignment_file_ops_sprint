@@ -12,7 +12,7 @@ class DictionarySearcher
   end
 
   def search_begins_with(term)
-    @dictionary.select { |word| word.chomp[ 0..(term.length -1) ] == term }
+    @dictionary.select { |word| word.chomp[0..(term.length - 1)] == term }
   end
 
   def search_ends_with(term)
