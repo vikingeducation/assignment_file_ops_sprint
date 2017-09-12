@@ -16,6 +16,7 @@ class DictionaryUI
     type = request_search_type
     word = request_word
     display_results(type, word, @dictionary)
+    save_results?
   end
 
   private
@@ -71,12 +72,20 @@ class DictionaryUI
     results.find_matches
   end
 
-  def quit?(response)
-    if response == 'q'
-      exit_program
+  def save_results?
+    puts "Would you like to save these results?  y | n"
+    response = gets.chomp.downcase.strip
+    quit?(response)
+    response
+    if response == 'y'
+      puts "Placeholder to generate results saver"
     else
-      @path = response
+      exit_program
     end
+  end
+
+  def quit?(response)
+    exit_program if response == 'q'
   end
 
   def exit_program
