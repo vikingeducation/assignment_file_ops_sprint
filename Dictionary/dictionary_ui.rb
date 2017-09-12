@@ -54,6 +54,7 @@ class DictionaryUI
       if File.exist?(@file_name)
         puts "A file with this name already exists. Would you like to overwrite it? (y/n)"
         @overwrite = gets.chomp
+        break if @overwrite == 'y'
       else
         break
       end
