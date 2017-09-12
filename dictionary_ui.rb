@@ -11,6 +11,9 @@ class DictionaryUI
     puts "Press 'Enter' to see Stats."
     gets.chomp
     display_stats
+    type = request_search_type
+    word = request_word
+    display_results(type, word)
   end
 
   private
@@ -33,6 +36,33 @@ class DictionaryUI
 
   def display_stats
     puts @dictionary.stats
+  end
+
+  def request_search_type
+    puts "What kind of search would you like to perform?"
+    options = ['exact', 'partial', 'begins with','ends with']
+    display_search_type_options(options)
+    response = gets.chomp
+    until options.include?(response.downcase.strip)
+      puts "I'm sorry #{response} is not an option."
+      display_search_type_options(options)
+      response = gets.chomp
+    end
+    response
+  end
+
+  def display_search_type_options(options)
+    puts "Enter one of these options:"
+    options.each {|option| puts option}
+  end
+
+  def request_word
+    puts "Enter your word to search:"
+    response = gets.chomp.strip
+  end
+
+  def display_results(search_type, word)
+    puts "Placeholder results for '#{search_type}' and '#{word}'"
   end
 
   def quit?(response)
