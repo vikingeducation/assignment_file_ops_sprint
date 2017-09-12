@@ -21,7 +21,6 @@ module SearcherFactory
 end
 
 class DictionarySearcher
-  attr_accessor :matches
 
   def initialize(word, dictionary)
     @word = word
@@ -37,6 +36,9 @@ class DictionarySearcher
     display_matches
     display_match_count
   end
+
+  private
+  attr_accessor :matches
 
   def display_matches
     puts @matches
