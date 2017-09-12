@@ -7,6 +7,8 @@ module SearcherFactory
   def self.create(search_type, word, dictionary)
     # DictionarySearcher.new(word, dictionary)
     case search_type
+    when '1'
+      Exact.new(word, dictionary)
     when '2'
       Partial.new(word, dictionary)
     when '3'
@@ -43,6 +45,13 @@ class DictionarySearcher
   def display_match_count
     puts '-----------------------'
     puts "Total Matches: #{@matches.length}"
+  end
+end
+
+class Exact < DictionarySearcher
+  def initialize(word, dictionary)
+    super(word, dictionary)
+    @regex = /^\A#{word}\z/i
   end
 end
 
