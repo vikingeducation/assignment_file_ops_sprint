@@ -7,6 +7,8 @@ module SearcherFactory
   def self.create(search_type, word, dictionary)
     # DictionarySearcher.new(word, dictionary)
     case search_type
+    when '2'
+      Partial.new(word, dictionary)
     when '3'
       BeginsWith.new(word, dictionary)
     when '4'
@@ -17,7 +19,6 @@ module SearcherFactory
 end
 
 class DictionarySearcher
-
   attr_accessor :matches
 
   def initialize(word, dictionary)
@@ -43,7 +44,13 @@ class DictionarySearcher
     puts '-----------------------'
     puts "Total Matches: #{@matches.length}"
   end
+end
 
+class Partial < DictionarySearcher
+  def initialize(word, dictionary)
+    super(word, dictionary)
+    @regex = /#{word}/i
+  end
 end
 
 class BeginsWith < DictionarySearcher
