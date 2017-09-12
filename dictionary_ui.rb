@@ -30,6 +30,7 @@ class DictionaryUI
     # response = gets.chomp
     response = "./5desk.txt"
     quit?(response)
+    @path = response
   end
 
   def load_dictionary(path)
@@ -47,6 +48,7 @@ class DictionaryUI
 
     display_search_type_options(options)
     response = gets.chomp
+    quit?(response)
     until options.keys.include?(response.strip)
       puts "I'm sorry #{response} is not an option."
       display_search_type_options(options)
@@ -63,6 +65,8 @@ class DictionaryUI
   def request_word
     puts "Enter your word to search:"
     response = gets.chomp.strip
+    quit?(response)
+    response
   end
 
   def display_results(search_type, word, dictionary)
