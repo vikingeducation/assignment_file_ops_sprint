@@ -24,7 +24,6 @@ class DictionaryUI
     # response = gets.chomp
     response = "./5desk.txt"
     quit?(response)
-    puts "Great! Thanks."
   end
 
   def load_dictionary(path)
@@ -33,7 +32,7 @@ class DictionaryUI
   end
 
   def display_stats
-    puts "stats placeholder"
+    puts @dictionary.stats
   end
 
   def quit?(response)
