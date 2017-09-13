@@ -2,7 +2,6 @@
 require './dictionary_loader'
 require './dictionary_searcher'
 require './results_saver'
-require 'pry'
 
 class DictionaryUI
   include DictionaryLoader
