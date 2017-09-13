@@ -29,7 +29,7 @@ class DictionaryUI
     puts "Where is your dictionary? ('q' to quit)"
     puts "ex: path/to/myfile.csv"
     # response = gets.chomp
-    response = "./5desk.txt"
+    response = "./lib/5desk.txt"
     quit?(response)
     @path = response
   end
