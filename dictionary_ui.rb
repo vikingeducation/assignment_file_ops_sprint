@@ -16,7 +16,7 @@ class DictionaryUI
     type = request_search_type
     word = request_word
     display_results(type, word, @dictionary)
-    save_results?
+    save_results
   end
 
   private
@@ -72,20 +72,46 @@ class DictionaryUI
   def display_results(search_type, word, dictionary)
     puts '------------------------------'
     puts "The results for '#{word}' are:"
-    results = SearcherFactory.create(search_type, word, dictionary)
-    results.find_matches
+    search_results = SearcherFactory.create(search_type, word, dictionary)
+    search_results.find_matches
   end
 
-  def save_results?
+  def save_results
     puts "Would you like to save these results?  y | n"
     response = gets.chomp.downcase.strip
     quit?(response)
     response
     if response == 'y'
       puts "Placeholder to generate results saver"
+      filename = request_output_file_name
+      permission = request_overwrite_permission if file_exists?(filename)
+      if permission
+        puts "placeholder to overwrite file"
+      else
+        puts "placeholder to get intended file name until one is available"
+      end
     else
       exit_program
     end
+  end
+
+  def request_output_file_name
+    puts "What filepath shold we write to?"
+    puts "ex: results.txt"
+    response = gets.chomp
+    quit?(response)
+    response
+  end
+
+  def file_exists?(filename)
+    File.exist?(filename)
+  end
+
+  def request_overwrite_permission
+    puts "This file already exists. Would you like to overwrite it? y | n"
+    response = gets.chomp.downcase
+    quit?(response)
+    response
   end
 
   def quit?(response)
