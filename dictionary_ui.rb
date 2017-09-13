@@ -77,29 +77,19 @@ class DictionaryUI
   end
 
   def save_results
-    puts "Would you like to save these results?  y | n"
+    puts '','Would you like to save these results?  y | n'
     response = gets.chomp.downcase.strip
     quit?(response)
-    if response == 'y'
-      filename = request_output_file_name
-      @permission = true
-      request_overwrite_permission if file_exists?(filename)
-      if @permission
-        puts "Overwriting/writing to file #{filename}..."
-        saved_results = ResultsSaver.new(filename, @matches)
-        saved_results.generate_file
-        puts "Results saved. Check your file."
-      else
-        puts "placeholder to get intended file name until one is available"
+    @filename = request_output_filename
+    file_exists?(@filename) ? @permission = false : @permission = true
+      while !@permission
+        request_overwrite_permission
       end
-    else
-      exit_program
-    end
+    write_to_file(@filename) if @permission
   end
 
-  def request_output_file_name
-    puts "What filepath should we write to?"
-    puts "ex: results.txt"
+  def request_output_filename
+    puts '','What filepath should we write to? (ex: results.txt)'
     response = gets.chomp
     quit?(response)
     response
@@ -117,8 +107,16 @@ class DictionaryUI
       @permission = true
     else
       @permission = false
-      request_output_file_name
+      @filename = request_output_filename
+      file_exists?(@filename) ? @permission = false : @permission = true
     end
+  end
+
+  def write_to_file(filename)
+    puts "","Overwriting/writing to file #{filename}..."
+    saved_results = ResultsSaver.new(filename, @matches)
+    saved_results.generate_file
+    puts 'Results saved. Check your file.'
   end
 
   def quit?(response)
