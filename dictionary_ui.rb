@@ -1,6 +1,7 @@
 # main class which handles the user interaction loop.
 require './dictionary_loader'
 require './dictionary_searcher'
+require './results_saver'
 require 'pry'
 
 class DictionaryUI
@@ -23,6 +24,7 @@ class DictionaryUI
 
   @path = ''
   @dictionary = nil
+  @matches = nil
 
   def request_dictionary_path
     puts "Where is your dictionary? ('q' to quit)"
@@ -45,7 +47,6 @@ class DictionaryUI
   def request_search_type
     puts "What kind of search would you like to perform?"
     options = SearcherFactory::SEARCH_OPTIONS
-
     display_search_type_options(options)
     response = gets.chomp
     quit?(response)
@@ -73,20 +74,22 @@ class DictionaryUI
     puts '------------------------------'
     puts "The results for '#{word}' are:"
     search_results = SearcherFactory.create(search_type, word, dictionary)
-    search_results.find_matches
+    @matches = search_results.find_matches
   end
 
   def save_results
     puts "Would you like to save these results?  y | n"
     response = gets.chomp.downcase.strip
     quit?(response)
-    response
     if response == 'y'
-      puts "Placeholder to generate results saver"
       filename = request_output_file_name
-      permission = request_overwrite_permission if file_exists?(filename)
-      if permission
-        puts "placeholder to overwrite file"
+      @permission = true
+      request_overwrite_permission if file_exists?(filename)
+      if @permission
+        puts "Overwriting/writing to file #{filename}..."
+        saved_results = ResultsSaver.new(filename, @matches)
+        saved_results.generate_file
+        puts "Results saved. Check your file."
       else
         puts "placeholder to get intended file name until one is available"
       end
@@ -96,7 +99,7 @@ class DictionaryUI
   end
 
   def request_output_file_name
-    puts "What filepath shold we write to?"
+    puts "What filepath should we write to?"
     puts "ex: results.txt"
     response = gets.chomp
     quit?(response)
@@ -111,7 +114,12 @@ class DictionaryUI
     puts "This file already exists. Would you like to overwrite it? y | n"
     response = gets.chomp.downcase
     quit?(response)
-    response
+    if response == 'y'
+      @permission = true
+    else
+      @permission = false
+      request_output_file_name
+    end
   end
 
   def quit?(response)

@@ -33,6 +33,7 @@ class DictionarySearcher
     end
     display_matches
     display_match_count
+    @matches
   end
 
   private
