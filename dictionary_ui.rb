@@ -44,7 +44,7 @@ class DictionaryUI
   end
 
   def request_search_type
-    puts "What kind of search would you like to perform?"
+    puts '','What kind of search would you like to perform?'
     options = SearcherFactory::SEARCH_OPTIONS
     display_search_type_options(options)
     response = gets.chomp
@@ -58,12 +58,12 @@ class DictionaryUI
   end
 
   def display_search_type_options(options)
-    puts "Enter the number of one of these options:"
+    puts 'Enter the number of one of these options:'
     options.each {|num, option| puts "#{num}: #{option}"}
   end
 
   def request_word
-    puts "Enter your word to search:"
+    puts '','Enter your word to search:'
     response = gets.chomp.strip
     quit?(response)
     response

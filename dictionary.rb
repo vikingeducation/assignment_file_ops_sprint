@@ -25,7 +25,7 @@ class Dictionary
     sorted.each do |letter, entries|
       puts "#{letter}: #{entries.length}"
     end
-    puts '===================================',''
+    puts '==================================='
   end
 
 end
