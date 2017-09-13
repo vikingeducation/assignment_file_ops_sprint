@@ -28,6 +28,7 @@ class DictionaryUI
   def request_dictionary_path
     puts "Where is your dictionary? ('q' to quit)"
     puts "ex: path/to/myfile.csv"
+    # Use pre-populated dictionary location instead of having the user enter it
     # response = gets.chomp
     response = "./lib/5desk.txt"
     quit?(response)
