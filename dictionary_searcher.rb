@@ -1,6 +1,6 @@
 # perform any analysis on the dictionary you provide it
 module SearcherFactory
-  SEARCH_OPTIONS = {'1'=>'Exact', '2'=>'Partial', '3'=>'Begins with','4'=>'Ends with'}
+  SEARCH_OPTIONS = {'1'=>'Exact', '2'=>'Partial', '3'=>'Begins with','4'=>'Ends with', '5'=> 'Has 3 chars that repeat'}
 
   def self.create(search_type)
     case search_type
@@ -12,6 +12,8 @@ module SearcherFactory
       BeginsWith.new
     when '4'
       EndsWith.new
+    when '5'
+      RepeatThree.new
     end
   end
 end
@@ -58,5 +60,11 @@ end
 class EndsWith < DictionarySearcher
   def regex(word)
     /(#{word}$)/
+  end
+end
+
+class RepeatThree < DictionarySearcher
+  def regex(word)
+    /(.{3}).*\1$/
   end
 end
