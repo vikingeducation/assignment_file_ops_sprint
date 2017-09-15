@@ -2,75 +2,61 @@
 module SearcherFactory
   SEARCH_OPTIONS = {'1'=>'Exact', '2'=>'Partial', '3'=>'Begins with','4'=>'Ends with'}
 
-  def self.create(search_type, word, dictionary)
+  def self.create(search_type)
     case search_type
     when '1'
-      Exact.new(word, dictionary)
+      Exact.new
     when '2'
-      Partial.new(word, dictionary)
+      Partial.new
     when '3'
-      BeginsWith.new(word, dictionary)
+      BeginsWith.new
     when '4'
-      EndsWith.new(word, dictionary)
+      EndsWith.new
     end
   end
 end
 
 class DictionarySearcher
 
-  def initialize(word, dictionary)
-    @word = word
-    @dictionary = dictionary
-    @regex = nil
+  def initialize
     @matches = []
   end
 
-  def find_matches
-    @dictionary.entries.each do |entry|
-     @matches << entry if entry.match(@regex)
+  def find_matches(word, dictionary)
+    dictionary.entries.each do |entry|
+     @matches << entry if entry.match(regex(word))
     end
-    display_matches
-    display_match_count
     @matches
+  end
+
+  def regex(word)
+    raise NotImplemented
   end
 
   private
   attr_accessor :matches
-
-  def display_matches
-    puts @matches
-  end
-
-  def display_match_count
-    puts '-----------------------'
-    puts "Total Matches: #{@matches.length}"
-  end
 end
 
 class Exact < DictionarySearcher
-  def initialize(word, dictionary)
-    super(word, dictionary)
-    @regex = /^\A#{word}\z/i
+  def regex(word)
+    /^\A#{word}\z/i
   end
 end
 
 class Partial < DictionarySearcher
-  def initialize(word, dictionary)
-    super(word, dictionary)
-    @regex = /#{word}/i
+  def regex(word)
+    /#{word}/i
   end
 end
 
 class BeginsWith < DictionarySearcher
-  def initialize(word, dictionary)
-    super(word, dictionary)
-    @regex = /(^#{word}\w+)/i
+  def regex(word)
+    /(^#{word}\w+)/i
   end
 end
 
 class EndsWith < DictionarySearcher
-  def initialize(word, dictionary)
-    super(word, dictionary)
-    @regex = /(#{word}$)/
+  def regex(word)
+    /(#{word}$)/
   end
 end
