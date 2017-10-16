@@ -9,7 +9,7 @@ class DictionaryUI
 
   def run
     loop do
-      puts "Where is your dictionary? ('q' to quit)"
+      puts "Where is your dictionary? ('q' to quit) (load your file or the attached by typing 5desk.txt)"
       file_location = gets.chomp
       break if file_location == 'q'
       redo unless directory_exists?(file_location)
