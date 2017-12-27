@@ -15,7 +15,7 @@ class DictionaryLoader
   end
 
   def fetch
-# need to do something about files that can't be found
+# TODO handle files that don't exist
     file = File.readlines(@path).map(&:strip)
     @read = Dictionary.new(file)
   end
