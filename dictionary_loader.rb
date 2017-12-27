@@ -7,6 +7,7 @@
 require "./dictionary.rb"
 
 class DictionaryLoader
+  attr_reader :read
 
   def initialize(path)
     @path = path
@@ -14,9 +15,8 @@ class DictionaryLoader
   end
 
   def fetch
-    # need to do something about files that can't be found
-    file = File.readlines("#{@path}")
-    Dictionary(file)
+# need to do something about files that can't be found
+    file = File.readlines(@path).map(&:strip)
+    @read = Dictionary.new(file)
   end
-
 end

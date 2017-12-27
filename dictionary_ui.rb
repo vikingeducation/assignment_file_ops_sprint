@@ -4,7 +4,6 @@
 require "./dictionary_loader.rb"
 
 class DictionaryUI
-
   def initialize
     locate
   end
@@ -24,10 +23,9 @@ class DictionaryUI
   end
 
   def load(file_path)
-    @dictionary = DictionaryLoader.new(file_path)
-    puts @dictionary
+    l = DictionaryLoader.new(file_path)
+    @dictionary = l.read
   end
-
 end
 
 d = DictionaryUI.new
