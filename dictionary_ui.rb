@@ -2,6 +2,8 @@
 =begin
  DictionaryUI is the main class which handles the user interaction loop.
 
+ Documents/Viking/Ruby/dictionary
+
  require "pry"
  binding.pry
 =end
@@ -39,6 +41,12 @@ class DictionaryUI
     puts "\nDictionary successfully loaded"
     puts "Your dictionary contains #{@book.dictionary.length} words."
     #puts "Word frequency by starting letter:"
+    search
+  end
+
+  def search
+    # TODO prompt user about what they want to search for and how
+    # DictionarySearcher.new(@book.dictionary, search_type)
   end
 end
 
