@@ -45,8 +45,22 @@ class DictionaryUI
   end
 
   def search
-    # TODO prompt user about what they want to search for and how
-    # DictionarySearcher.new(@book.dictionary, search_type)
+=begin
+ What kind of search?
+ 1: Exact
+ 2: Partial
+ 3: Begins With
+ 4: Ends With
+
+ Enter the search term
+
+ DictionarySearcher.new(@book.dictionary, type, term)
+
+ puts "Found #{results.length} matches:"
+ puts results
+
+ TODO user input validation
+=end
   end
 end
 
