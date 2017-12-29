@@ -5,15 +5,24 @@
 =end
 
 class DictionarySearcher
+  attr_reader :results
+
   def initialize(dictionary, type, term)
     @dictionary = dictionary
     @type = type
     @term = term
+    @results = []
     analyze
   end
 
+=begin
+  TODO
+  1. begins and ends should work for multiple letters
+  2. partial should try to find x amount of matching letters in the same
+  order in a given word
+=end
+
   def analyze
-    results = []
     @dictionary.each do |word|
       if @type == "1" # exact
         results << word if word == @term
@@ -25,7 +34,6 @@ class DictionarySearcher
         results << word if word[-1] == @term[-1]
       end
     end
-
   end
 
 end

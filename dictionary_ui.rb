@@ -9,6 +9,7 @@
 =end
 
 require "./dictionary_loader.rb"
+require "./dictionary_searcher.rb"
 
 class DictionaryUI
   def initialize
@@ -37,7 +38,7 @@ class DictionaryUI
   end
 
   def statistics
-# TODO break up into seperate classes, finish second stat
+# TODO break up into seperate classes?, finish second stat
     puts "\nDictionary successfully loaded"
     puts "Your dictionary contains #{@book.dictionary.length} words."
     #puts "Word frequency by starting letter:"
@@ -45,23 +46,19 @@ class DictionaryUI
   end
 
   def search
-=begin
- What kind of search?
- 1: Exact
- 2: Partial
- 3: Begins With
- 4: Ends With
-
- Enter the search term
-
- DictionarySearcher.new(@book.dictionary, type, term)
-
- puts "Found #{results.length} matches:"
- puts results
-
- TODO user input validation
-=end
+# TODO user input validation
+    puts "\nWhat kind of search would you like to do?"
+    puts "Enter a number below to select the search type:"
+    puts "1 - Exact\n2 - Partial\n3 - Begins With\n4 - Ends With\n\n"
+    type = gets.chomp
+    print "\nWhat word would you like to search for? "
+    term = gets.chomp
+    @s = DictionarySearcher.new(@book.dictionary, type, term)
+    plural = "es" if @s.results.length > 1
+    puts "\nFound #{@s.results.length} match#{plural}:"
+    puts @s.results
   end
+
 end
 
 s = DictionaryUI.new
