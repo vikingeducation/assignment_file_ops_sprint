@@ -6,10 +6,17 @@
 
  require "pry"
  binding.pry
+
+ TODO for all project files
+ 1. implement user input validation/should be able to quit in any prompt
+ 2. break up methods (as needed)
+ 3. review naming
+ 4. checklist items
 =end
 
 require "./dictionary_loader.rb"
 require "./dictionary_searcher.rb"
+require "./results_saver.rb"
 
 class DictionaryUI
   def initialize
@@ -20,7 +27,7 @@ class DictionaryUI
 # TODO user input validation
     puts "Where is your dictionary?"
     puts " Please enter the file name and location in the following format"
-    puts " path/to/myfile.csv"
+    puts " path/to/myfile.extension"
     puts " Or enter q to quit\n\n"
     path = gets.chomp
     quit?(path)
@@ -46,7 +53,7 @@ class DictionaryUI
   end
 
   def search
-# TODO user input validation
+# TODO user input validation, split into seperate methods?
     puts "\nWhat kind of search would you like to do?"
     puts " Enter a number below to select the search type:"
     puts "1 - Exact\n2 - Partial\n3 - Begins With\n4 - Ends With\n\n"
@@ -55,17 +62,49 @@ class DictionaryUI
     term = gets.chomp
     @s = DictionarySearcher.new(@book.dictionary, type, term)
     plural = "es" if @s.results.length > 1
-    puts "\nFound #{@s.results.length} match#{plural}:"
-    puts @s.results
-    save
+      puts "\nFound #{@s.results.length} match#{plural}:"
+      puts @s.results
+      save
   end
 
   def save
+# TODO user input validation, split into seperate methods?
     puts "\nDo you want to save the results?"
     puts " Please enter y for yes or n for no, alternatively enter q to quit."
     choice = gets.chomp
     quit?(choice)
+    if choice = "y"
+      store
+    elsif choice = "n"
+      search
+    else
+      # bad input
+    end
+  end
 
+  def store
+# TODO user input validation, split into seperate methods?
+    puts "Where should the results be stored in a file at?"
+    puts " Please enter the file name and location in the following format"
+    puts " path/to/myfile.extension"
+    where = gets.chomp
+    if File.file?(location)
+      puts "That file aready exists, should it be overwritten?"
+      puts " Please enter y for yes or n for no, alternatively enter q to quit."
+      choice = gets.chomp
+      if choice = "y"
+        how = "replace"
+      elsif choice = "n"
+        how = "add"
+      else
+        # bad input
+      end
+    else
+      how = "add"
+    end
+      w = ResultsSaver.new(@s.results, where, how)
+      # confirm results were saved, and puts result
+      search
   end
 
 end

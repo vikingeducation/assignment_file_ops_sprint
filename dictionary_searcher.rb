@@ -19,7 +19,7 @@ class DictionarySearcher
   TODO
   1. begins and ends should work for multiple letters
   2. partial should try to find x amount of matching letters in the same
-  order in a given word
+  order in a given word/maybe just find some of the same letters?
 =end
 
   def analyze
