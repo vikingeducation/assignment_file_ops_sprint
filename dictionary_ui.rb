@@ -26,7 +26,7 @@ class DictionaryUI
   def locate
 # TODO user input validation
     puts "Where is your dictionary?"
-    puts " Please enter the file name and location in the following format"
+    puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts " Or enter q to quit\n\n"
     path = gets.chomp
@@ -88,7 +88,7 @@ class DictionaryUI
 # TODO user input validation, split into seperate methods?
     how = nil
     puts "\nWhere should the results be stored in a file at?"
-    puts " Please enter the file name and location in the following format"
+    puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts ''
     where = gets.chomp

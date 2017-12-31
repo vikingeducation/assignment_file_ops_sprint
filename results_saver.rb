@@ -11,15 +11,26 @@ require "pry"
      write
    end
 
+=begin
+ figure out a way for this part to move to the root of the file system but not lose the current path
+
+ |Dir.home()| changes working directory to current user home (/home/'username'/)
+
+ while |Dir.pwd| returns current working directory
+
+ system "cd 'path'" old school method
+=end
    def write
-# figure out a way for this part to move to the root of the file system but not lose the current path
-binding.pry
      if Dir.exist?(@where)
+binding.pry
        Dir.chdir(@where) do
+
 # TODO check and handle if the necessary permissions are present to create a file
          File.open("results2.txt", "w") { |file| file.write(@results) }
        end
      else
+# TODO make it handle directory structures that don't exist by creating necessary folders see |mkdir|
+binding.pry
        Dir.chdir(File.dirname(@where)) do
 # TODO check and handle if the file is write-able or not
          @how == "replace" ? mode = "w" : mode = "a"
