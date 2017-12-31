@@ -12,11 +12,14 @@
    def write
      if Dir.exist?(@where)
        Dir.chdir(@where) do
-         File.new(results2.txt, "w") { |words| words.write(@results)}
+# TODO check and handle if the necessary permissions are present to create a file
+         File.open("results2.txt", "w") { |file| file.write(@results) }
        end
-     else # if @where includes a file at the end of the path (or just the file)
-       Dir.chdir(# regexp on @where) do
-        @how == replace ? # overwrite @where with @results : append @results to @where
+     else
+       Dir.chdir(File.dirname(@where)) do
+# TODO check and handle if the file is write-able or not
+         @how == "replace" ? mode = "w" : mode = "a"
+         File.open("#{File.basename(@where)}", mode) { |file| file.write(@results) }
        end
      end
 

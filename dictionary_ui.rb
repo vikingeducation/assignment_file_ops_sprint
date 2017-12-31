@@ -55,7 +55,7 @@ class DictionaryUI
   def search
 # TODO user input validation, split into seperate methods?
     puts "\nWhat kind of search would you like to do?"
-    puts " Enter a number below to select the search type:"
+    puts " Enter one of the numbers below to select the search type:"
     puts "1 - Exact\n2 - Partial\n3 - Begins With\n4 - Ends With\n\n"
     type = gets.chomp
     print "\nWhat word would you like to search for? "
@@ -64,6 +64,7 @@ class DictionaryUI
     plural = "es" if @s.results.length > 1
       puts "\nFound #{@s.results.length} match#{plural}:"
       puts @s.results
+# TODO change what happens if there are no results
       save
   end
 
@@ -71,11 +72,12 @@ class DictionaryUI
 # TODO user input validation, split into seperate methods?
     puts "\nDo you want to save the results?"
     puts " Please enter y for yes or n for no, alternatively enter q to quit."
+    puts ''
     choice = gets.chomp
     quit?(choice)
-    if choice = "y"
+    if choice == "y"
       store
-    elsif choice = "n"
+    elsif choice == "n"
       search
     else
       # bad input
@@ -85,15 +87,17 @@ class DictionaryUI
   def store
 # TODO user input validation, split into seperate methods?
     how = nil
-    puts "Where should the results be stored in a file at?"
+    puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and location in the following format"
     puts " path/to/myfile.extension"
+    puts ''
     where = gets.chomp
-    if File.file?(location)
-      puts "That file aready exists, should it be overwritten?"
+    if File.file?(where)
+      puts "\nThat file aready exists, should it be overwritten?"
       puts " Please enter y for yes or n for no, alternatively enter q to quit."
+      puts ''
       choice = gets.chomp
-      if choice = "y"
+      if choice == "y"
         how = "replace"
       else
         # bad input
