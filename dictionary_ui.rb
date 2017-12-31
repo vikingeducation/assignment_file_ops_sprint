@@ -84,6 +84,7 @@ class DictionaryUI
 
   def store
 # TODO user input validation, split into seperate methods?
+    how = nil
     puts "Where should the results be stored in a file at?"
     puts " Please enter the file name and location in the following format"
     puts " path/to/myfile.extension"
@@ -94,13 +95,9 @@ class DictionaryUI
       choice = gets.chomp
       if choice = "y"
         how = "replace"
-      elsif choice = "n"
-        how = "add"
       else
         # bad input
       end
-    else
-      how = "add"
     end
       w = ResultsSaver.new(@s.results, where, how)
       # confirm results were saved, and puts result
