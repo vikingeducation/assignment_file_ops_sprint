@@ -25,23 +25,29 @@ class DictionaryUI
 
   def locate
 # TODO user input validation
-    puts "Where is your dictionary?"
+    puts "\nWhere is your dictionary?"
     puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts " Or enter q to quit\n\n"
-    path = gets.chomp
-    quit?(path)
-    load(path)
+    @path = gets.chomp
+    quit?(@path)
+    load
   end
 
   def quit?(input)
     exit if input == "q"
   end
 
-  def load(file_path)
-    l = DictionaryLoader.new(file_path)
-    @book = l.read
-    statistics
+  def load
+# TODO test with different files in different paths
+    l = DictionaryLoader.new(@path)
+    if l.read == 0
+      puts "\nFile not found, try entering again"
+      locate
+    else
+      @book = l.read
+      statistics
+    end
   end
 
   def statistics
