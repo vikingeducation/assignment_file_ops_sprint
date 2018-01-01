@@ -20,6 +20,8 @@ require "./results_saver.rb"
 
 class DictionaryUI
   def initialize
+    system 'cls'
+    system 'clear'
     locate
   end
 
