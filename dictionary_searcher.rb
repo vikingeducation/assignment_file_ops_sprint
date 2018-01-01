@@ -54,6 +54,4 @@ class DictionarySearcher
       end
     end
   end
-
-
 end

@@ -10,13 +10,12 @@ class DictionaryLoader
   attr_reader :read
 
   def initialize(path)
-    @path = path
-    fetch
+    fetch(path)
   end
 
-  def fetch
-    if File.file?(@path)
-      file = File.readlines(@path).map(&:strip)
+  def fetch(file_path)
+    if File.file?(file_path)
+      file = File.readlines(file_path).map(&:strip)
       @read = Dictionary.new(file)
     else
       @read = 0

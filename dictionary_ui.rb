@@ -30,19 +30,19 @@ class DictionaryUI
     puts "\nWhere is your dictionary?"
     puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
-    puts " Or enter q to quit\n\n"
-    @path = gets.chomp
-    quit?(@path)
-    load
+    puts " Or enter q to quit in any prompt\n\n"
+    path = gets.chomp
+    quit?(path)
+    load(path)
   end
 
   def quit?(input)
     exit if input == "q"
   end
 
-  def load
+  def load(path)
 # TODO test with different files in different paths
-    l = DictionaryLoader.new(@path)
+    l = DictionaryLoader.new(path)
     if l.read == 0
       puts "\nFile not found, try entering again"
       locate
