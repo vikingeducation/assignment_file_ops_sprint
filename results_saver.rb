@@ -26,7 +26,7 @@ binding.pry
        Dir.chdir(@where) do
 
 # TODO check and handle if the necessary permissions are present to create a file
-         File.open("results2.txt", "w") { |file| file.write(@results) }
+         File.open("results1.txt", "w") { |file| file.write(@results) }
        end
      else
 # TODO make it handle directory structures that don't exist by creating necessary folders see |mkdir|
