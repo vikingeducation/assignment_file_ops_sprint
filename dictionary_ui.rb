@@ -2,7 +2,7 @@
 =begin
  DictionaryUI is the main class which handles the user interaction loop.
 
- Documents/Viking/Ruby/dictionary
+ cd Documents/Viking/Ruby/dictionary
 
  require "pry"
  binding.pry
@@ -83,9 +83,10 @@ class DictionaryUI
     puts ''
     choice = gets.chomp
     quit?(choice)
-    if choice == "y"
+    case choice
+    when "y"
       store
-    elsif choice == "n"
+    when "n"
       search
     else
       # bad input

@@ -9,34 +9,51 @@ class DictionarySearcher
 
   def initialize(dictionary, type, term)
     @dictionary = dictionary
-    @type = type
     @term = term
     @results = []
-    analyze
+    route(type)
   end
 
-=begin
-  TODO
-  2. partial should try to find x amount of matching letters in the same
-  order in a given word/maybe just find some of the same letters?
-=end
+  def route(search_type)
+    case search_type
+    when "1"
+      exact
+    when "2"
+      partial
+    when "3"
+      begins
+    when "4"
+      ends
+    end
+  end
 
-  def analyze
+  def exact
     @dictionary.each do |word|
-      if @type == "1" # exact
-        results << word if word == @term
-      elsif @type == "2" # partial
-        results << word if word[0...@term.length] == @term
-      elsif @type == "3" # begins
-        results << word if word[0...@term.length] == @term
-      else @type == "4" # ends
-        if @term.length == 1
-          results << word if word[-1] == @term[-1]
-        else
-          results << word if word[-@term.length..-1] == @term
-        end
+      results << word if word == @term
+    end
+  end
+
+  def partial
+    @dictionary.each do |word|
+      results << word if word.include?(@term)
+    end
+  end
+
+  def begins
+    @dictionary.each do |word|
+      results << word if word[0...@term.length] == @term
+    end
+  end
+
+  def ends
+    @dictionary.each do |word|
+      if @term.length == 1
+        results << word if word[-1] == @term[-1]
+      else
+        results << word if word[-@term.length..-1] == @term
       end
     end
   end
+
 
 end
