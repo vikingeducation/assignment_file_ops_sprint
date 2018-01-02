@@ -42,12 +42,12 @@ class DictionaryUI
 
   def load(path)
 # TODO test with different files in different paths
-    l = DictionaryLoader.new(path)
-    if l.read == 0
+    openy = DictionaryLoader.new(path)
+    if openy.read == 0
       puts "\nFile not found, try entering again"
       locate
     else
-      @book = l.read
+      @book = openy.read
       count
     end
   end
@@ -63,32 +63,68 @@ class DictionaryUI
                 "g" => 0, "h" => 0, "i" => 0, "j" => 0, "k" => 0, "l" => 0,
                 "m" => 0, "n" => 0, "o" => 0, "p" => 0, "q" => 0, "r" => 0,
                 "s" => 0, "t" => 0, "u" => 0, "v" => 0, "w" => 0, "x" => 0,
-                "y" => 0, "z" => 0}
+                "y" => 0, "z" => 0 }
     @book.dictionary.each do |word|
       letters.each_pair { |key, value| letters[key] += 1 if word[0] == key }
     end
-    puts "Word frequency by starting letter:"
-    letters.each_pair {|key, value|
-      puts "#{key.upcase}: #{value}"
-    }
-    search
+      puts "Word frequency by starting letter:"
+      letters.each_pair { |key, value| puts "#{key.upcase}: #{value}" }
+        search_type
   end
 
-  def search
-# TODO user input validation, split into seperate methods?
+  def search_type
     puts "\nWhat kind of search would you like to do?"
     puts " Enter one of the numbers below to select the search type:"
     puts "1 - Exact\n2 - Partial\n3 - Begins With\n4 - Ends With\n\n"
-    type = gets.chomp
+    input = gets.chomp.strip
+    type_check(input)
+  end
+
+  def type_check(input)
+    options = ["1", "2", "3", "4"]
+    if options.include?(input)
+      @type = input
+      search_term
+    else
+      puts "\n That wasn't one of the valid options, try again"
+      search_type
+    end
+  end
+
+# TODO user input validation
+  def search_term
     print "\nWhat would you like to search for? "
-    term = gets.chomp
-    @s = DictionarySearcher.new(@book.dictionary, type, term)
+    input = gets.chomp.strip
+    check_term(input)
+  end
+
+  def check_term(input)
+    if input == input.gsub(/[^a-z]/, '')
+      @term = input.downcase
+      search_results
+    else
+      puts "\n That's not a valid search term, try again"
+      search_term
+    end
+  end
+
+
+
+  def search_results
+    @s = DictionarySearcher.new(@book.dictionary, @type, @term)
+
+# TODO change what happens if there are no results
+
+
     plural = "es" if @s.results.length > 1
       puts "\nFound #{@s.results.length} match#{plural}:"
       puts @s.results
-# TODO change what happens if there are no results
+
+
       save
   end
+
+
 
   def save
 # TODO user input validation, split into seperate methods?
