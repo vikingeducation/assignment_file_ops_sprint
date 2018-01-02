@@ -91,10 +91,9 @@ class DictionaryUI
     end
   end
 
-# TODO user input validation
   def search_term
     print "\nWhat would you like to search for? "
-    input = gets.chomp.strip
+    input = gets.chomp
     check_term(input)
   end
 
@@ -108,63 +107,74 @@ class DictionaryUI
     end
   end
 
-
-
   def search_results
-    @s = DictionarySearcher.new(@book.dictionary, @type, @term)
-
-# TODO change what happens if there are no results
-
-
-    plural = "es" if @s.results.length > 1
-      puts "\nFound #{@s.results.length} match#{plural}:"
-      puts @s.results
-
-
-      save
+    @find = DictionarySearcher.new(@book.dictionary, @type, @term)
+    if @find.results.length == 0
+      puts "\n No matches were found, try searching again"
+      search_type
+    else
+      plural = "es" if @find.results.length > 1
+        puts "\nFound #{@find.results.length} match#{plural}:"
+        puts @find.results
+        save
+    end
   end
 
-
-
   def save
-# TODO user input validation, split into seperate methods?
     puts "\nDo you want to save the results?"
     puts " Please enter y for yes or n for no, alternatively enter q to quit"
     puts ''
     choice = gets.chomp
     quit?(choice)
-    case choice
+    save_check(choice)
+  end
+
+  def save_check(input)
+    case input
     when "y"
-      store
+      place
     when "n"
-      search
+      search_type
     else
-      # bad input
+      puts "\n Unable to interpret that input, try again"
+      save
     end
   end
 
-  def store
-# TODO user input validation, split into seperate methods?
-    how = nil
+  def place
     puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts ''
-    where = gets.chomp
-    if File.file?(where)
+    @where = gets.chomp
+    mode
+  end
+
+# TODO user input validation, split into seperate methods?
+  def mode
+    how = nil
+    if File.file?(@where)
       puts "\nThat file aready exists, should it be overwritten?"
       puts " Please enter y for yes or n for no, alternatively enter q to quit"
       puts ''
-      choice = gets.chomp
-      if choice == "y"
+      choice = gets.chomp.strip.downcase
+
+      case choice
+      when "y"
         how = "replace"
+      when "n"
       else
-        # bad input
+        puts "\n Unfortunately that was an invalid answer, try again"
+        mode
       end
+
+
+    else
+      # file doesn't exist
     end
-      w = ResultsSaver.new(@s.results, where, how)
+      w = ResultsSaver.new(@find.results, @where, how)
       # confirm results were saved, and puts result
-      search
+      search_type
   end
 
 end

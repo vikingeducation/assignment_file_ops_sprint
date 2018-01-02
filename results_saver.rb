@@ -4,7 +4,7 @@
 require "pry"
 
  class ResultsSaver
-   def initialize(results, where, how = nil)
+   def initialize(results, where, how)
      @results = results
      @where = where
      @how = how
