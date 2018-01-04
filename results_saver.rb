@@ -3,6 +3,7 @@
 
 require "pry"
 
+# needs major rewrite in general but especially because how is now a true/false value indicating whether to overwrite or not
  class ResultsSaver
    def initialize(results, where, how)
      @results = results
@@ -18,7 +19,7 @@ require "pry"
 
  while |Dir.pwd| returns current working directory
 
- system "cd 'path'" old school method
+ system "cd 'path'" old school method, probably bad practice
 =end
    def write
      if Dir.exist?(@where)

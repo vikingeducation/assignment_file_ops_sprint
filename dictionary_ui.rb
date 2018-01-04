@@ -9,10 +9,9 @@
  binding.pry
 
  TODO (for this file and results_saver)
- 1. implement user input validation/should be able to quit in any prompt
- 2. break up methods (as needed)
- 3. review naming
- 4. checklist items
+ 1. break up methods (as needed)
+ 2. review naming
+ 3. checklist items
 =end
 
 require "./dictionary_loader.rb"
@@ -40,8 +39,8 @@ class DictionaryUI
     exit if input == "q"
   end
 
+# TODO make it possible to load files in paths that dont have the current working directory as the base path
   def load(path)
-# TODO test with different files in different paths
     openy = DictionaryLoader.new(path)
     if openy.read == 0
       puts "\nFile not found, try entering again"
@@ -77,6 +76,7 @@ class DictionaryUI
     puts " Enter one of the numbers below to select the search type:"
     puts "1 - Exact\n2 - Partial\n3 - Begins With\n4 - Ends With\n\n"
     input = gets.chomp.strip
+    quit?(input)
     type_check(input)
   end
 
@@ -92,7 +92,8 @@ class DictionaryUI
   end
 
   def search_term
-    print "\nWhat would you like to search for? "
+    puts "\n You can't input q to quit for this prompt so that it can be searched"
+    puts "What would you like to search for?\n\n"
     input = gets.chomp
     check_term(input)
   end
@@ -124,9 +125,9 @@ class DictionaryUI
     puts "\nDo you want to save the results?"
     puts " Please enter y for yes or n for no, alternatively enter q to quit"
     puts ''
-    choice = gets.chomp
-    quit?(choice)
-    save_check(choice)
+    input = gets.chomp
+    quit?(input)
+    save_check(input)
   end
 
   def save_check(input)
@@ -141,40 +142,58 @@ class DictionaryUI
     end
   end
 
+# TODO make it possible to load files in paths that dont have the current working directory as the base path
   def place
     puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts ''
     @where = gets.chomp
-    mode
+    quit?(@where)
+    place_check
   end
 
-# TODO user input validation, split into seperate methods?
-  def mode
-    how = nil
+  def place_check
     if File.file?(@where)
-      puts "\nThat file aready exists, should it be overwritten?"
-      puts " Please enter y for yes or n for no, alternatively enter q to quit"
-      puts ''
-      choice = gets.chomp.strip.downcase
-
-      case choice
-      when "y"
-        how = "replace"
-      when "n"
-      else
-        puts "\n Unfortunately that was an invalid answer, try again"
-        mode
-      end
-
-
+      write_mode
     else
-      # file doesn't exist
+      if Dir.exist?(File.dirname(@where))
+        saving
+      else
+        puts "\n That path doesn't exist, try again"
+        place
+      end
     end
-      w = ResultsSaver.new(@find.results, @where, how)
-      # confirm results were saved, and puts result
-      search_type
+  end
+
+  def write_mode
+    puts "\nThat file aready exists, should it be overwritten?"
+    puts " Please enter y for yes or n for no, alternatively enter q to quit"
+    puts ''
+    input = gets.chomp.strip.downcase
+    quit?(input)
+    mode_check(input)
+  end
+
+  def mode_check(input)
+    case input
+    when "y"
+      @overwrite = true
+      saving
+    when "n"
+      saving
+    else
+      puts "\n Unfortunately that was an invalid answer, try again"
+      write_mode
+    end
+  end
+
+  def saving
+    @overwrite = false unless @overwrite == true
+    exit
+    w = ResultsSaver.new(@find.results, @where, @overwrite)
+    # confirm results were saved, and puts result
+    search_type
   end
 
 end
