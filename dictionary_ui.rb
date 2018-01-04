@@ -92,8 +92,8 @@ class DictionaryUI
   end
 
   def search_term
-    puts "\n You can't input q to quit for this prompt so that it can be searched"
-    puts "What would you like to search for?\n\n"
+    puts "\nWhat would you like to search for?"
+    puts " (You can't input q to quit for this prompt so that it can be searched for)\n\n"
     input = gets.chomp
     check_term(input)
   end
@@ -154,10 +154,13 @@ class DictionaryUI
   end
 
   def place_check
+    @overwrite = false
     if File.file?(@where)
+# TODO check and handle if the file is write-able or not?
       write_mode
     else
       if Dir.exist?(File.dirname(@where))
+# TODO check and handle if the necessary permissions are present to create a file?
         saving
       else
         puts "\n That path doesn't exist, try again"
@@ -189,8 +192,6 @@ class DictionaryUI
   end
 
   def saving
-    @overwrite = false unless @overwrite == true
-    exit
     w = ResultsSaver.new(@find.results, @where, @overwrite)
     # confirm results were saved, and puts result
     search_type

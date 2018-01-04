@@ -1,14 +1,11 @@
 
 # takes a batch of results and writes them to a file.
 
-require "pry"
-
-# needs major rewrite in general but especially because how is now a true/false value indicating whether to overwrite or not
  class ResultsSaver
-   def initialize(results, where, how)
+   def initialize(results, where, overwrite)
      @results = results
      @where = where
-     @how = how
+     @overwrite = overwrite
      write
    end
 
@@ -23,18 +20,12 @@ require "pry"
 =end
    def write
      if Dir.exist?(@where)
-binding.pry
        Dir.chdir(@where) do
-
-# TODO check and handle if the necessary permissions are present to create a file
-         File.open("results1.txt", "w") { |file| file.write(@results) }
+         File.open("results.txt", "a") { |file| file.write(@results) }
        end
      else
-# TODO make it handle directory structures that don't exist by creating necessary folders see |mkdir|
-binding.pry
+       @overwrite ? mode = "w" : mode = "a"
        Dir.chdir(File.dirname(@where)) do
-# TODO check and handle if the file is write-able or not
-         @how == "replace" ? mode = "w" : mode = "a"
          File.open("#{File.basename(@where)}", mode) { |file| file.write(@results) }
        end
      end
