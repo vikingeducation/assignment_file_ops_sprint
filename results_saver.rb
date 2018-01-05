@@ -1,6 +1,11 @@
 
 # takes a batch of results and writes them to a file.
 
+# /home/brennan/Documents/Viking/Ruby/dictionary/example
+# /home/brennan/Documents/Viking/Ruby/dictionary/example/results.txt
+
+require "pry"
+
  class ResultsSaver
    def initialize(results, where, overwrite)
      @results = results
@@ -9,28 +14,39 @@
      write
    end
 
+
+
    def write
-     if Dir.exist?(File.dirname(@where)) && !File.file?(@where)
-       Dir.chdir(File.dirname(@where)) do
-# TODO fix problem with processing file names/need to create them if they're not specified
-         File.open("#{File.basename(@where)}", "a") { |file| file.write(@results) }
-       end
+     @overwrite ? mode = "w" : mode = "a"
+
+     if @where[-1] == "/"
+       filename = "results.txt"
+       filepath = @where
      else
-       @overwrite ? mode = "w" : mode = "a"
-       Dir.chdir(File.dirname(@where)) do
-         File.open("#{File.basename(@where)}", mode) { |file| file.write(@results) }
-       end
+       filename = "#{File.basename(@where)}"
+       filepath = File.dirname(@where)
      end
+
+binding.pry
+       Dir.chdir(filepath) do
+         File.open(filename, mode) { |file| file.write(@results) }
+       end
+
      target_exist
    end
+
+
 
 # TODO move this check to d_ui as this is going outside of this classes purpose
    def target_exist
      if File.file?(@where)
+binding.pry
        write_check(@where)
      elsif Dir.exist?(@where)
-       write_check("#{@where}/results.txt")
+binding.pry
+       write_check("#{@where}results.txt")
      else
+binding.pry
        puts "\n Unable to create file to save results to"
      end
    end

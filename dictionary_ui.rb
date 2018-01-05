@@ -143,7 +143,9 @@ class DictionaryUI
     if File.file?(@where)
       write_mode
     else
-      if Dir.exist?(File.dirname(@where))
+      if Dir.exist?(@where)
+        saving
+      elsif Dir.exist?(File.dirname(@where))
         saving
       else
         puts "\n That path doesn't exist, try again"
@@ -176,7 +178,7 @@ class DictionaryUI
 
   def saving
     w = ResultsSaver.new(@find.results, @where, @overwrite)
-    # confirm results were saved, and puts result
+# confirm results were saved, and puts result
     search_type
   end
 
