@@ -17,9 +17,9 @@ class DictionaryUI
     puts " Please enter the file name and/or location in the following format"
     puts " path/to/myfile.extension"
     puts " Or enter q to quit in any prompt\n\n"
-    path = gets.chomp
-    quit?(path)
-    load(path)
+    input = gets.chomp
+    quit?(input)
+    load(input)
   end
 
   def quit?(input)
@@ -27,34 +27,13 @@ class DictionaryUI
   end
 
   def load(path)
-    openy = DictionaryLoader.new(path)
-    if openy.read == 0
+    if File.file?(path)
+      @dictionary = DictionaryLoader.new(path).read.dictionary
+      search_type
+    else
       puts "\nFile not found, try entering again"
       locate
-    else
-      @book = openy.read
-      count
     end
-  end
-
-  def count
-    puts "\nDictionary successfully loaded"
-    puts "Your dictionary contains #{@book.dictionary.length} words"
-    frequency
-  end
-
-  def frequency
-    letters = { "a" => 0, "b" => 0, "c" => 0, "d" => 0, "e" => 0, "f" => 0,
-                "g" => 0, "h" => 0, "i" => 0, "j" => 0, "k" => 0, "l" => 0,
-                "m" => 0, "n" => 0, "o" => 0, "p" => 0, "q" => 0, "r" => 0,
-                "s" => 0, "t" => 0, "u" => 0, "v" => 0, "w" => 0, "x" => 0,
-                "y" => 0, "z" => 0 }
-    @book.dictionary.each do |word|
-      letters.each_pair { |key, value| letters[key] += 1 if word[0] == key }
-    end
-      puts "Word frequency by starting letter:"
-      letters.each_pair { |key, value| puts "#{key.upcase}: #{value}" }
-        search_type
   end
 
   def search_type
@@ -95,14 +74,14 @@ class DictionaryUI
   end
 
   def search_results
-    @find = DictionarySearcher.new(@book.dictionary, @type, @term)
-    if @find.results.length == 0
+    @results = DictionarySearcher.new(@dictionary, @type, @term).results
+    if @results.length == 0
       puts "\n No matches were found, try searching again"
       search_type
     else
-      plural = "es" if @find.results.length > 1
-        puts "\nFound #{@find.results.length} match#{plural}:"
-        puts @find.results
+      plural = "es" if @results.length > 1
+        puts "\nFound #{@results.length} match#{plural}:"
+        puts @results
         save
     end
   end
@@ -178,7 +157,7 @@ class DictionaryUI
 
   def saving
     @where = "#{@where}results.txt" if Dir.exist?(@where)
-    ResultsSaver.new(@find.results, @where, @overwrite)
+    ResultsSaver.new(@results, @where, @overwrite)
     target_exist(@where)
     search_type
   end
@@ -199,5 +178,3 @@ class DictionaryUI
     end
   end
 end
-
-start = DictionaryUI.new

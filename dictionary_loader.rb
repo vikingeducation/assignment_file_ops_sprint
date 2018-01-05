@@ -14,11 +14,7 @@ class DictionaryLoader
   end
 
   def fetch(file_path)
-    if File.file?(file_path)
-      file = File.foreach(file_path).map { |word| word.strip.downcase }
-      @read = Dictionary.new(file)
-    else
-      @read = 0
-    end
+    file = File.foreach(file_path).map { |word| word.strip.downcase }
+    @read = Dictionary.new(file)
   end
 end

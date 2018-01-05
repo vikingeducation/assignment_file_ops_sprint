@@ -29,28 +29,28 @@ class DictionarySearcher
 
   def exact
     @dictionary.each do |word|
-      results << word if word == @term
+      @results << word if word == @term
     end
   end
 
   def partial
     @dictionary.each do |word|
-      results << word if word.include?(@term)
+      @results << word if word.include?(@term)
     end
   end
 
   def begins
     @dictionary.each do |word|
-      results << word if word[0...@term.length] == @term
+      @results << word if word[0...@term.length] == @term
     end
   end
 
   def ends
     @dictionary.each do |word|
       if @term.length == 1
-        results << word if word[-1] == @term[-1]
+        @results << word if word[-1] == @term[-1]
       else
-        results << word if word[-@term.length..-1] == @term
+        @results << word if word[-@term.length..-1] == @term
       end
     end
   end
