@@ -9,19 +9,11 @@
      write
    end
 
-=begin
- figure out a way for this part to move to the root of the file system but not lose the current path
-
- |Dir.home()| changes working directory to current user home (/home/'username'/)
-
- while |Dir.pwd| returns current working directory
-
- system "cd 'path'" old school method, probably bad practice
-=end
    def write
-     if Dir.exist?(@where)
-       Dir.chdir(@where) do
-         File.open("results.txt", "a") { |file| file.write(@results) }
+     if Dir.exist?(File.dirname(@where)) && !File.file?(@where)
+       Dir.chdir(File.dirname(@where)) do
+# TODO fix problem with processing file names/need to create them if they're not specified
+         File.open("#{File.basename(@where)}", "a") { |file| file.write(@results) }
        end
      else
        @overwrite ? mode = "w" : mode = "a"
@@ -29,7 +21,26 @@
          File.open("#{File.basename(@where)}", mode) { |file| file.write(@results) }
        end
      end
+     target_exist
+   end
 
+# TODO move this check to d_ui as this is going outside of this classes purpose
+   def target_exist
+     if File.file?(@where)
+       write_check(@where)
+     elsif Dir.exist?(@where)
+       write_check("#{@where}/results.txt")
+     else
+       puts "\n Unable to create file to save results to"
+     end
+   end
+
+   def write_check(file_path)
+     if File.open(file_path).each.any? { |line| line.include?("#{@results}") }
+       puts "\n Results saved successfully"
+     else
+       puts "\n Failed to save results"
+     end
    end
 
  end

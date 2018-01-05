@@ -1,18 +1,5 @@
 
-=begin
- DictionaryUI is the main class which handles the user interaction loop.
-
- cd Documents/Viking/Ruby/dictionary
- ruby dictionary_ui.rb
-
- require "pry"
- binding.pry
-
- TODO (for this file and results_saver)
- 1. break up methods (as needed)
- 2. review naming
- 3. checklist items
-=end
+# DictionaryUI is the main class which handles the user interaction loop.
 
 require "./dictionary_loader.rb"
 require "./dictionary_searcher.rb"
@@ -28,7 +15,7 @@ class DictionaryUI
   def locate
     puts "\nWhere is your dictionary?"
     puts " Please enter the file name and/or location in the following format"
-    puts " path/to/myfile.extension"
+    puts " /path/to/myfile.extension"
     puts " Or enter q to quit in any prompt\n\n"
     path = gets.chomp
     quit?(path)
@@ -39,7 +26,6 @@ class DictionaryUI
     exit if input == "q"
   end
 
-# TODO make it possible to load files in paths that dont have the current working directory as the base path
   def load(path)
     openy = DictionaryLoader.new(path)
     if openy.read == 0
@@ -142,11 +128,10 @@ class DictionaryUI
     end
   end
 
-# TODO make it possible to load files in paths that dont have the current working directory as the base path
   def place
     puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and/or location in the following format"
-    puts " path/to/myfile.extension"
+    puts " /path/to/myfile.extension"
     puts ''
     @where = gets.chomp
     quit?(@where)
@@ -156,11 +141,9 @@ class DictionaryUI
   def place_check
     @overwrite = false
     if File.file?(@where)
-# TODO check and handle if the file is write-able or not?
       write_mode
     else
       if Dir.exist?(File.dirname(@where))
-# TODO check and handle if the necessary permissions are present to create a file?
         saving
       else
         puts "\n That path doesn't exist, try again"
