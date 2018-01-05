@@ -15,7 +15,7 @@ class DictionaryUI
   def locate
     puts "\nWhere is your dictionary?"
     puts " Please enter the file name and/or location in the following format"
-    puts " /path/to/myfile.extension"
+    puts " path/to/myfile.extension"
     puts " Or enter q to quit in any prompt\n\n"
     path = gets.chomp
     quit?(path)
@@ -131,7 +131,7 @@ class DictionaryUI
   def place
     puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and/or location in the following format"
-    puts " /path/to/myfile.extension"
+    puts " path/to/myfile.extension"
     puts ''
     @where = gets.chomp
     quit?(@where)
@@ -156,7 +156,7 @@ class DictionaryUI
 
   def write_mode
     puts "\nThat file aready exists, should it be overwritten?"
-    puts " Please enter y for yes or n for no, alternatively enter q to quit"
+    puts " Please enter y for yes or n for no"
     puts ''
     input = gets.chomp.strip.downcase
     quit?(input)
@@ -177,20 +177,27 @@ class DictionaryUI
   end
 
   def saving
+    @where = "#{@where}results.txt" if Dir.exist?(@where)
     w = ResultsSaver.new(@find.results, @where, @overwrite)
-# confirm results were saved, and puts result
+    target_exist(@where)
     search_type
   end
 
+  def target_exist(file_path)
+    if File.file?(file_path)
+      write_check(file_path)
+    else
+      puts "\n Unable to create file to save results to"
+    end
+  end
+
+  def write_check(file_path)
+    if File.open(file_path).each.any? { |line| line.include?("#{@results}") }
+      puts "\n Results saved successfully"
+    else
+      puts "\n Failed to save results"
+    end
+  end
 end
 
 s = DictionaryUI.new
-
-
-
-
-
-
-
-
-# spacing
