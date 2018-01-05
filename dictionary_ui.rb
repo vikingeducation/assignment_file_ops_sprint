@@ -58,7 +58,8 @@ class DictionaryUI
 
   def search_term
     puts "\nWhat would you like to search for?"
-    puts " (You can't input q to quit for this prompt so that it can be searched for)\n\n"
+    puts " (You can't input q to quit for this prompt so that it can be searched for)"
+    puts ''
     input = gets.chomp
     check_term(input)
   end
@@ -75,13 +76,20 @@ class DictionaryUI
 
   def search_results
     @results = DictionarySearcher.new(@dictionary, @type, @term).results
+    results_check
+  end
+
+  def results_check
     if @results.length == 0
       puts "\n No matches were found, try searching again"
       search_type
     else
-      plural = "es" if @results.length > 1
-        puts "\nFound #{@results.length} match#{plural}:"
+      if @results.length == 1
+        puts "\nFound a match: " + @results.to_s
+      else
+        puts "\nFound #{@results.length} matches:"
         puts @results
+      end
         save
     end
   end
@@ -110,15 +118,13 @@ class DictionaryUI
   def place
     puts "\nWhere should the results be stored in a file at?"
     puts " Please enter the file name and/or location in the following format"
-    puts " path/to/myfile.extension"
-    puts ''
+    puts " path/to/myfile.extension\n\n"
     @where = gets.chomp
     quit?(@where)
     place_check
   end
 
   def place_check
-    @overwrite = false
     if File.file?(@where)
       write_mode
     else
@@ -127,7 +133,7 @@ class DictionaryUI
       elsif Dir.exist?(File.dirname(@where))
         saving
       else
-        puts "\n That path doesn't exist, try again"
+        puts "\n That file and/or path doesn't exist, try again"
         place
       end
     end
@@ -135,8 +141,7 @@ class DictionaryUI
 
   def write_mode
     puts "\nThat file aready exists, should it be overwritten?"
-    puts " Please enter y for yes or n for no"
-    puts ''
+    puts " Please enter y for yes or n for no\n\n"
     input = gets.chomp.strip.downcase
     quit?(input)
     mode_check(input)
@@ -148,6 +153,7 @@ class DictionaryUI
       @overwrite = true
       saving
     when "n"
+      @overwrite = false
       saving
     else
       puts "\n Unfortunately that was an invalid answer, try again"
@@ -158,23 +164,6 @@ class DictionaryUI
   def saving
     @where = "#{@where}results.txt" if Dir.exist?(@where)
     ResultsSaver.new(@results, @where, @overwrite)
-    target_exist(@where)
     search_type
-  end
-
-  def target_exist(file_path)
-    if File.file?(file_path)
-      write_check(file_path)
-    else
-      puts "\n Unable to create file to save results to"
-    end
-  end
-
-  def write_check(file_path)
-    if File.open(file_path).each.any? { |line| line.include?("#{@results}") }
-      puts "\n Results saved successfully"
-    else
-      puts "\n Failed to save results"
-    end
   end
 end
