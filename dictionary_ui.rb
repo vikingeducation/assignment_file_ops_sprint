@@ -178,7 +178,7 @@ class DictionaryUI
 
   def saving
     @where = "#{@where}results.txt" if Dir.exist?(@where)
-    w = ResultsSaver.new(@find.results, @where, @overwrite)
+    ResultsSaver.new(@find.results, @where, @overwrite)
     target_exist(@where)
     search_type
   end
@@ -200,4 +200,4 @@ class DictionaryUI
   end
 end
 
-s = DictionaryUI.new
+start = DictionaryUI.new
